@@ -1,0 +1,85 @@
+* {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  background-color: rgb(176, 184, 184);
+}
+
+.nav-btn,
+.add-project-btn {
+  font-size: 1rem;
+  text-align: left;
+  text-indent: 15px;
+  min-height: 40px;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+.add-project-btn:hover {
+  background-color: rgb(202, 202, 202);
+}
+
+.nav-btn:hover {
+  background-color: rgb(202, 202, 202);
+}
+
+.project-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.project-header,
+.tab-header {
+  margin: 15px;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100%;
+}
+
+.app-container {
+  display: flex;
+  flex: 1;
+  max-width: 1200px;
+  min-height: 80vh;
+  margin: 30px 30px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 22px;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 240px;
+  border-radius: 20px 0 0 20px;
+  background-color: rgb(231, 231, 231);
+}
+
+.tab-container,
+ul {
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-container {
+  margin: 20px 0;
+}
+
+.app-content {
+  flex: 1;
+  background-color: rgb(255, 255, 255);
+  border-radius: 0 25px 25px 0;
+}
