@@ -15,11 +15,12 @@ body {
 .add-project-btn {
   font-size: 1rem;
   text-align: left;
-  text-indent: 15px;
+  text-indent: 25px;
   min-height: 40px;
   width: 100%;
   border: none;
   cursor: pointer;
+  background: none;
 }
 
 .add-project-btn:hover {

@@ -31,6 +31,21 @@ function renderMain() {
     element.appendChild(navBtns[index]);
   });
 
+  content.appendChild(main);
+  main.appendChild(appContainer);
+  appContainer.appendChild(sidebar);
+
+  sidebar.appendChild(tabContainer);
+  tabContainer.appendChild(tabHeader);
+  tabContainer.appendChild(navList);
+
+  appContainer.appendChild(appContent);
+}
+
+
+function projectSection() {
+  const sidebar = document.querySelector("aside");
+
   //* Projects section
   const projectContainer = divFactory("div", "project-container");
   const projectHeader = textFactory("h3", "project-header", "Projects");
@@ -40,23 +55,20 @@ function renderMain() {
     "Add Project"
   );
 
-  content.appendChild(main);
-  main.appendChild(appContainer);
-  appContainer.appendChild(sidebar);
-
-  sidebar.appendChild(tabContainer);
-  tabContainer.appendChild(tabHeader);
-  tabContainer.appendChild(navList);
-
   sidebar.appendChild(projectContainer);
   projectContainer.appendChild(projectHeader);
   projectContainer.appendChild(addProjectBtn);
-
-  appContainer.appendChild(appContent);
 }
 
 function renderPage() {
   renderMain();
+  projectSection();
 }
+
+//? Should I wrap pages in an object?
+function updateContent() {
+  
+}
+
 
 export { renderPage };
