@@ -42,7 +42,6 @@ function renderMain() {
   appContainer.appendChild(appContent);
 }
 
-
 function projectSection() {
   const sidebar = document.querySelector("aside");
 
@@ -66,9 +65,6 @@ function renderPage() {
 }
 
 //? Should I wrap pages in an object?
-function updateContent() {
-  
-}
-
+function updateContent() {}
 
 export { renderPage };

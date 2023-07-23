@@ -11,6 +11,10 @@ body {
   background-color: rgb(176, 184, 184);
 }
 
+button {
+  cursor: pointer;
+}
+
 .nav-btn,
 .add-project-btn {
   font-size: 1rem;
@@ -80,7 +84,30 @@ ul {
 }
 
 .app-content {
+  display: flex;
+  flex-direction: column;
   flex: 1;
   background-color: rgb(255, 255, 255);
   border-radius: 0 25px 25px 0;
+}
+
+.task-item {
+  display: flex;
+  flex-direction: row;
+  padding: 12px;
+  margin: 12px;
+  border-radius: 12px;
+  background-color: rgb(197, 197, 197);
+}
+
+.complete-btn {
+  border: none;
+  background: rgb(190, 231, 255);
+  border-radius: 12px;
+}
+
+.text-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 12px;
 }
