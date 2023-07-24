@@ -5,7 +5,7 @@ import {
   navFactory,
 } from "./elementFactories";
 
-import { openModal } from "./crud";
+import { projectSection } from "./component";
 
 const content = document.querySelector("#content");
 
@@ -48,28 +48,6 @@ function renderMain() {
   sectionRight.appendChild(appHeader);
   sectionRight.appendChild(appContent);
   appHeader.appendChild(newTaskBtn);
-
-  const taskBtn = document.querySelector("#newTaskBtn");
-  taskBtn.addEventListener("click", () => {
-    openModal();
-  });
-}
-
-function projectSection() {
-  const sidebar = document.querySelector("aside");
-
-  //* Projects section
-  const projectContainer = divFactory("div", "project-container");
-  const projectHeader = textFactory("h3", "project-header", "Projects");
-  const addProjectBtn = buttonFactory(
-    "add-project-btn",
-    "addProjectBtn",
-    "Add Project"
-  );
-
-  sidebar.appendChild(projectContainer);
-  projectContainer.appendChild(projectHeader);
-  projectContainer.appendChild(addProjectBtn);
 }
 
 function renderPage() {

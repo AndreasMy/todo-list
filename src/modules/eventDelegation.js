@@ -1,14 +1,13 @@
-//? Export to index.js a tabSelection function with a default setting
-//? This module handles button clicks globally???
-
-import { removeTask, renderTaskItems } from "./crud";
+import { openProjectModal, openTaskModal } from "./crud";
 
 const content = document.querySelector("#content");
 
-const eventDelegation = (index) => {
+const eventDelegation = () => {
   content.addEventListener("click", (event) => {
-    if (event.target.matches(`.cpl-btn-${index}`)) {
-      removeTask(index);
+    if (event.target.matches("#newTaskBtn")) {
+      openTaskModal();
+    } else if (event.target.matches("#addProjectBtn")) {
+      openProjectModal();
     }
   });
 };

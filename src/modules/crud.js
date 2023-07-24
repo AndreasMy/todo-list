@@ -46,8 +46,12 @@ function removeElements() {
   }
 }
 
-function openModal() {
-  renderTaskModal();
+function openTaskModal() {
+  renderTaskModal("Add Task", "task", "Task:", "addTaskBtn", submitEntry);
+}
+
+function openProjectModal() {
+  renderTaskModal("Add Project", "project", "Project:", "addProjectBtn", submitEntry);
 }
 
 function closeModal() {
@@ -67,7 +71,6 @@ function removeTask(index) {
 
 function submitEntry(event) {
   event.preventDefault();
-
   const task = document.querySelector("#task").value;
   const description = document.querySelector("#description").value;
   const newTask = taskFactory(task, description);
@@ -85,7 +88,8 @@ export {
   removeElements,
   tasks,
   removeTask,
-  openModal,
   closeModal,
   submitEntry,
+  openProjectModal,
+  openTaskModal,
 };
