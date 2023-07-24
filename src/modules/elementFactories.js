@@ -31,4 +31,28 @@ function navFactory(num) {
   return ul;
 }
 
-export { divFactory, buttonFactory, textFactory, navFactory };
+function labelFactory(labelFor, labelText) {
+  const label = document.createElement("label");
+  label.for = labelFor;
+  label.textContent = labelText;
+
+  return label;
+}
+
+function inputFactory(inputType, id, inputName, placeholder) {
+  const input = document.createElement(inputType);
+  input.id = id;
+  input.name = inputName;
+  input.placeholder = placeholder;
+
+  return input;
+}
+
+export {
+  labelFactory,
+  inputFactory,
+  divFactory,
+  buttonFactory,
+  textFactory,
+  navFactory,
+};

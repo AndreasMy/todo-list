@@ -15,9 +15,45 @@ button {
   cursor: pointer;
 }
 
+input {
+  height: 30px;
+  margin: 0 0 12px 0;
+}
+
+#description {
+  height: 60px;
+  resize: vertical;
+}
+
+.modal-container {
+  position: absolute;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100%;
+  top: 0;
+  backdrop-filter: blur(16px);
+  display: flex;
+}
+
+.modal-card {
+  display: flex;
+  flex-direction: column;
+  height: 500px;
+  width: 400px;
+  background-color: white;
+  border-radius: 12px;
+  border: 1px solid rgb(224, 224, 224);
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
 .nav-btn,
 .add-project-btn {
-  font-size: 1rem;
+  font-size: 1.2rem;
   text-align: left;
   text-indent: 25px;
   min-height: 40px;
@@ -56,6 +92,7 @@ main {
 
 .app-container {
   display: flex;
+  flex-direction: row;
   flex: 1;
   max-width: 1200px;
   min-height: 80vh;
@@ -83,6 +120,12 @@ ul {
   margin: 20px 0;
 }
 
+.section-right {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
 .app-content {
   display: flex;
   flex-direction: column;
@@ -91,11 +134,32 @@ ul {
   border-radius: 0 25px 25px 0;
 }
 
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  min-width: 100%;
+  min-height: 75px;
+  background-color: rgb(231, 231, 231);
+  border-radius: 0 20px 0 0;
+}
+
+.new-task-btn {
+  border: none;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  background-color: rgb(207, 35, 35);
+  color: antiquewhite;
+  border-radius: 8px;
+  margin: 0 22px;
+}
+
 .task-item {
   display: flex;
   flex-direction: row;
   padding: 12px;
-  margin: 12px;
+  margin: 12px 22px;
   border-radius: 12px;
   background-color: rgb(197, 197, 197);
 }

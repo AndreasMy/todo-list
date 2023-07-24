@@ -5,13 +5,17 @@ import {
   navFactory,
 } from "./elementFactories";
 
+import { openModal } from "./crud";
+
 const content = document.querySelector("#content");
 
 function renderMain() {
   //* Wrappers
   const main = divFactory("main", "mainClass");
   const appContainer = divFactory("div", "app-container");
+  const sectionRight = divFactory("div", "section-right");
   const appContent = divFactory("div", "app-content");
+  const appHeader = divFactory("div", "app-header");
 
   //* Sidebar
   const sidebar = divFactory("aside", "sidebar");
@@ -20,6 +24,7 @@ function renderMain() {
   const navList = navFactory(4);
 
   //* Sorting btns
+  const newTaskBtn = buttonFactory("new-task-btn", "newTaskBtn", "New Task");
   const generalBtn = buttonFactory("nav-btn", "generalBtn", "General");
   const todayBtn = buttonFactory("nav-btn", "todayBtn", "Today");
   const weekBtn = buttonFactory("nav-btn", "weekBtn", "Week");
@@ -34,12 +39,20 @@ function renderMain() {
   content.appendChild(main);
   main.appendChild(appContainer);
   appContainer.appendChild(sidebar);
+  appContainer.appendChild(sectionRight);
 
   sidebar.appendChild(tabContainer);
   tabContainer.appendChild(tabHeader);
   tabContainer.appendChild(navList);
 
-  appContainer.appendChild(appContent);
+  sectionRight.appendChild(appHeader);
+  sectionRight.appendChild(appContent);
+  appHeader.appendChild(newTaskBtn);
+
+  const taskBtn = document.querySelector("#newTaskBtn");
+  taskBtn.addEventListener("click", () => {
+    openModal();
+  });
 }
 
 function projectSection() {
@@ -63,8 +76,5 @@ function renderPage() {
   renderMain();
   projectSection();
 }
-
-//? Should I wrap pages in an object?
-function updateContent() {}
 
 export { renderPage };

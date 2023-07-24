@@ -7,7 +7,7 @@
 //TODO: Create an object using taskFactory()
 //TODO: Create component that displays object
 
-import { renderTaskItems } from "./component";
+import { renderTaskItems, renderTaskModal } from "./component";
 
 const tasks = [];
 
@@ -45,10 +45,14 @@ function removeElements() {
   }
 }
 
+function openModal() {
+  renderTaskModal()
+}
+
 function removeTask(index) {
   tasks.splice(index, 1);
   removeElements();
   renderTaskItems();
 }
 
-export { taskFactory, projectFactory, removeElements, tasks, removeTask };
+export { taskFactory, projectFactory, removeElements, tasks, removeTask, openModal };
