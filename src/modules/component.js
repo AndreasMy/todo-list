@@ -3,13 +3,14 @@
 //* 1.1 :Project tabs and their contents
 //* 2.0: Independent tasks
 
-import { tasks, removeTask } from "./crud";
+import { tasks, removeTask, closeModal, submitEntry,} from "./crud";
 import {
   divFactory,
   buttonFactory,
   textFactory,
   inputFactory,
   labelFactory,
+
 } from "./elementFactories";
 
 function taskItemFactory(tasks) {
@@ -41,10 +42,12 @@ function taskItemFactory(tasks) {
 }
 
 function renderTaskModal() {
+  //* Containers
   const modalContainer = divFactory("div", "modal-container");
   const modalBackground = divFactory("div", "modal-background");
   const modalCard = divFactory("div", "modal-card");
   const inputWrapper = divFactory("div", "input-wrapper");
+  const modalBtnWrapper = divFactory("div", "modal-btn-wrapper")
 
   //* Header
   const modalHeader = textFactory("h3", "modal-header", "Add Task");
@@ -53,34 +56,47 @@ function renderTaskModal() {
   const labelTaskName = labelFactory("task", "Task:");
   const inputTaskName = inputFactory("input", "task", "task", "Add a task...");
   const labelDescription = labelFactory("description", "Description:");
-  const inputDescription = inputFactory(
-    "textarea",
-    "description",
-    "description",
-    "Add a description..."
-  );
-  inputDescription.setAttribute("rows", "4");
+  const inputDescription = inputFactory("textarea", "description", "description", "Add a description...");
+  inputDescription.setAttribute("rows", "5");
   inputDescription.setAttribute("cols", "50");
 
+  //* Buttons
+  const addBtn = buttonFactory("add-btn", "addBtn", "Add");
+  const cancelBtn = buttonFactory("cancel-btn", "cancelBtn", "Cancel");
+
+  //* Appending elements
   const content = document.querySelector("#content");
 
   modalContainer.appendChild(modalCard);
   modalContainer.appendChild(modalBackground);
   modalCard.appendChild(modalHeader);
   modalCard.appendChild(inputWrapper);
-
+  
   inputWrapper.appendChild(labelTaskName);
   inputWrapper.appendChild(inputTaskName);
   inputWrapper.appendChild(labelDescription);
   inputWrapper.appendChild(inputDescription);
+  
+  modalCard.appendChild(modalBtnWrapper);
+  modalBtnWrapper.appendChild(cancelBtn);
+  modalBtnWrapper.appendChild(addBtn);
 
   content.appendChild(modalContainer);
+
+  //* Event listeners
+  const modalBg = document.querySelector(".modal-background")
+  const modalCancel = document.querySelector("#cancelBtn")
+  const modalConfirm = document.querySelector("#addBtn")
+
+  modalBg.addEventListener("click", closeModal)
+  modalCancel.addEventListener("click", closeModal)
+  modalConfirm.addEventListener("click", submitEntry)
 }
 
 function renderTaskItems() {
   const taskItems = taskItemFactory(tasks);
-  console.log(taskItems);
   const appContent = document.querySelector(".app-content");
+
   taskItems.elements.forEach((element, index) => {
     appContent.appendChild(element);
 

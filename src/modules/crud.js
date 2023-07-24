@@ -8,6 +8,7 @@
 //TODO: Create component that displays object
 
 import { renderTaskItems, renderTaskModal } from "./component";
+import { renderPage } from "./page";
 
 const tasks = [];
 
@@ -46,7 +47,16 @@ function removeElements() {
 }
 
 function openModal() {
-  renderTaskModal()
+  renderTaskModal();
+}
+
+function closeModal() {
+  const content = document.querySelector("#content");
+  while (content.firstChild) {
+    content.removeChild(content.firstChild);
+  }
+  renderPage();
+  renderTaskItems();
 }
 
 function removeTask(index) {
@@ -55,4 +65,27 @@ function removeTask(index) {
   renderTaskItems();
 }
 
-export { taskFactory, projectFactory, removeElements, tasks, removeTask, openModal };
+function submitEntry(event) {
+  event.preventDefault();
+
+  const task = document.querySelector("#task").value;
+  const description = document.querySelector("#description").value;
+  const newTask = taskFactory(task, description);
+  tasks.push(newTask);
+
+  document.querySelector("#task").value = "";
+  document.querySelector("#description").value = "";
+
+  closeModal();
+}
+
+export {
+  taskFactory,
+  projectFactory,
+  removeElements,
+  tasks,
+  removeTask,
+  openModal,
+  closeModal,
+  submitEntry,
+};

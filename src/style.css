@@ -8,11 +8,18 @@
 
 html,
 body {
-  background-color: rgb(176, 184, 184);
+  background-color: rgb(127, 141, 168);
 }
 
 button {
   cursor: pointer;
+}
+
+input,
+#description {
+  width: 100%;
+  padding: 4px;
+  border: 1px solid rgb(236, 236, 236);
 }
 
 input {
@@ -33,22 +40,44 @@ input {
   min-width: 100%;
   top: 0;
   backdrop-filter: blur(16px);
+  background-color: rgba(59, 78, 77, 0.336);
   display: flex;
 }
 
+.modal-header {
+  margin: 20px 20px 0 20px; 
+  font-size: 1.5rem;
+}
+
 .modal-card {
+  position: absolute;
   display: flex;
   flex-direction: column;
-  height: 500px;
-  width: 400px;
+  align-items: center;
+  height: 350px;
+  width: 300px;
   background-color: white;
   border-radius: 12px;
-  border: 1px solid rgb(224, 224, 224);
+
+}
+
+.modal-background {
+  min-height: 100vh;
+  min-width: 100%;
+  cursor: pointer;
 }
 
 .input-wrapper {
   display: flex;
+  flex: 1;
   flex-direction: column;
+  margin: 20px;
+}
+
+.modal-btn-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px;
 }
 
 .nav-btn,
@@ -144,12 +173,23 @@ ul {
   border-radius: 0 20px 0 0;
 }
 
-.new-task-btn {
+.new-task-btn, 
+.add-btn {
+  background-color: rgb(207, 35, 35);
+} 
+
+.cancel-btn {
+  background-color: rgb(35, 187, 207);
+}
+
+.new-task-btn, 
+.add-btn, 
+.cancel-btn {
   border: none;
   padding: 12px;
+  width: 105px;
   font-size: 1rem;
   font-weight: 700;
-  background-color: rgb(207, 35, 35);
   color: antiquewhite;
   border-radius: 8px;
   margin: 0 22px;
@@ -166,7 +206,7 @@ ul {
 
 .complete-btn {
   border: none;
-  background: rgb(190, 231, 255);
+  background: rgb(81, 192, 71);
   border-radius: 12px;
 }
 
