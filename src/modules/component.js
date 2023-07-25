@@ -3,7 +3,8 @@
 //* 1.1 :Project tabs and their contents
 //* 2.0: Independent tasks
 
-import { tasks, removeTask, closeModal, submitEntry } from "./crud";
+import { tasks, projects, submitEntry, submitProject } from "./crud";
+import { renderPage } from "./page";
 import {
   divFactory,
   buttonFactory,
@@ -55,7 +56,14 @@ function renderTaskItems() {
   });
 }
 
-function renderTaskModal(headerText, labelFor, inputLabel, addBtnID, onsubmitHandler ) {
+function renderTaskModal(
+  headerText,
+  labelFor,
+  inputLabel,
+  description,
+  addBtnID,
+  onsubmitHandler
+) {
   //* Containers
   const modalContainer = divFactory("div", "modal-container");
   const modalBackground = divFactory("div", "modal-background");
@@ -68,19 +76,24 @@ function renderTaskModal(headerText, labelFor, inputLabel, addBtnID, onsubmitHan
 
   //* Inputs
   const labelTaskName = labelFactory(labelFor, inputLabel);
-  const inputTaskName = inputFactory("input", labelFor, labelFor, "Add a task...");
-  const labelDescription = labelFactory("description", "Description:");
+  const inputTaskName = inputFactory(
+    "input",
+    labelFor,
+    labelFor,
+    "Add a task..."
+  );
+  const labelDescription = labelFactory(description, "Description:");
   const inputDescription = inputFactory(
     "textarea",
-    "description",
-    "description",
+    description,
+    description,
     "Add a description..."
   );
   inputDescription.setAttribute("rows", "5");
   inputDescription.setAttribute("cols", "50");
 
   //* Buttons
-  const addBtn = buttonFactory("add-btn", addBtnID, "Add");
+  const addBtn = buttonFactory("add-btn", "submitBtn", "Add");
   const cancelBtn = buttonFactory("cancel-btn", "cancelBtn", "Cancel");
 
   //* Appending elements
@@ -105,7 +118,7 @@ function renderTaskModal(headerText, labelFor, inputLabel, addBtnID, onsubmitHan
   //* Event listeners
   const modalBg = document.querySelector(".modal-background");
   const modalCancel = document.querySelector("#cancelBtn");
-  const modalConfirm = document.querySelector("#addTaskBtn");
+  const modalConfirm = document.querySelector("#submitBtn");
 
   modalBg.addEventListener("click", closeModal);
   modalCancel.addEventListener("click", closeModal);
@@ -113,10 +126,10 @@ function renderTaskModal(headerText, labelFor, inputLabel, addBtnID, onsubmitHan
 }
 
 function modalTaskSettings() {
-  //* date
-  //* priority 
+  //* Date
+  //* Priority
+  //? Other stuff
 }
-
 
 function projectSection() {
   const sidebar = document.querySelector("aside");
@@ -140,4 +153,86 @@ function projectSection() {
   projectContainer.appendChild(addProjectBtn);
 }
 
-export { taskItemFactory, renderTaskItems, renderTaskModal, projectSection };
+function projectTabFactory(projects) {
+  const elements = projects.map((project) => {
+    const tabItem = divFactory("div", "project-tab");
+    tabItem.setAttribute("id", `${project.id}`);
+
+    const tabName = textFactory("h3", "tab-name", `${project.title}`);
+
+    tabItem.appendChild(tabName);
+    return tabItem;
+  });
+
+  return {
+    elements: elements,
+  };
+}
+
+function renderProjectTab() {
+  const tabElements = projectTabFactory(projects);
+  const projectContentContainer = document.querySelector(
+    ".project-content-container"
+  );
+  console.log(tabElements.elements);
+  tabElements.elements.forEach((element) => {
+    projectContentContainer.appendChild(element);
+  });
+}
+
+//* Element Manipulation
+function removeElements(classID) {
+  const container = document.querySelector(classID);
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+}
+
+function openTaskModal() {
+  renderTaskModal(
+    "Add Task",
+    "task",
+    "Task:",
+    "description",
+    "#addTaskBtn",
+    submitEntry
+  );
+}
+
+function openProjectModal() {
+  renderTaskModal(
+    "Add Project",
+    "project",
+    "Project:",
+    "projectDescription",
+    "#addProjectBtn",
+    submitProject
+  );
+}
+
+
+
+function closeModal() {
+  removeElements("#content");
+  renderPage();
+  renderTaskItems();
+  renderProjectTab();
+}
+
+function removeTask(index) {
+  tasks.splice(index, 1);
+  removeElements(".app-content");
+  renderTaskItems();
+  renderProjectTab();
+}
+
+export {
+  taskItemFactory,
+  renderTaskItems,
+  renderTaskModal,
+  projectSection,
+  renderProjectTab,
+  openProjectModal,
+  openTaskModal,
+  closeModal,
+};

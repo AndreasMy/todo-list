@@ -1,33 +1,33 @@
-//* a todo is an object
-//* a project is an array of objects
-
 //* createObject is a factory for object arrays
 //* Submit button creates named Project button and "opens" its corresponding tab
 
-//TODO: Create an object using taskFactory()
-//TODO: Create component that displays object
-
-import { renderTaskItems, renderTaskModal } from "./component";
-import { renderPage } from "./page";
+import { closeModal, renderProjectTab } from "./component";
 
 const tasks = [];
+const projects = [];
+console.log(projects)
 
 //* Todo factory
 const taskFactory = (title, description) => {
-  return { title: title, description: description };
-
-  // priority
-  // dueDate
+  return { title, description };
 };
 
 //* Project factory
-const projectFactory = () => {
-  // name
-  // description
-  // create array and assign
+const projectFactory = (title, description) => {
+  const tabID = generateTabId(title);
+  const tab = {
+    id: tabID,
+    title,
+    description,
+  };
 
-  return {};
+  return tab;
 };
+
+function generateTabId(title) {
+  const formattedName = title.toLowerCase().replace(/\s+/g, "-");
+  return `tab-${formattedName}`;
+}
 
 function defaultTasks() {
   let task1 = taskFactory("Get started", "Getting started");
@@ -39,43 +39,36 @@ function defaultTasks() {
 }
 defaultTasks();
 
-function removeElements() {
-  const appContainer = document.querySelector(".app-content");
-  while (appContainer.firstChild) {
-    appContainer.removeChild(appContainer.firstChild);
-  }
+function defaultProject() {
+  const project = projectFactory("Trying", "To make it work")
+  projects.push(project)
 }
+defaultProject() 
 
-function openTaskModal() {
-  renderTaskModal("Add Task", "task", "Task:", "addTaskBtn", submitEntry);
-}
+function submitProject(event) {
+  event.preventDefault();
+  const project = document.querySelector("#project").value;
+  const description = document.querySelector("#projectDescription").value;
 
-function openProjectModal() {
-  renderTaskModal("Add Project", "project", "Project:", "addProjectBtn", submitEntry);
-}
+  const newProject = projectFactory(project, description);
+  projects.push(newProject);
 
-function closeModal() {
-  const content = document.querySelector("#content");
-  while (content.firstChild) {
-    content.removeChild(content.firstChild);
-  }
-  renderPage();
-  renderTaskItems();
-}
+  document.querySelector("#project").value = "";
+  document.querySelector("#projectDescription").value = "";
 
-function removeTask(index) {
-  tasks.splice(index, 1);
-  removeElements();
-  renderTaskItems();
+  closeModal();
 }
 
 function submitEntry(event) {
   event.preventDefault();
   const task = document.querySelector("#task").value;
   const description = document.querySelector("#description").value;
+
+  //* Create new task
   const newTask = taskFactory(task, description);
   tasks.push(newTask);
 
+  //* Clearing input fields
   document.querySelector("#task").value = "";
   document.querySelector("#description").value = "";
 
@@ -85,11 +78,8 @@ function submitEntry(event) {
 export {
   taskFactory,
   projectFactory,
-  removeElements,
   tasks,
-  removeTask,
-  closeModal,
+  projects,
   submitEntry,
-  openProjectModal,
-  openTaskModal,
+  submitProject,
 };

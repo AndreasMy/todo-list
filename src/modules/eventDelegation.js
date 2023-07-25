@@ -1,4 +1,4 @@
-import { openProjectModal, openTaskModal } from "./crud";
+import { openProjectModal, openTaskModal } from "./component";
 
 const content = document.querySelector("#content");
 
