@@ -1,11 +1,6 @@
-//* createObject is a factory for object arrays
-//* Submit button creates named Project button and "opens" its corresponding tab
-
-import { closeModal, renderProjectTab } from "./component";
-
 const tasks = [];
 const projects = [];
-console.log(projects)
+console.log(projects);
 
 //* Todo factory
 const taskFactory = (title, description) => {
@@ -19,6 +14,7 @@ const projectFactory = (title, description) => {
     id: tabID,
     title,
     description,
+    taskArray: [],
   };
 
   return tab;
@@ -30,56 +26,27 @@ function generateTabId(title) {
 }
 
 function defaultTasks() {
-  let task1 = taskFactory("Get started", "Getting started");
-  let task2 = taskFactory(
-    "Continue starting",
-    "Try to keep going with getting started"
+  tasks.push(
+    taskFactory("Project tab", "Make project tab btns render the content page"),
+    taskFactory("Project header", "Make project tab selection change header"),
+    taskFactory(
+      "Task modal context awareness",
+      "Modal automatiaclly detects the selected projects"
+    )
   );
-  tasks.push(task1, task2);
 }
 defaultTasks();
 
 function defaultProject() {
-  const project = projectFactory("Trying", "To make it work")
-  projects.push(project)
+  const project = projectFactory("Trying", "To make it work");
+
+  project.taskArray.push(
+    taskFactory("Task 1", "Description for Task 1"),
+    taskFactory("Task 2", "Description for Task 2")
+  );
+
+  projects.push(project);
 }
-defaultProject() 
+defaultProject();
 
-function submitProject(event) {
-  event.preventDefault();
-  const project = document.querySelector("#project").value;
-  const description = document.querySelector("#projectDescription").value;
-
-  const newProject = projectFactory(project, description);
-  projects.push(newProject);
-
-  document.querySelector("#project").value = "";
-  document.querySelector("#projectDescription").value = "";
-
-  closeModal();
-}
-
-function submitEntry(event) {
-  event.preventDefault();
-  const task = document.querySelector("#task").value;
-  const description = document.querySelector("#description").value;
-
-  //* Create new task
-  const newTask = taskFactory(task, description);
-  tasks.push(newTask);
-
-  //* Clearing input fields
-  document.querySelector("#task").value = "";
-  document.querySelector("#description").value = "";
-
-  closeModal();
-}
-
-export {
-  taskFactory,
-  projectFactory,
-  tasks,
-  projects,
-  submitEntry,
-  submitProject,
-};
+export { taskFactory, projectFactory, tasks, projects };

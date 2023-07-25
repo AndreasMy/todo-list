@@ -2,9 +2,12 @@ import {
   textFactory,
   divFactory,
   buttonFactory,
+  navFactory,
 } from "../modules/elementFactories";
-
+import { renderTaskItems } from "./taskItems";
 import { projects } from "../modules/crud";
+import { selectProjectArray, removeElements } from "./componentsRenderer";
+
 
 function projectSection() {
   const sidebar = document.querySelector("aside");
@@ -21,6 +24,8 @@ function projectSection() {
     "addProjectBtn",
     "Add Project +"
   );
+  /*   const navList = navFactory(`${projects.length}`);
+  console.log(navList) */
 
   sidebar.appendChild(projectContainer);
   projectContainer.appendChild(projectHeader);
@@ -30,12 +35,12 @@ function projectSection() {
 
 function projectTabFactory(projects) {
   const elements = projects.map((project) => {
-    const tabItem = divFactory("div", "project-tab");
-    tabItem.setAttribute("id", `${project.id}`);
-
-    const tabName = textFactory("h3", "tab-name", `${project.title}`);
-
-    tabItem.appendChild(tabName);
+    const tabItem = buttonFactory(
+      "project-tab",
+      `${project.id}`,
+      "project-tab"
+    );
+    tabItem.textContent = `${project.title}`;
     return tabItem;
   });
 
@@ -46,13 +51,23 @@ function projectTabFactory(projects) {
 
 function renderProjectTab() {
   const tabElements = projectTabFactory(projects);
-  const projectContentContainer = document.querySelector(
-    ".project-content-container"
-  );
-  console.log(tabElements.elements);
+  const navList = document.createElement("ul");
+  const projetContainer = document.querySelector(".project-content-container");
+
   tabElements.elements.forEach((element) => {
-    projectContentContainer.appendChild(element);
+    const li = document.createElement("li");
+
+    li.appendChild(element);
+    navList.appendChild(li);
+    projetContainer.appendChild(navList);
   });
 }
 
-export { projectSection, projectTabFactory, renderProjectTab };
+function renderSelectedProject(targetID) {
+  const getTargetID = targetID
+  const projectArray = selectProjectArray(getTargetID);
+  removeElements(".app-content")
+  renderTaskItems(projectArray)
+}
+
+export { projectSection, projectTabFactory, renderProjectTab, renderSelectedProject };

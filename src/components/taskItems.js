@@ -1,6 +1,7 @@
 import { textFactory, divFactory, buttonFactory } from "../modules/elementFactories";
 import { tasks } from "../modules/crud";
 import { removeTask } from "./componentsRenderer";
+import { hasPersistentID, hasDynamicID} from "../modules/eventDelegation";
 
 function taskItemFactory(tasks) {
   const elements = tasks.map((task, index) => {
@@ -11,10 +12,10 @@ function taskItemFactory(tasks) {
     const cplBtn = buttonFactory(
       "complete-btn",
       `completeBtn_${index}`,
-      "Complete"
+      "Finish"
     );
-    taskItem.appendChild(cplBtn);
     taskItem.appendChild(itemTextWrapper);
+    taskItem.appendChild(cplBtn);
     itemTextWrapper.appendChild(
       textFactory("h4", "task-title", `${task.title}`)
     );

@@ -13,7 +13,6 @@ function renderTaskModal(
   labelFor,
   inputLabel,
   description,
-  addBtnID,
   onsubmitHandler
 ) {
   //* Containers

@@ -4,8 +4,8 @@ import {
   textFactory,
   navFactory,
 } from "./elementFactories";
-
-import { projectSection } from "./component";
+import { setCategoryHeader } from "../components/componentsRenderer";
+import { projectSection } from "../components/sidebar";
 
 const content = document.querySelector("#content");
 
@@ -16,6 +16,8 @@ function renderMain() {
   const sectionRight = divFactory("div", "section-right");
   const appContent = divFactory("div", "app-content");
   const appHeader = divFactory("div", "app-header");
+  const appHeaderBtnWrapper = divFactory("div", "header-btn-wrapper")
+  const appHeaderTitleWrapper = divFactory("div", "header-title-wrapper")
 
   //* Sidebar
   const sidebar = divFactory("aside", "sidebar");
@@ -47,11 +49,15 @@ function renderMain() {
 
   sectionRight.appendChild(appHeader);
   sectionRight.appendChild(appContent);
-  appHeader.appendChild(newTaskBtn);
+  appHeader.appendChild(appHeaderTitleWrapper)
+  appHeader.appendChild(appHeaderBtnWrapper);
+  appHeaderBtnWrapper.appendChild(newTaskBtn)
+
 }
 
 function renderPage() {
   renderMain();
+  setCategoryHeader("General");
   projectSection();
 }
 
