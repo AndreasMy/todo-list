@@ -2,12 +2,9 @@ import {
   textFactory,
   divFactory,
   buttonFactory,
-  navFactory,
 } from "../modules/elementFactories";
-import { renderTaskItems } from "./taskItems";
-import { projects } from "../modules/crud";
-import { selectProjectArray, removeElements, setSelectedProject } from "./componentsRenderer";
 
+import { projects } from "../modules/crud";
 
 function projectSection() {
   const sidebar = document.querySelector("aside");
@@ -24,8 +21,6 @@ function projectSection() {
     "addProjectBtn",
     "Add Project +"
   );
-  /*   const navList = navFactory(`${projects.length}`);
-  console.log(navList) */
 
   sidebar.appendChild(projectContainer);
   projectContainer.appendChild(projectHeader);
@@ -50,7 +45,6 @@ function projectTabFactory(projects) {
 }
 
 function renderProjectTab() {
-
   const tabElements = projectTabFactory(projects);
   const navList = document.createElement("ul");
   const projetContainer = document.querySelector(".project-content-container");
@@ -63,13 +57,4 @@ function renderProjectTab() {
   });
 }
 
-function renderSelectedProject(targetID) {
-  const getTargetID = targetID
-  const projectArray = selectProjectArray(getTargetID);
-  setSelectedProject(targetID)
-
-  removeElements(".app-content")
-  renderTaskItems(projectArray)
-}
-
-export { projectSection, projectTabFactory, renderProjectTab, renderSelectedProject };
+export { projectSection, projectTabFactory, renderProjectTab };

@@ -1,9 +1,10 @@
 import { renderTaskModal } from "./modal";
 import { renderPage } from "../modules/page";
-import { renderTaskItems } from "./taskItems";
+import { renderTaskItems } from "./tabNavigation";
 import { renderProjectTab } from "./sidebar";
 import { tasks, projects, projectFactory, taskFactory } from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
+import { selectedProjectID, selectProjectArray } from "../modules/utils";
 
 function submitProject(event) {
   event.preventDefault();
@@ -34,18 +35,6 @@ function submitEntry(event) {
   document.querySelector("#description").value = "";
 
   closeModal();
-}
-
-let selectedProjectID = null;
-
-function selectProjectArray(targetID) {
-  const selectedProject = projects.find((project) => project.id === targetID);
-  console.log(selectedProject);
-  return selectedProject ? selectedProject.taskArray : false;
-}
-
-function selectProjectID(targetID) {
-  return (selectedID = targetID);
 }
 
 function removeElements(classID) {
@@ -117,14 +106,6 @@ function removeTask(index) {
   }
 }
 
-function setSelectedProject(targetID) {
-  selectedProjectID = targetID;
-}
-
-function clearSelectedProject() {
-  selectedProjectID = null;
-}
-
 export {
   submitEntry,
   submitProject,
@@ -135,8 +116,5 @@ export {
   renderByCategory,
   setCategoryHeader,
   selectProjectArray,
-  selectProjectID,
   removeElements,
-  setSelectedProject,
-  clearSelectedProject
 };

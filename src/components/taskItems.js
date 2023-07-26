@@ -3,9 +3,6 @@ import {
   divFactory,
   buttonFactory,
 } from "../modules/elementFactories";
-import { tasks } from "../modules/crud";
-import { removeTask, removeElements } from "./componentsRenderer";
-import { hasPersistentID, hasDynamicID } from "../modules/eventDelegation";
 
 function taskItemFactory(array) {
   const elements = array.map((task, index) => {
@@ -38,21 +35,4 @@ function taskItemFactory(array) {
   };
 }
 
-function renderTaskItems(array) {
-  removeElements(".app-content");
-
-  const taskItems = taskItemFactory(array);
-  const appContent = document.querySelector(".app-content");
-
-  taskItems.elements.forEach((element, index) => {
-    appContent.appendChild(element);
-
-    //* Buttons
-    const completedClick = document.querySelector(`#completeBtn_${index}`);
-    completedClick.addEventListener("click", () => {
-      removeTask(index);
-    });
-  });
-}
-
-export { taskItemFactory, renderTaskItems };
+export { taskItemFactory };

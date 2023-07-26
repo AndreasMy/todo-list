@@ -2,22 +2,13 @@ import {
   openProjectModal,
   openTaskModal,
   renderByCategory,
-  selectProjectArray,
-  clearSelectedProject,
 } from "../components/componentsRenderer";
-import { renderSelectedProject } from "../components/sidebar";
+import { clearSelectedProject } from "./utils";
+import { renderSelectedProject } from "../components/tabNavigation";
+
+import { hasDynamicID, hasPersistentID } from "./utils";
 
 const content = document.querySelector("#content");
-
-function hasPersistentID(element) {
-  const persitentTabIDs = ["completeBtn", "weekBtn", "todayBtn", "generalBtn"];
-  return persitentTabIDs.includes(element.id);
-}
-
-function hasDynamicID(element) {
-  const prefix = "tab-";
-  return element.id.startsWith(prefix);
-}
 
 const eventDelegation = () => {
   content.addEventListener("click", (event) => {
@@ -41,4 +32,4 @@ const eventDelegation = () => {
   });
 };
 
-export { eventDelegation, hasPersistentID, hasDynamicID };
+export { eventDelegation };

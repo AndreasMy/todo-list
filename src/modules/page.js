@@ -16,8 +16,8 @@ function renderMain() {
   const sectionRight = divFactory("div", "section-right");
   const appContent = divFactory("div", "app-content");
   const appHeader = divFactory("div", "app-header");
-  const appHeaderBtnWrapper = divFactory("div", "header-btn-wrapper")
-  const appHeaderTitleWrapper = divFactory("div", "header-title-wrapper")
+  const appHeaderBtnWrapper = divFactory("div", "header-btn-wrapper");
+  const appHeaderTitleWrapper = divFactory("div", "header-title-wrapper");
 
   //* Sidebar
   const sidebar = divFactory("aside", "sidebar");
@@ -49,10 +49,9 @@ function renderMain() {
 
   sectionRight.appendChild(appHeader);
   sectionRight.appendChild(appContent);
-  appHeader.appendChild(appHeaderTitleWrapper)
+  appHeader.appendChild(appHeaderTitleWrapper);
   appHeader.appendChild(appHeaderBtnWrapper);
-  appHeaderBtnWrapper.appendChild(newTaskBtn)
-
+  appHeaderBtnWrapper.appendChild(newTaskBtn);
 }
 
 function renderPage() {
