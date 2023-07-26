@@ -44,6 +44,9 @@ function projectTabFactory(projects) {
   };
 }
 
+//TODO: Create all tabs as dynamically created objects
+//TODO: Make an inheritance function to assign sorting methods to object properties
+
 function renderProjectTab() {
   const tabElements = projectTabFactory(projects);
   const navList = document.createElement("ul");

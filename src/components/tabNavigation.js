@@ -1,6 +1,6 @@
 import { taskItemFactory } from "./taskItems";
-import { removeTask, removeElements } from "./componentsRenderer";
-import { selectProjectArray, setSelectedProject } from "../modules/utils";
+import { removeTask } from "./componentsRenderer";
+import { selectProjectArray, setSelectedProject, removeElements } from "../modules/utils";
 
 function renderTaskItems(array) {
   removeElements(".app-content");

@@ -4,7 +4,7 @@ import { renderTaskItems } from "./tabNavigation";
 import { renderProjectTab } from "./sidebar";
 import { tasks, projects, projectFactory, taskFactory } from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
-import { selectedProjectID, selectProjectArray } from "../modules/utils";
+import { selectedProjectID, selectProjectArray, removeElements } from "../modules/utils";
 
 function submitProject(event) {
   event.preventDefault();
@@ -37,12 +37,7 @@ function submitEntry(event) {
   closeModal();
 }
 
-function removeElements(classID) {
-  const container = document.querySelector(classID);
-  while (container.firstChild) {
-    container.removeChild(container.firstChild);
-  }
-}
+
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
@@ -116,5 +111,4 @@ export {
   renderByCategory,
   setCategoryHeader,
   selectProjectArray,
-  removeElements,
 };

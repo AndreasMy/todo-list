@@ -1,3 +1,5 @@
+import { projects, tasks } from "./crud";
+
 let selectedProjectID = null;
 
 function selectProjectID(targetID) {
@@ -22,6 +24,13 @@ function hasDynamicID(element) {
   return element.id.startsWith(prefix);
 }
 
+function removeElements(classID) {
+  const container = document.querySelector(classID);
+  while (container.firstChild) {
+    container.removeChild(container.firstChild);
+  }
+}
+
 function selectProjectArray(targetID) {
   const selectedProject = projects.find((project) => project.id === targetID);
   console.log(selectedProject);
@@ -36,4 +45,5 @@ export {
   hasPersistentID,
   hasDynamicID,
   selectProjectArray,
+  removeElements
 };
