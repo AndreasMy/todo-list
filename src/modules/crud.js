@@ -8,17 +8,22 @@ const taskFactory = (title, description) => {
 };
 
 //* Project factory
-const projectFactory = (title, description) => {
+const projectFactory = (title, description, isStatic) => {
   const tabID = generateTabId(title);
   const tab = {
     id: tabID,
     title,
     description,
     taskArray: [],
+    isStatic,
   };
 
   return tab;
 };
+
+//Use
+const newProject = projectFactory("project", "it's a project", true)
+console.log(newProject)
 
 function generateTabId(title) {
   const formattedName = title.toLowerCase().replace(/\s+/g, "-");

@@ -4,45 +4,68 @@ import { renderTaskItems } from "./tabNavigation";
 import { renderProjectTab } from "./sidebar";
 import { tasks, projects, projectFactory, taskFactory } from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
-import { selectedProjectID, selectProjectArray, removeElements } from "../modules/utils";
+import {
+  selectedProjectID,
+  selectProjectArray,
+  removeElements,
+  chosenModal,
+  setChosenModal,
+} from "../modules/utils";
 
-function submitProject(event) {
-  event.preventDefault();
-  const project = document.querySelector("#project").value;
-  const description = document.querySelector("#projectDescription").value;
-
-  const newProject = projectFactory(project, description);
-  projects.push(newProject);
-
-  document.querySelector("#project").value = "";
-  document.querySelector("#projectDescription").value = "";
-
-  closeModal();
+function openTaskModal() {
+  setChosenModal("taskModal");
+  console.log(chosenModal);
+  renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
 }
 
-//? see if you can use the same function for both buttons
-function submitEntry(event) {
-  event.preventDefault();
-  const task = document.querySelector("#task").value;
-  const description = document.querySelector("#description").value;
-
-  //* Create new task
-  const newTask = taskFactory(task, description);
-  tasks.push(newTask);
-
-  //* Clearing input fields
-  document.querySelector("#task").value = "";
-  document.querySelector("#description").value = "";
-
-  closeModal();
+function openProjectModal() {
+  setChosenModal("projectModal");
+  console.log(chosenModal);
+  renderTaskModal(
+    "Add Project",
+    "project",
+    "Project:",
+    "projectDescription",
+    submitObject
+  );
 }
 
+function getModalInput() {
+  return {
+    title: (formID) => document.querySelector(formID).value,
+    description: (descriptionFromID) =>
+      document.querySelector(descriptionFromID).value,
+  };
+}
 
+function pushFormSubmission(titleFormID, projectFormID, functionHandler, array ) {
+  const modalInput = getModalInput();
+  const title = modalInput.title(titleFormID);
+  const description = modalInput.description(projectFormID);
+  const newElement = functionHandler(title, description);
+  array.push(newElement);
+}
+
+function submitObject() {
+  if (chosenModal === "projectModal") {
+    pushFormSubmission("#project", "#projectDescription", projectFactory, projects )
+  } else if (chosenModal === "taskModal") {
+    pushFormSubmission("#task", "#description", taskFactory,  tasks )
+  }
+  closeModal();
+}
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
   header.innerHTML = ""; // Clear existing content
   header.appendChild(textFactory("h2", "app-header-title", text));
+}
+
+function closeModal() {
+  removeElements("#content");
+  renderPage();
+  renderTaskItems(tasks);
+  renderProjectTab();
 }
 
 function renderByCategory(categoryId) {
@@ -67,27 +90,6 @@ function renderByCategory(categoryId) {
   }
 }
 
-function openTaskModal() {
-  renderTaskModal("Add Task", "task", "Task:", "description", submitEntry);
-}
-
-function openProjectModal() {
-  renderTaskModal(
-    "Add Project",
-    "project",
-    "Project:",
-    "projectDescription",
-    submitProject
-  );
-}
-
-function closeModal() {
-  removeElements("#content");
-  renderPage();
-  renderTaskItems(tasks);
-  renderProjectTab();
-}
-
 function removeTask(index) {
   removeElements(".app-content");
 
@@ -102,8 +104,6 @@ function removeTask(index) {
 }
 
 export {
-  submitEntry,
-  submitProject,
   openProjectModal,
   openTaskModal,
   closeModal,
@@ -111,4 +111,5 @@ export {
   renderByCategory,
   setCategoryHeader,
   selectProjectArray,
+  submitObject,
 };

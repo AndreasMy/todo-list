@@ -1,6 +1,10 @@
 import { projects, tasks } from "./crud";
 
 let selectedProjectID = null;
+let chosenModal = "";
+const setChosenModal = (value) => {
+  chosenModal = value;
+};
 
 function selectProjectID(targetID) {
   return (selectedID = targetID);
@@ -45,5 +49,7 @@ export {
   hasPersistentID,
   hasDynamicID,
   selectProjectArray,
-  removeElements
+  removeElements,
+  chosenModal,
+  setChosenModal,
 };
