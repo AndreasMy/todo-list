@@ -1,10 +1,14 @@
-import { textFactory, divFactory, buttonFactory } from "../modules/elementFactories";
+import {
+  textFactory,
+  divFactory,
+  buttonFactory,
+} from "../modules/elementFactories";
 import { tasks } from "../modules/crud";
-import { removeTask } from "./componentsRenderer";
-import { hasPersistentID, hasDynamicID} from "../modules/eventDelegation";
+import { removeTask, removeElements } from "./componentsRenderer";
+import { hasPersistentID, hasDynamicID } from "../modules/eventDelegation";
 
-function taskItemFactory(tasks) {
-  const elements = tasks.map((task, index) => {
+function taskItemFactory(array) {
+  const elements = array.map((task, index) => {
     const taskItem = divFactory("div", `task-item`);
     taskItem.classList.add(`item-${index}`);
 
@@ -14,14 +18,17 @@ function taskItemFactory(tasks) {
       `completeBtn_${index}`,
       "Finish"
     );
+    const taskTitle = textFactory("h4", "task-title", `${task.title}`);
+    const taskDescription = textFactory(
+      "p",
+      "task-description",
+      `${task.description}`
+    );
+
     taskItem.appendChild(itemTextWrapper);
     taskItem.appendChild(cplBtn);
-    itemTextWrapper.appendChild(
-      textFactory("h4", "task-title", `${task.title}`)
-    );
-    itemTextWrapper.appendChild(
-      textFactory("p", "task-description", `${task.description}`)
-    );
+    itemTextWrapper.appendChild(taskTitle);
+    itemTextWrapper.appendChild(taskDescription);
 
     return taskItem;
   });
@@ -31,8 +38,10 @@ function taskItemFactory(tasks) {
   };
 }
 
-function renderTaskItems() {
-  const taskItems = taskItemFactory(tasks);
+function renderTaskItems(array) {
+  removeElements(".app-content");
+
+  const taskItems = taskItemFactory(array);
   const appContent = document.querySelector(".app-content");
 
   taskItems.elements.forEach((element, index) => {

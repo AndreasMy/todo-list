@@ -2,7 +2,6 @@ import { renderTaskModal } from "./modal";
 import { renderPage } from "../modules/page";
 import { renderTaskItems } from "./taskItems";
 import { renderProjectTab } from "./sidebar";
-
 import { tasks, projects, projectFactory, taskFactory } from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
 
@@ -37,9 +36,11 @@ function submitEntry(event) {
   closeModal();
 }
 
+let selectedProjectID = null;
+
 function selectProjectArray(targetID) {
   const selectedProject = projects.find((project) => project.id === targetID);
-  //console.log(selectedProject.taskArray);
+  console.log(selectedProject);
   return selectedProject ? selectedProject.taskArray : false;
 }
 
@@ -64,6 +65,7 @@ function renderByCategory(categoryId) {
   switch (categoryId) {
     case "generalBtn":
       setCategoryHeader("General");
+      renderTaskItems(tasks);
       break;
     case "todayBtn":
       setCategoryHeader("Today");
@@ -98,14 +100,29 @@ function openProjectModal() {
 function closeModal() {
   removeElements("#content");
   renderPage();
-  renderTaskItems();
+  renderTaskItems(tasks);
   renderProjectTab();
 }
 
 function removeTask(index) {
-  tasks.splice(index, 1);
   removeElements(".app-content");
-  renderTaskItems();
+
+  if (selectedProjectID !== null) {
+    const projectArray = selectProjectArray(selectedProjectID);
+    projectArray.splice(index, 1);
+    renderTaskItems(projectArray);
+  } else {
+    tasks.splice(index, 1);
+    renderTaskItems(tasks);
+  }
+}
+
+function setSelectedProject(targetID) {
+  selectedProjectID = targetID;
+}
+
+function clearSelectedProject() {
+  selectedProjectID = null;
 }
 
 export {
@@ -120,4 +137,6 @@ export {
   selectProjectArray,
   selectProjectID,
   removeElements,
+  setSelectedProject,
+  clearSelectedProject
 };

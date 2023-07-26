@@ -3,7 +3,7 @@ import {
   openTaskModal,
   renderByCategory,
   selectProjectArray,
-  selectProjectID
+  clearSelectedProject,
 } from "../components/componentsRenderer";
 import { renderSelectedProject } from "../components/sidebar";
 
@@ -19,7 +19,6 @@ function hasDynamicID(element) {
   return element.id.startsWith(prefix);
 }
 
-
 const eventDelegation = () => {
   content.addEventListener("click", (event) => {
     //* Open New Task Button
@@ -30,11 +29,12 @@ const eventDelegation = () => {
       openProjectModal();
       //* Sort by tab selection
     } else if (hasPersistentID(event.target)) {
+      clearSelectedProject();
       renderByCategory(event.target.id);
       //* SortyTaskByCategory()
     } else if (hasDynamicID(event.target)) {
-      selectProjectArray(event.target.id);
-      renderSelectedProject(event.target.id)
+      // selectProjectArray(event.target.id);
+      renderSelectedProject(event.target.id);
 
       //? function that tells NEW TASK what object has been selected
     }

@@ -6,7 +6,7 @@ import {
 } from "../modules/elementFactories";
 import { renderTaskItems } from "./taskItems";
 import { projects } from "../modules/crud";
-import { selectProjectArray, removeElements } from "./componentsRenderer";
+import { selectProjectArray, removeElements, setSelectedProject } from "./componentsRenderer";
 
 
 function projectSection() {
@@ -50,13 +50,13 @@ function projectTabFactory(projects) {
 }
 
 function renderProjectTab() {
+
   const tabElements = projectTabFactory(projects);
   const navList = document.createElement("ul");
   const projetContainer = document.querySelector(".project-content-container");
 
   tabElements.elements.forEach((element) => {
     const li = document.createElement("li");
-
     li.appendChild(element);
     navList.appendChild(li);
     projetContainer.appendChild(navList);
@@ -66,6 +66,8 @@ function renderProjectTab() {
 function renderSelectedProject(targetID) {
   const getTargetID = targetID
   const projectArray = selectProjectArray(getTargetID);
+  setSelectedProject(targetID)
+
   removeElements(".app-content")
   renderTaskItems(projectArray)
 }
