@@ -18,14 +18,20 @@ function clearSelectedProject() {
   selectedProjectID = null;
 }
 
+//! obsolete?
 function hasPersistentID(element) {
   const persitentTabIDs = ["completeBtn", "weekBtn", "todayBtn", "generalBtn"];
   return persitentTabIDs.includes(element.id);
 }
-
+//! obsolete?
 function hasDynamicID(element) {
   const prefix = "tab-";
   return element.id.startsWith(prefix);
+}
+
+//? replaces the above 2 functions in eventDelegation
+function checkIfStatic(element) {
+  return element.isStatic === true;
 }
 
 function removeElements(classID) {
@@ -38,7 +44,7 @@ function removeElements(classID) {
 function selectProjectArray(targetID) {
   const selectedProject = projects.find((project) => project.id === targetID);
   console.log(selectedProject);
-  return selectedProject ? selectedProject.taskArray : false;
+  return selectedProject ? selectedProject.taskArray : tasks;
 }
 
 export {
@@ -52,4 +58,5 @@ export {
   removeElements,
   chosenModal,
   setChosenModal,
+  checkIfStatic,
 };

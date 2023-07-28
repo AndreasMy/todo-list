@@ -4,7 +4,7 @@ import {
   buttonFactory,
 } from "../modules/elementFactories";
 
-import { projects } from "../modules/crud";
+import { projects, staticTabs } from "../modules/crud";
 
 function projectSection() {
   const sidebar = document.querySelector("aside");
@@ -28,8 +28,8 @@ function projectSection() {
   projectContainer.appendChild(addProjectBtn);
 }
 
-function projectTabFactory(projects) {
-  const elements = projects.map((project) => {
+function projectTabFactory(tabArray) {
+  const elements = tabArray.map((project) => {
     const tabItem = buttonFactory(
       "project-tab",
       `${project.id}`,
@@ -44,13 +44,10 @@ function projectTabFactory(projects) {
   };
 }
 
-//TODO: Create all tabs as dynamically created objects
-//TODO: Make an inheritance function to assign sorting methods to object properties
-
-function renderProjectTab() {
-  const tabElements = projectTabFactory(projects);
+function renderProjectTab(tabArray, targetClass) {
+  const tabElements = projectTabFactory(tabArray);
   const navList = document.createElement("ul");
-  const projetContainer = document.querySelector(".project-content-container");
+  const projetContainer = document.querySelector(targetClass);
 
   tabElements.elements.forEach((element) => {
     const li = document.createElement("li");
@@ -59,5 +56,8 @@ function renderProjectTab() {
     projetContainer.appendChild(navList);
   });
 }
+
+
+
 
 export { projectSection, projectTabFactory, renderProjectTab };

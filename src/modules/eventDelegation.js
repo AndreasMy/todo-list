@@ -1,32 +1,25 @@
-import {
-  openProjectModal,
-  openTaskModal,
-  renderByCategory,
-} from "../components/componentsRenderer";
+import { renderByCategory, openModal } from "../components/componentsRenderer";
 import { clearSelectedProject } from "./utils";
-import { renderSelectedProject } from "../components/tabNavigation";
-
-import { hasDynamicID, hasPersistentID } from "./utils";
+import {
+  renderSelectedProject,
+  renderStaticTab,
+} from "../components/tabNavigation";
+import { projects } from "./crud";
+import { hasDynamicID, hasPersistentID, checkIfStatic } from "./utils";
 
 const content = document.querySelector("#content");
+const modal = openModal();
 
 const eventDelegation = () => {
   content.addEventListener("click", (event) => {
     //* Open New Task Button
     if (event.target.matches("#newTaskBtn")) {
-      openTaskModal();
+      modal.taskModal();
       //* Open New Project Button
     } else if (event.target.matches("#addProjectBtn")) {
-      openProjectModal();
-      //* Sort by tab selection
-    } else if (hasPersistentID(event.target)) {
-      clearSelectedProject();
-      renderByCategory(event.target.id);
-      //* SortyTaskByCategory()
+      modal.projectModal();
     } else if (hasDynamicID(event.target)) {
-      // selectProjectArray(event.target.id);
       renderSelectedProject(event.target.id);
-
       //? function that tells NEW TASK what object has been selected
     }
   });

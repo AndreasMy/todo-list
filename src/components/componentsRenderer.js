@@ -1,8 +1,8 @@
 import { renderTaskModal } from "./modal";
 import { renderPage } from "../modules/page";
-import { renderTaskItems } from "./tabNavigation";
+import { renderTaskItems, renderSelectedTab } from "./tabNavigation";
 import { renderProjectTab } from "./sidebar";
-import { tasks, projects, projectFactory, taskFactory } from "../modules/crud";
+import { tasks, projects, staticTabs, projectFactory, taskFactory } from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
 import {
   selectedProjectID,
@@ -12,22 +12,27 @@ import {
   setChosenModal,
 } from "../modules/utils";
 
-function openTaskModal() {
-  setChosenModal("taskModal");
-  console.log(chosenModal);
-  renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
-}
-
-function openProjectModal() {
-  setChosenModal("projectModal");
-  console.log(chosenModal);
-  renderTaskModal(
-    "Add Project",
-    "project",
-    "Project:",
-    "projectDescription",
-    submitObject
-  );
+function openModal() {
+  return {
+    taskModal: () => {
+      setChosenModal("taskModal");
+      renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
+      const inputField = document.querySelector("#task");
+      inputField.focus();
+    },
+    projectModal: () => {
+      setChosenModal("projectModal");
+      renderTaskModal(
+        "Add Project",
+        "project",
+        "Project:",
+        "projectDescription",
+        submitObject
+      );
+      const inputField = document.querySelector("#project");
+      inputField.focus();
+    },
+  };
 }
 
 function getModalInput() {
@@ -38,34 +43,46 @@ function getModalInput() {
   };
 }
 
-function pushFormSubmission(titleFormID, projectFormID, functionHandler, array ) {
+function pushFormSubmission(
+  titleFormID,
+  projectFormID,
+  functionHandler,
+  array
+) {
   const modalInput = getModalInput();
   const title = modalInput.title(titleFormID);
   const description = modalInput.description(projectFormID);
   const newElement = functionHandler(title, description);
+
   array.push(newElement);
 }
 
 function submitObject() {
   if (chosenModal === "projectModal") {
-    pushFormSubmission("#project", "#projectDescription", projectFactory, projects )
+    pushFormSubmission(
+      "#project",
+      "#projectDescription",
+      projectFactory,
+      projects
+    );
   } else if (chosenModal === "taskModal") {
-    pushFormSubmission("#task", "#description", taskFactory,  tasks )
+    pushFormSubmission("#task", "#description", taskFactory, tasks);
   }
   closeModal();
-}
-
-function setCategoryHeader(text) {
-  const header = document.querySelector(".header-title-wrapper");
-  header.innerHTML = ""; // Clear existing content
-  header.appendChild(textFactory("h2", "app-header-title", text));
 }
 
 function closeModal() {
   removeElements("#content");
   renderPage();
   renderTaskItems(tasks);
-  renderProjectTab();
+  renderProjectTab(projects, ".project-content-container");
+  renderProjectTab(staticTabs, ".static-tab-container");
+}
+
+function setCategoryHeader(text) {
+  const header = document.querySelector(".header-title-wrapper");
+  header.innerHTML = ""; // Clear existing content
+  header.appendChild(textFactory("h2", "app-header-title", text));
 }
 
 function renderByCategory(categoryId) {
@@ -104,12 +121,11 @@ function removeTask(index) {
 }
 
 export {
-  openProjectModal,
-  openTaskModal,
   closeModal,
   removeTask,
   renderByCategory,
   setCategoryHeader,
   selectProjectArray,
   submitObject,
+  openModal,
 };

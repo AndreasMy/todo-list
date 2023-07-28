@@ -33,6 +33,7 @@ function renderTaskModal(
     labelFor,
     "Add a task..."
   );
+
   const labelDescription = labelFactory(description, "Description:");
   const inputDescription = inputFactory(
     "textarea",

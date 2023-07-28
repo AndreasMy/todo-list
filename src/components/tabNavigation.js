@@ -1,6 +1,10 @@
 import { taskItemFactory } from "./taskItems";
 import { removeTask } from "./componentsRenderer";
-import { selectProjectArray, setSelectedProject, removeElements } from "../modules/utils";
+import {
+  selectProjectArray,
+  setSelectedProject,
+  removeElements,
+} from "../modules/utils";
 
 function renderTaskItems(array) {
   removeElements(".app-content");
@@ -23,9 +27,14 @@ function renderSelectedProject(targetID) {
   const getTargetID = targetID;
   const projectArray = selectProjectArray(getTargetID);
   setSelectedProject(targetID);
-
+  console.log(projectArray);
   removeElements(".app-content");
   renderTaskItems(projectArray);
 }
 
-export { renderSelectedProject, renderTaskItems };
+export { renderTaskItems, renderSelectedProject };
+
+const obj = {
+  tasks: [],
+  projects: [],
+};

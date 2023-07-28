@@ -4,10 +4,11 @@ import {
   textFactory,
   navFactory,
 } from "./elementFactories";
-import { setCategoryHeader } from "../components/componentsRenderer";
+import { staticTabs } from "./crud";
+import { setCategoryHeader, renderStaticTab } from "../components/componentsRenderer";
 import { projectSection } from "../components/sidebar";
-
 const content = document.querySelector("#content");
+
 
 function renderMain() {
   //* Wrappers
@@ -23,6 +24,7 @@ function renderMain() {
   const sidebar = divFactory("aside", "sidebar");
   const tabContainer = divFactory("nav", "tab-container");
   const tabHeader = textFactory("h3", "tab-header", "To Do List");
+  const staticTabContainer = divFactory("div", "static-tab-container")
   const navList = navFactory(4);
 
   //* Sorting btns
@@ -31,13 +33,13 @@ function renderMain() {
   const todayBtn = buttonFactory("nav-btn", "todayBtn", "Today");
   const weekBtn = buttonFactory("nav-btn", "weekBtn", "Week");
   const completeBtn = buttonFactory("nav-btn", "completeBtn", "Completed");
-  const navBtns = [generalBtn, todayBtn, weekBtn, completeBtn];
+/*   const navBtns = [generalBtn, todayBtn, weekBtn, completeBtn];
 
   //* Append Buttons to li elements
   navList.querySelectorAll("li").forEach((element, index) => {
     element.appendChild(navBtns[index]);
   });
-
+ */
   content.appendChild(main);
   main.appendChild(appContainer);
   appContainer.appendChild(sidebar);
@@ -45,7 +47,8 @@ function renderMain() {
 
   sidebar.appendChild(tabContainer);
   tabContainer.appendChild(tabHeader);
-  tabContainer.appendChild(navList);
+  tabContainer.appendChild(staticTabContainer)
+  //tabContainer.appendChild(navList);
 
   sectionRight.appendChild(appHeader);
   sectionRight.appendChild(appContent);
@@ -58,6 +61,7 @@ function renderPage() {
   renderMain();
   setCategoryHeader("General");
   projectSection();
+
 }
 
 export { renderPage };
