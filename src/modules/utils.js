@@ -1,4 +1,4 @@
-import { projects, tasks } from "./crud";
+import { projects } from "./crud";
 
 let selectedProjectID = null;
 let chosenModal = "";
@@ -25,8 +25,18 @@ function hasPersistentID(element) {
 }
 //! obsolete?
 function hasDynamicID(element) {
-  const prefix = "tab-";
+  const prefix = "tab";
   return element.id.startsWith(prefix);
+}
+
+function getObjectArray(id) {
+  const getArray = projects.id.taskArray;
+  return getArray;
+}
+
+function findTabArray(tabID) {
+  const tabProject = projects.find((project) => project.id === tabID);
+  return tabProject.taskArray;
 }
 
 //? replaces the above 2 functions in eventDelegation
@@ -41,10 +51,19 @@ function removeElements(classID) {
   }
 }
 
-function selectProjectArray(targetID) {
+function selectObjectByID(targetID) {
   const selectedProject = projects.find((project) => project.id === targetID);
-  console.log(selectedProject);
-  return selectedProject ? selectedProject.taskArray : tasks;
+  return selectedProject;
+}
+
+function selectTabTitle(targetID) {
+  const selectedProject = selectObjectByID(targetID);
+  return selectedProject ? selectedProject.title : "Not found";
+}
+
+function selectProjectArray(targetID) {
+  const selectedProject = selectObjectByID(targetID);
+  return selectedProject ? selectedProject.taskArray : null;
 }
 
 export {
@@ -59,4 +78,8 @@ export {
   chosenModal,
   setChosenModal,
   checkIfStatic,
+  selectTabTitle,
+  selectObjectByID,
+  getObjectArray,
+  findTabArray,
 };

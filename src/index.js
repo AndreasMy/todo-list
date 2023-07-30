@@ -1,15 +1,19 @@
 import _ from "lodash";
 import "./style.css";
-import { projects, staticTabs } from "./modules/crud";
+import {  filteredArrays } from "./modules/crud";
+import { findTabArray } from "./modules/utils";
 
 import { renderPage } from "./modules/page";
-import { renderTaskItems } from "./components/tabNavigation";
+import { renderTaskItems } from "./components/taskItems";
 import { renderProjectTab } from "./components/sidebar";
 import { eventDelegation } from "./modules/eventDelegation";
-import { tasks } from "./modules/crud";
+
+const staticBtns = filteredArrays().static()
+const dynamicBtns = filteredArrays().dynamic()
+const generalTab = findTabArray("tabgeneral");
 
 renderPage();
-renderTaskItems(tasks);
-renderProjectTab(projects, ".project-content-container");
-renderProjectTab(staticTabs, ".static-tab-container");
+renderTaskItems(generalTab);
+renderProjectTab(dynamicBtns, ".project-content-container");
+renderProjectTab(staticBtns, ".static-tab-container");
 eventDelegation();

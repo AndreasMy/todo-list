@@ -1,40 +1,35 @@
-import { taskItemFactory } from "./taskItems";
-import { removeTask } from "./componentsRenderer";
+import {  renderTaskItems } from "./taskItems";
+
 import {
   selectProjectArray,
   setSelectedProject,
   removeElements,
+  selectTabTitle,
+  checkIfStatic
 } from "../modules/utils";
 
-function renderTaskItems(array) {
-  removeElements(".app-content");
-
-  const taskItems = taskItemFactory(array);
-  const appContent = document.querySelector(".app-content");
-
-  taskItems.elements.forEach((element, index) => {
-    appContent.appendChild(element);
-
-    //* Buttons
-    const completedClick = document.querySelector(`#completeBtn_${index}`);
-    completedClick.addEventListener("click", () => {
-      removeTask(index);
-    });
-  });
+function renderTabHeader(targetID) {
+  const tabTitle = selectTabTitle(targetID);
+  console.log("Tab Title:", tabTitle);
 }
 
-function renderSelectedProject(targetID) {
-  const getTargetID = targetID;
-  const projectArray = selectProjectArray(getTargetID);
+function renderTabContent(targetID) {
+  const projectArray = selectProjectArray(targetID);
   setSelectedProject(targetID);
   console.log(projectArray);
+  console.log(targetID)
+
   removeElements(".app-content");
-  renderTaskItems(projectArray);
+  renderTabHeader(targetID);
+  if (!checkIfStatic(targetID)) {
+    renderTaskItems(projectArray);
+    console.log("working")
+  } else {
+    console.log("not working")
+
+  }
 }
 
-export { renderTaskItems, renderSelectedProject };
+export { renderTabContent };
 
-const obj = {
-  tasks: [],
-  projects: [],
-};
+

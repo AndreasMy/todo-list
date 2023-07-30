@@ -4,8 +4,6 @@ import {
   buttonFactory,
 } from "../modules/elementFactories";
 
-import { projects, staticTabs } from "../modules/crud";
-
 function projectSection() {
   const sidebar = document.querySelector("aside");
 
@@ -56,8 +54,5 @@ function renderProjectTab(tabArray, targetClass) {
     projetContainer.appendChild(navList);
   });
 }
-
-
-
 
 export { projectSection, projectTabFactory, renderProjectTab };

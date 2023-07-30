@@ -1,11 +1,7 @@
-import { renderByCategory, openModal } from "../components/componentsRenderer";
-import { clearSelectedProject } from "./utils";
-import {
-  renderSelectedProject,
-  renderStaticTab,
-} from "../components/tabNavigation";
-import { projects } from "./crud";
-import { hasDynamicID, hasPersistentID, checkIfStatic } from "./utils";
+import { openModal } from "../components/componentsRenderer";
+import { renderTabContent } from "../components/tabNavigation";
+import { hasDynamicID } from "./utils";
+
 
 const content = document.querySelector("#content");
 const modal = openModal();
@@ -19,9 +15,13 @@ const eventDelegation = () => {
     } else if (event.target.matches("#addProjectBtn")) {
       modal.projectModal();
     } else if (hasDynamicID(event.target)) {
-      renderSelectedProject(event.target.id);
+      renderTabContent(event.target.id);
+      /*      const selectedTabTitle = selectTabTitle(event.target.id);
+      console.log(selectedTabTitle) */
       //? function that tells NEW TASK what object has been selected
-    }
+    } /* else if (checkIfStatic(element)) {
+      handleStaticTabs()
+    } */
   });
 };
 

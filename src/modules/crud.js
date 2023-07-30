@@ -1,7 +1,13 @@
-const tasks = [];
+import { filter } from "lodash";
+import { checkIfStatic, findTabArray } from "./utils";
+
+
 const projects = [];
-const staticTabs = [];
+
 console.log(projects);
+
+//TODO: Store all projects in projects array
+//TODO: filter out and render the ones that are static.
 
 //* Todo factory
 const taskFactory = (title, description) => {
@@ -24,20 +30,14 @@ const projectFactory = (title, description, isStatic) => {
 
 function generateTabId(title) {
   const formattedName = title.toLowerCase().replace(/\s+/g, "-");
-  return `tab-${formattedName}`;
-}
 
-function defaultTasks() {
-  tasks.push(
-    taskFactory("Project tab", "Make project tab btns render the content page"),
-    taskFactory("Project header", "Make project tab selection change header"),
-    taskFactory(
-      "Task modal context awareness",
-      "Modal automatiaclly detects the selected projects"
-    )
+  // Convert the formatted name to camel case
+  const camelCaseName = formattedName.replace(/-([a-z])/g, (match, letter) =>
+    letter.toUpperCase()
   );
+
+  return `tab${camelCaseName}`;
 }
-defaultTasks();
 
 (function createStaticTabs() {
   const tabs = {
@@ -47,17 +47,18 @@ defaultTasks();
     completed: projectFactory("Completed", "Completed tasks", true),
   };
 
-  staticTabs.push(tabs.general, tabs.today, tabs.week, tabs.completed);
-  staticTabs.forEach((tab) => {
-    delete tab.taskArray;
-  });
+  projects.push(tabs.general, tabs.today, tabs.week, tabs.completed);
 
-  console.log(staticTabs);
+  console.log(projects);
 })();
 
 function defaultProject() {
   const project = projectFactory("Trying", "To make it work", false);
-  const anotherProject = projectFactory("Trying Harder", "To make it is work");
+  const anotherProject = projectFactory(
+    "Trying Harder",
+    "To make it is work",
+    false
+  );
 
   project.taskArray.push(
     taskFactory("Task 1", "Description for Task 1"),
@@ -71,4 +72,73 @@ function defaultProject() {
 }
 defaultProject();
 
-export { taskFactory, projectFactory, tasks, projects, staticTabs };
+//TODO, export/import function, store in variable, pass as argument, drink coffee
+function getStaticBtns() {
+  const filteredBtns = projects.filter((project) => checkIfStatic(project));
+  console.log(filteredBtns);
+  return filteredBtns;
+}
+
+function getDynamicBtns() {
+  const filteredBtns = projects.filter((project) => !checkIfStatic(project));
+  return filteredBtns;
+}
+getDynamicBtns();
+
+function filteredArrays() {
+  return {
+    static: () => getStaticBtns(),
+    dynamic: () => getDynamicBtns(),
+  };
+}
+
+function sortTaskByGeneral() {
+  const generalTab = findTabArray("tabgeneral");
+  // something something go to bed...
+}
+
+function populateStaticTabArrays() {
+  projects.forEach((project) => {
+    if (project.isStatic) {
+      switch (project.title) {
+        case "General":
+          sortTaskByGeneral();
+          break;
+      }
+    }
+  });
+}
+
+function defaultTasks() {
+  const generalTab = findTabArray("tabgeneral");
+
+  generalTab.push(
+    taskFactory("Project tab", "Make project tab btns render the content page"),
+    taskFactory("Project header", "Make project tab selection change header"),
+    taskFactory(
+      "Task modal context awareness",
+      "Modal automatiaclly detects the selected projects"
+    )
+  );
+}
+defaultTasks();
+
+/* function findArray(tabID) {
+  const tabProject = projects.find((project) => project.id === tabID);
+  if (tabProject && tabProject.taskArray) {
+    return tabProject.taskArray;
+  } else {
+    return null;
+  }
+}
+
+console.log(findArray("tabgeneral")); */
+
+export {
+  taskFactory,
+  projectFactory,
+  //tasks,
+  projects,
+  filteredArrays,
+  getStaticBtns,
+};

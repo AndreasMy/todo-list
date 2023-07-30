@@ -1,8 +1,8 @@
 import { renderTaskModal } from "./modal";
 import { renderPage } from "../modules/page";
-import { renderTaskItems, renderSelectedTab } from "./tabNavigation";
+import { renderTaskItems } from "./taskItems";
 import { renderProjectTab } from "./sidebar";
-import { tasks, projects, staticTabs, projectFactory, taskFactory } from "../modules/crud";
+import {  projects, projectFactory, taskFactory } from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
 import {
   selectedProjectID,
@@ -10,7 +10,9 @@ import {
   removeElements,
   chosenModal,
   setChosenModal,
+  findTabArray
 } from "../modules/utils";
+import { filteredArrays } from "../modules/crud";
 
 function openModal() {
   return {
@@ -43,6 +45,9 @@ function getModalInput() {
   };
 }
 
+const generalTab = findTabArray("tabgeneral");
+console.log(generalTab)
+
 function pushFormSubmission(
   titleFormID,
   projectFormID,
@@ -66,45 +71,26 @@ function submitObject() {
       projects
     );
   } else if (chosenModal === "taskModal") {
-    pushFormSubmission("#task", "#description", taskFactory, tasks);
+    pushFormSubmission("#task", "#description", taskFactory, generalTab);
   }
   closeModal();
 }
 
 function closeModal() {
+  const staticBtns = filteredArrays().static()
+  const dynamicBtns = filteredArrays().dynamic()
   removeElements("#content");
   renderPage();
-  renderTaskItems(tasks);
-  renderProjectTab(projects, ".project-content-container");
-  renderProjectTab(staticTabs, ".static-tab-container");
+  //* hmmmmm...
+  renderTaskItems(generalTab);
+  renderProjectTab(dynamicBtns, ".project-content-container");
+  renderProjectTab(staticBtns, ".static-tab-container");
 }
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
   header.innerHTML = ""; // Clear existing content
   header.appendChild(textFactory("h2", "app-header-title", text));
-}
-
-function renderByCategory(categoryId) {
-  switch (categoryId) {
-    case "generalBtn":
-      setCategoryHeader("General");
-      renderTaskItems(tasks);
-      break;
-    case "todayBtn":
-      setCategoryHeader("Today");
-      break;
-    case "weekBtn":
-      setCategoryHeader("This Week");
-      break;
-    case "completeBtn":
-      setCategoryHeader("Completed");
-      break;
-
-    default:
-      setCategoryHeader("General");
-      break;
-  }
 }
 
 function removeTask(index) {
@@ -115,15 +101,15 @@ function removeTask(index) {
     projectArray.splice(index, 1);
     renderTaskItems(projectArray);
   } else {
-    tasks.splice(index, 1);
-    renderTaskItems(tasks);
+    generalTab.splice(index, 1);
+    renderTaskItems(generalTab);
   }
 }
 
 export {
   closeModal,
   removeTask,
-  renderByCategory,
+
   setCategoryHeader,
   selectProjectArray,
   submitObject,
