@@ -1,8 +1,8 @@
-import { renderTaskModal } from "./modal";
+import { renderTaskModal, modalPriority } from "./modal";
 import { renderPage } from "../modules/page";
 import { renderTaskItems } from "./taskItems";
 import { renderProjectTab } from "./sidebar";
-import {  projects, projectFactory, taskFactory } from "../modules/crud";
+import { projects, projectFactory, taskFactory } from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
 import {
   selectedProjectID,
@@ -10,7 +10,7 @@ import {
   removeElements,
   chosenModal,
   setChosenModal,
-  findTabArray
+  findTabArray,
 } from "../modules/utils";
 import { filteredArrays } from "../modules/crud";
 
@@ -19,9 +19,13 @@ function openModal() {
     taskModal: () => {
       setChosenModal("taskModal");
       renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
+      modalPriority()
+
+      //* Auto select input field
       const inputField = document.querySelector("#task");
       inputField.focus();
     },
+
     projectModal: () => {
       setChosenModal("projectModal");
       renderTaskModal(
@@ -31,6 +35,8 @@ function openModal() {
         "projectDescription",
         submitObject
       );
+
+      //* Auto select input field
       const inputField = document.querySelector("#project");
       inputField.focus();
     },
@@ -46,7 +52,7 @@ function getModalInput() {
 }
 
 const generalTab = findTabArray("tabgeneral");
-console.log(generalTab)
+console.log(generalTab);
 
 function pushFormSubmission(
   titleFormID,
@@ -77,20 +83,14 @@ function submitObject() {
 }
 
 function closeModal() {
-  const staticBtns = filteredArrays().static()
-  const dynamicBtns = filteredArrays().dynamic()
+  const staticBtns = filteredArrays().static();
+  const dynamicBtns = filteredArrays().dynamic();
   removeElements("#content");
   renderPage();
   //* hmmmmm...
   renderTaskItems(generalTab);
   renderProjectTab(dynamicBtns, ".project-content-container");
   renderProjectTab(staticBtns, ".static-tab-container");
-}
-
-function setCategoryHeader(text) {
-  const header = document.querySelector(".header-title-wrapper");
-  header.innerHTML = ""; // Clear existing content
-  header.appendChild(textFactory("h2", "app-header-title", text));
 }
 
 function removeTask(index) {
@@ -106,12 +106,4 @@ function removeTask(index) {
   }
 }
 
-export {
-  closeModal,
-  removeTask,
-
-  setCategoryHeader,
-  selectProjectArray,
-  submitObject,
-  openModal,
-};
+export { closeModal, removeTask, selectProjectArray, submitObject, openModal };

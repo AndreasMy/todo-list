@@ -4,7 +4,7 @@ import {
   textFactory,
   navFactory,
 } from "./elementFactories";
-import { setCategoryHeader } from "../components/componentsRenderer";
+import { setCategoryHeader } from "../components/tabNavigation";
 import { projectSection } from "../components/sidebar";
 const content = document.querySelector("#content");
 

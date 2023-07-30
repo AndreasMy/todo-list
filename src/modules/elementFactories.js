@@ -48,6 +48,15 @@ function inputFactory(inputType, id, inputName, placeholder) {
   return input;
 }
 
+function radioFactyory(inputID, inputName, inputValue) {
+  const input = document.createElement("input");
+  input.type = "radio";
+  input.id = inputID;
+  input.name = inputName;
+  input.value = inputValue;
+  return input;
+}
+
 export {
   labelFactory,
   inputFactory,
@@ -55,4 +64,5 @@ export {
   buttonFactory,
   textFactory,
   navFactory,
+  radioFactyory,
 };

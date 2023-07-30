@@ -7,9 +7,18 @@ import {
   selectTabTitle,
   checkIfStatic
 } from "../modules/utils";
+import { textFactory } from "../modules/elementFactories";
+
+
+function setCategoryHeader(text) {
+  const header = document.querySelector(".header-title-wrapper");
+  header.innerHTML = ""; // Clear existing content
+  header.appendChild(textFactory("h2", "app-header-title", text));
+}
 
 function renderTabHeader(targetID) {
   const tabTitle = selectTabTitle(targetID);
+  setCategoryHeader(tabTitle)
   console.log("Tab Title:", tabTitle);
 }
 
@@ -30,6 +39,6 @@ function renderTabContent(targetID) {
   }
 }
 
-export { renderTabContent };
+export { renderTabContent, setCategoryHeader };
 
 

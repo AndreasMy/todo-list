@@ -1,13 +1,8 @@
 import { filter } from "lodash";
 import { checkIfStatic, findTabArray } from "./utils";
 
-
 const projects = [];
-
 console.log(projects);
-
-//TODO: Store all projects in projects array
-//TODO: filter out and render the ones that are static.
 
 //* Todo factory
 const taskFactory = (title, description) => {
@@ -123,16 +118,19 @@ function defaultTasks() {
 }
 defaultTasks();
 
-/* function findArray(tabID) {
-  const tabProject = projects.find((project) => project.id === tabID);
-  if (tabProject && tabProject.taskArray) {
-    return tabProject.taskArray;
-  } else {
-    return null;
-  }
+function storeArray() {
+  localStorage.setItem("projectsArray", JSON.stringify(projects));
 }
 
-console.log(findArray("tabgeneral")); */
+function retrieveArray() {
+  const jsonString = localStorage.getItem("projectsArray");
+  const retrievedArray = JSON.parse(jsonString);
+  console.log(retrievedArray);
+  return retrievedArray;
+}
+
+storeArray();
+retrieveArray();
 
 export {
   taskFactory,

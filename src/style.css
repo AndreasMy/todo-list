@@ -17,10 +17,38 @@ button {
 
 input,
 #description,
-#projectDescription {
+#projectDescription,
+.radio-container,
+.radio-btns {
+  flex: 1;
   width: 100%;
   padding: 4px;
   border: 1px solid rgb(236, 236, 236);
+}
+
+.radio-container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.label-container {
+  display: flex;
+  width: 80%;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0 12px;
+}
+
+.radio-btns {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.radio-container input[type="radio"] {
+  width: 16px;
+  height: 16px;
 }
 
 input {
@@ -47,7 +75,7 @@ input {
 }
 
 .modal-header {
-  margin: 20px 20px 0 20px; 
+  margin: 20px 20px 0 20px;
   font-size: 1.5rem;
 }
 
@@ -56,11 +84,10 @@ input {
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 350px;
+  min-height: 350px;
   width: 300px;
   background-color: white;
   border-radius: 12px;
-
 }
 
 .modal-background {
@@ -114,7 +141,7 @@ input {
 .project-tab:focus {
   background-color: rgb(207, 35, 35);
   color: antiquewhite;
-} 
+}
 
 .project-container {
   display: flex;
@@ -189,17 +216,17 @@ ul {
   border-radius: 0 20px 0 0;
 }
 
-.new-task-btn, 
+.new-task-btn,
 .add-btn {
   background-color: rgb(207, 35, 35);
-} 
+}
 
 .cancel-btn {
   background-color: rgb(35, 187, 207);
 }
 
-.new-task-btn, 
-.add-btn, 
+.new-task-btn,
+.add-btn,
 .cancel-btn {
   border: none;
   padding: 12px;

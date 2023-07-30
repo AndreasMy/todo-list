@@ -4,6 +4,7 @@ import {
   buttonFactory,
   labelFactory,
   inputFactory,
+  radioFactyory,
 } from "../modules/elementFactories";
 
 import { closeModal } from "./componentsRenderer";
@@ -77,4 +78,40 @@ function renderTaskModal(
   modalConfirm.addEventListener("click", onsubmitHandler);
 }
 
-export { renderTaskModal };
+function modalPriority() {
+  const inputWrapper = document.querySelector(".input-wrapper");
+
+  const radioHeader = labelFactory("", "Select Priority");
+  const radioContainer = divFactory("div", "radio-container");
+  const labelContainer = divFactory("div", "label-container");
+  const radioBtnContainer = divFactory("div", "radio-btns");
+
+  const labelLow = textFactory("p", "priority-low", "Low");
+  const priorityLow = radioFactyory("priorityLow", "priority", "Low");
+
+  const labelMedium = textFactory("p", "priority-normal", "Normal");
+  const priorityNormal = radioFactyory("priorityNormal", "priority", "Normal");
+  priorityNormal.checked = true
+
+
+  const labelHigh = textFactory("p", "priority-high", "High");
+  const priorityHigh = radioFactyory("priorityHigh", "priority", "High");
+
+  inputWrapper.appendChild(radioHeader);
+
+  labelContainer.appendChild(labelLow);
+  labelContainer.appendChild(labelMedium);
+  labelContainer.appendChild(labelHigh);
+  radioContainer.appendChild(labelContainer);
+
+  radioContainer.appendChild(radioBtnContainer);
+  radioBtnContainer.appendChild(priorityLow);
+  radioBtnContainer.appendChild(priorityNormal);
+  radioBtnContainer.appendChild(priorityHigh);
+
+  inputWrapper.appendChild(radioContainer);
+}
+
+function modalDueDtate() {}
+
+export { renderTaskModal, modalPriority };
