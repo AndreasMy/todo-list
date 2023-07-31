@@ -5,6 +5,8 @@ import {
   labelFactory,
   inputFactory,
   radioFactyory,
+  dateFactory,
+  navFactory,
 } from "../modules/elementFactories";
 
 import { closeModal } from "./componentsRenderer";
@@ -78,40 +80,58 @@ function renderTaskModal(
   modalConfirm.addEventListener("click", onsubmitHandler);
 }
 
+function modalDate() {
+  const inputWrapper = document.querySelector(".input-wrapper");
+  const dateWrapper = divFactory("div", "date-wrapper");
+  const datePickerLabel = labelFactory("dueDate", "Select Due Date");
+  const datePicker = dateFactory();
+
+  dateWrapper.appendChild(datePickerLabel);
+  dateWrapper.appendChild(datePicker);
+
+  inputWrapper.appendChild(dateWrapper);
+}
+
 function modalPriority() {
   const inputWrapper = document.querySelector(".input-wrapper");
 
   const radioHeader = labelFactory("", "Select Priority");
   const radioContainer = divFactory("div", "radio-container");
-  const labelContainer = divFactory("div", "label-container");
-  const radioBtnContainer = divFactory("div", "radio-btns");
+  const radioBtnContainers = navFactory(3);
+  radioBtnContainers.classList.add("radio-btn-wrapper")
 
-  const labelLow = textFactory("p", "priority-low", "Low");
-  const priorityLow = radioFactyory("priorityLow", "priority", "Low");
+  //! Use labels instead of text, for accessibility
+  const priorityOBJ = [
+    {
+      label: () => labelFactory("priorityLow", "Low"),
+      input: () => radioFactyory("priorityLow", "priority", "Low"),
+    },
+    {
+      label: () => labelFactory("priorityNormal", "Normal"),
+      input: () => {
+        const input = radioFactyory("priorityNormal", "priority", "Normal");
+        input.checked = true;
+        return input;
+      },
+    },
+    {
+      label: () => labelFactory("priorityHigh", "High"),
+      input: () => radioFactyory("priorityHigh", "priority", "High"),
+    },
+  ];
 
-  const labelMedium = textFactory("p", "priority-normal", "Normal");
-  const priorityNormal = radioFactyory("priorityNormal", "priority", "Normal");
-  priorityNormal.checked = true
-
-
-  const labelHigh = textFactory("p", "priority-high", "High");
-  const priorityHigh = radioFactyory("priorityHigh", "priority", "High");
+  //* Append Labels and Radio btns to <li>
+  radioBtnContainers.querySelectorAll("li").forEach((element, index) => {
+    element.classList.add("radio-btn-container")
+    element.appendChild(priorityOBJ[index].label());
+    element.appendChild(priorityOBJ[index].input());
+  });
 
   inputWrapper.appendChild(radioHeader);
-
-  labelContainer.appendChild(labelLow);
-  labelContainer.appendChild(labelMedium);
-  labelContainer.appendChild(labelHigh);
-  radioContainer.appendChild(labelContainer);
-
-  radioContainer.appendChild(radioBtnContainer);
-  radioBtnContainer.appendChild(priorityLow);
-  radioBtnContainer.appendChild(priorityNormal);
-  radioBtnContainer.appendChild(priorityHigh);
-
+  radioContainer.appendChild(radioBtnContainers);
   inputWrapper.appendChild(radioContainer);
 }
 
 function modalDueDtate() {}
 
-export { renderTaskModal, modalPriority };
+export { renderTaskModal, modalPriority, modalDate };

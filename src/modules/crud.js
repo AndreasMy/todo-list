@@ -125,18 +125,20 @@ function storeArray() {
 function retrieveArray() {
   const jsonString = localStorage.getItem("projectsArray");
   const retrievedArray = JSON.parse(jsonString);
+
   console.log(retrievedArray);
-  return retrievedArray;
+
 }
 
-storeArray();
-retrieveArray();
+// storeArray();
+// retrieveArray();
 
 export {
   taskFactory,
   projectFactory,
-  //tasks,
   projects,
   filteredArrays,
   getStaticBtns,
+  storeArray,
+  retrieveArray,
 };

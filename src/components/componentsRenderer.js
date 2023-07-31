@@ -1,4 +1,4 @@
-import { renderTaskModal, modalPriority } from "./modal";
+import { renderTaskModal, modalPriority, modalDate } from "./modal";
 import { renderPage } from "../modules/page";
 import { renderTaskItems } from "./taskItems";
 import { renderProjectTab } from "./sidebar";
@@ -19,8 +19,8 @@ function openModal() {
     taskModal: () => {
       setChosenModal("taskModal");
       renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
-      modalPriority()
-
+      modalDate();
+      modalPriority();
       //* Auto select input field
       const inputField = document.querySelector("#task");
       inputField.focus();
@@ -43,6 +43,8 @@ function openModal() {
   };
 }
 
+openModal().taskModal();
+
 function getModalInput() {
   return {
     title: (formID) => document.querySelector(formID).value,
@@ -64,6 +66,8 @@ function pushFormSubmission(
   const title = modalInput.title(titleFormID);
   const description = modalInput.description(projectFormID);
   const newElement = functionHandler(title, description);
+  //* Variable for date picker
+  //* Variable for priority
 
   array.push(newElement);
 }
@@ -87,7 +91,6 @@ function closeModal() {
   const dynamicBtns = filteredArrays().dynamic();
   removeElements("#content");
   renderPage();
-  //* hmmmmm...
   renderTaskItems(generalTab);
   renderProjectTab(dynamicBtns, ".project-content-container");
   renderProjectTab(staticBtns, ".static-tab-container");

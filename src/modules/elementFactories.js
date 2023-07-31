@@ -1,3 +1,5 @@
+const {format} = require('date-fns');
+
 function divFactory(elemType, className) {
   const element = document.createElement(elemType);
   element.classList.add(className);
@@ -28,12 +30,12 @@ function navFactory(num) {
     const li = document.createElement("li");
     ul.appendChild(li);
   }
-  return ul;
+  return ul; 
 }
 
 function labelFactory(labelFor, labelText) {
   const label = document.createElement("label");
-  label.for = labelFor;
+  label.setAttribute("for", labelFor)
   label.textContent = labelText;
 
   return label;
@@ -57,6 +59,20 @@ function radioFactyory(inputID, inputName, inputValue) {
   return input;
 }
 
+function dateFactory() {
+  //* Get tday's date
+  const today = new Date().toISOString().split('T')[0];
+  console.log(today)
+
+  const date = document.createElement("input");
+  date.type = "date";
+  date.id = "dueDate" 
+  date.name = "due-date"
+  date.value = today
+
+  return date
+}
+
 export {
   labelFactory,
   inputFactory,
@@ -65,4 +81,5 @@ export {
   textFactory,
   navFactory,
   radioFactyory,
+  dateFactory
 };
