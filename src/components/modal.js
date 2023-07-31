@@ -98,9 +98,8 @@ function modalPriority() {
   const radioHeader = labelFactory("", "Select Priority");
   const radioContainer = divFactory("div", "radio-container");
   const radioBtnContainers = navFactory(3);
-  radioBtnContainers.classList.add("radio-btn-wrapper")
+  radioBtnContainers.classList.add("radio-btn-wrapper");
 
-  //! Use labels instead of text, for accessibility
   const priorityOBJ = [
     {
       label: () => labelFactory("priorityLow", "Low"),
@@ -122,7 +121,7 @@ function modalPriority() {
 
   //* Append Labels and Radio btns to <li>
   radioBtnContainers.querySelectorAll("li").forEach((element, index) => {
-    element.classList.add("radio-btn-container")
+    element.classList.add("radio-btn-container");
     element.appendChild(priorityOBJ[index].label());
     element.appendChild(priorityOBJ[index].input());
   });

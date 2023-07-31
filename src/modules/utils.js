@@ -2,8 +2,10 @@ import { projects } from "./crud";
 
 let selectedProjectID = null;
 let chosenModal = "";
+
 const setChosenModal = (value) => {
   chosenModal = value;
+  console.log(chosenModal)
 };
 
 function selectProjectID(targetID) {

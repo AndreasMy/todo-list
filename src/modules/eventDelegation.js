@@ -1,7 +1,6 @@
-import { openModal } from "../components/componentsRenderer";
+import { openModal, submitObject } from "../components/componentsRenderer";
 import { renderTabContent } from "../components/tabNavigation";
-import { hasDynamicID } from "./utils";
-
+import { chosenModal, hasDynamicID } from "./utils";
 
 const content = document.querySelector("#content");
 const modal = openModal();

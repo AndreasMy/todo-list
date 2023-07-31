@@ -7,6 +7,7 @@ import { renderPage } from "./modules/page";
 import { renderTaskItems } from "./components/taskItems";
 import { renderProjectTab } from "./components/sidebar";
 import { eventDelegation } from "./modules/eventDelegation";
+import { renderTabContent } from "./components/tabNavigation";
 
 const staticBtns = filteredArrays().static()
 const dynamicBtns = filteredArrays().dynamic()

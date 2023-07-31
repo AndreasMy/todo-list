@@ -5,8 +5,8 @@ const projects = [];
 console.log(projects);
 
 //* Todo factory
-const taskFactory = (title, description) => {
-  return { title, description };
+const taskFactory = (title, description, priority) => {
+  return { title, description, priority };
 };
 
 //* Project factory
