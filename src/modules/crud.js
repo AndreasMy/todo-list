@@ -5,8 +5,8 @@ const projects = [];
 console.log(projects);
 
 //* Todo factory
-const taskFactory = (title, description, priority) => {
-  return { title, description, priority };
+const taskFactory = (title, description, priority, date) => {
+  return { title, description, priority, date };
 };
 
 //* Project factory
@@ -108,11 +108,20 @@ function defaultTasks() {
   const generalTab = findTabArray("tabgeneral");
 
   generalTab.push(
-    taskFactory("Project tab", "Make project tab btns render the content page"),
-    taskFactory("Project header", "Make project tab selection change header"),
+    taskFactory(
+      "Project tab",
+      "Make project tab btns render the content page",
+      "Normal"
+    ),
+    taskFactory(
+      "Project header",
+      "Make project tab selection change header",
+      "Low"
+    ),
     taskFactory(
       "Task modal context awareness",
-      "Modal automatiaclly detects the selected projects"
+      "Modal automatiaclly detects the selected projects",
+      "High"
     )
   );
 }
@@ -127,7 +136,6 @@ function retrieveArray() {
   const retrievedArray = JSON.parse(jsonString);
 
   console.log(retrievedArray);
-
 }
 
 // storeArray();

@@ -11,6 +11,23 @@ body {
   background-color: rgb(127, 141, 168);
 }
 
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  min-width: 100%;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  max-width: 240px;
+  border-radius: 20px 0 0 20px;
+  background-color: rgb(231, 231, 231);
+}
+
 button {
   cursor: pointer;
 }
@@ -168,14 +185,6 @@ input {
   margin: 15px;
 }
 
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  min-width: 100%;
-}
-
 .app-container {
   display: flex;
   flex-direction: row;
@@ -185,15 +194,6 @@ main {
   margin: 30px 30px;
   background-color: rgb(255, 255, 255);
   border-radius: 22px;
-}
-
-aside {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  max-width: 240px;
-  border-radius: 20px 0 0 20px;
-  background-color: rgb(231, 231, 231);
 }
 
 .tab-container,
@@ -256,10 +256,20 @@ ul {
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  padding: 12px;
   margin: 12px 22px;
   border-radius: 12px;
   background-color: rgb(197, 197, 197);
+}
+
+.left-wrapper {
+  display: flex;
+  flex-direction: row;
+  }
+
+.priority-marker {
+  width: 25px;
+  height: 100%;
+  border-radius: 12px 0 0 12px;
 }
 
 .complete-btn {
@@ -272,8 +282,12 @@ ul {
   padding: 12px;
 }
 
+.text-wrapper,
+.complete-btn {
+  margin: 12px 12px;
+}
+
 .text-wrapper {
   display: flex;
   flex-direction: column;
-  margin: 0 12px;
 }

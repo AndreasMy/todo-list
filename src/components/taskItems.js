@@ -11,6 +11,17 @@ function taskItemFactory(array) {
     const taskItem = divFactory("div", `task-item`);
     taskItem.classList.add(`item-${index}`);
 
+    const priorityMarker = divFactory("div", "priority-marker");
+    //* style the marker in js
+    if (task.priority === "Low") {
+      priorityMarker.style.backgroundColor = "rgb(71, 138, 69)";
+    } else if (task.priority === "Normal") {
+      priorityMarker.style.backgroundColor = "rgb(224, 213, 54)";
+    } else if (task.priority === "High") {
+      priorityMarker.style.backgroundColor = "rgb(207, 50, 50)";
+    }
+
+    const leftWrapper = divFactory("div", "left-wrapper");
     const itemTextWrapper = divFactory("div", "text-wrapper");
     const cplBtn = buttonFactory(
       "complete-btn",
@@ -24,7 +35,10 @@ function taskItemFactory(array) {
       `${task.description}`
     );
 
-    taskItem.appendChild(itemTextWrapper);
+    taskItem.appendChild(leftWrapper);
+
+    leftWrapper.appendChild(priorityMarker);
+    leftWrapper.appendChild(itemTextWrapper);
     taskItem.appendChild(cplBtn);
     itemTextWrapper.appendChild(taskTitle);
     itemTextWrapper.appendChild(taskDescription);

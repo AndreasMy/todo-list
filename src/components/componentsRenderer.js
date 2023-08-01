@@ -24,8 +24,10 @@ function getModalInput() {
       document.querySelector(descriptionFromID).value,
     priority: (priority) =>
       document.querySelector(`input[name="${priority}"]:checked`).value,
+    date: () => document.querySelector("#dueDate").value,
   };
 }
+
 
 //* Retrieves arguments that populate factory function stored in newElement
 function pushFormSubmission(
@@ -41,17 +43,15 @@ function pushFormSubmission(
 
   let newElement = null;
 
-  
   if (chosenModal === "projectModal") {
     newElement = functionHandler(title, description);
   } else if (chosenModal === "taskModal") {
     const priority = modalInput.priority(radioID);
-    newElement = functionHandler(title, description, priority);
+    const date = modalInput.date()
+    newElement = functionHandler(title, description, priority, date);
   }
 
   console.log(newElement);
-  //* Variable for date picker
-
   array.push(newElement);
 }
 
