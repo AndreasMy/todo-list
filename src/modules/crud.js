@@ -56,11 +56,11 @@ function defaultProject() {
   );
 
   project.taskArray.push(
-    taskFactory("Task 1", "Description for Task 1"),
-    taskFactory("Task 2", "Description for Task 2")
+    taskFactory("Task 1", "Description for Task 1", "Normal"),
+    taskFactory("Task 2", "Description for Task 2", "Normal")
   );
 
-  anotherProject.taskArray.push(taskFactory("Yay", "It's working!"));
+  anotherProject.taskArray.push(taskFactory("Yay", "It's working!", "High"));
 
   projects.push(project);
   projects.push(anotherProject);
@@ -87,23 +87,6 @@ function filteredArrays() {
   };
 }
 
-function sortTaskByGeneral() {
-  const generalTab = findTabArray("tabgeneral");
-  // something something go to bed...
-}
-
-function populateStaticTabArrays() {
-  projects.forEach((project) => {
-    if (project.isStatic) {
-      switch (project.title) {
-        case "General":
-          sortTaskByGeneral();
-          break;
-      }
-    }
-  });
-}
-
 function defaultTasks() {
   const generalTab = findTabArray("tabgeneral");
 
@@ -111,17 +94,20 @@ function defaultTasks() {
     taskFactory(
       "Project tab",
       "Make project tab btns render the content page",
-      "Normal"
+      "Normal",
+      "2023-08-01"
     ),
     taskFactory(
       "Project header",
       "Make project tab selection change header",
-      "Low"
+      "Low",
+      "2023-08-22"
     ),
     taskFactory(
       "Task modal context awareness",
       "Modal automatiaclly detects the selected projects",
-      "High"
+      "High",
+      "2023-08-05"
     )
   );
 }

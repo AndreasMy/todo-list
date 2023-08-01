@@ -12,7 +12,9 @@ import {
   setChosenModal,
   findTabArray,
 } from "../modules/utils";
+
 import { filteredArrays } from "../modules/crud";
+import { fetchDates, pushToArr } from "../modules/sortTasks";
 
 const generalTab = findTabArray("tabgeneral");
 
@@ -27,7 +29,6 @@ function getModalInput() {
     date: () => document.querySelector("#dueDate").value,
   };
 }
-
 
 //* Retrieves arguments that populate factory function stored in newElement
 function pushFormSubmission(
@@ -47,7 +48,7 @@ function pushFormSubmission(
     newElement = functionHandler(title, description);
   } else if (chosenModal === "taskModal") {
     const priority = modalInput.priority(radioID);
-    const date = modalInput.date()
+    const date = modalInput.date();
     newElement = functionHandler(title, description, priority, date);
   }
 
@@ -116,7 +117,7 @@ function submitObject() {
       modalData.array
     );
   }
-
+  pushToArr()
   closeModal();
 }
 

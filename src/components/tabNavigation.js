@@ -1,14 +1,13 @@
-import {  renderTaskItems } from "./taskItems";
+import { renderTaskItems } from "./taskItems";
 
 import {
   selectProjectArray,
   setSelectedProject,
   removeElements,
   selectTabTitle,
-  checkIfStatic
+  checkIfStatic,
 } from "../modules/utils";
 import { textFactory } from "../modules/elementFactories";
-
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
@@ -18,7 +17,7 @@ function setCategoryHeader(text) {
 
 function renderTabHeader(targetID) {
   const tabTitle = selectTabTitle(targetID);
-  setCategoryHeader(tabTitle)
+  setCategoryHeader(tabTitle);
   console.log("Tab Title:", tabTitle);
 }
 
@@ -26,19 +25,17 @@ function renderTabContent(targetID) {
   const projectArray = selectProjectArray(targetID);
   setSelectedProject(targetID);
   console.log(projectArray);
-  console.log(targetID)
+  console.log(targetID);
 
   removeElements(".app-content");
   renderTabHeader(targetID);
+
   if (!checkIfStatic(targetID)) {
     renderTaskItems(projectArray);
-    console.log("working")
+    console.log("working");
   } else {
-    console.log("not working")
-
+    console.log("not working");
   }
 }
 
 export { renderTabContent, setCategoryHeader };
-
-
