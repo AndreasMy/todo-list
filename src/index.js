@@ -1,6 +1,6 @@
 import _ from "lodash";
 import "./style.css";
-import {  filteredArrays, projects, } from "./modules/crud";
+import {  filteredArrays, retrieveArray, storeArray, projects } from "./modules/crud";
 import { findTabArray } from "./modules/utils";
 
 import { renderPage } from "./modules/page";
@@ -14,6 +14,8 @@ const staticBtns = filteredArrays().static()
 const dynamicBtns = filteredArrays().dynamic()
 const generalTab = findTabArray("tabgeneral");
 
+storeArray(projects)
+retrieveArray()
 renderPage();
 renderTaskItems(generalTab);
 renderProjectTab(dynamicBtns, ".project-content-container");

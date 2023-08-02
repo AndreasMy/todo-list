@@ -25,8 +25,6 @@ const projectFactory = (title, description, isStatic) => {
 
 function generateTabId(title) {
   const formattedName = title.toLowerCase().replace(/\s+/g, "-");
-
-  // Convert the formatted name to camel case
   const camelCaseName = formattedName.replace(/-([a-z])/g, (match, letter) =>
     letter.toUpperCase()
   );
@@ -113,19 +111,20 @@ function defaultTasks() {
 }
 defaultTasks();
 
-function storeArray() {
-  localStorage.setItem("projectsArray", JSON.stringify(projects));
+function storeArray(array) {
+  localStorage.setItem("projectsArray", JSON.stringify(array));
+  console.log(localStorage)
 }
 
 function retrieveArray() {
   const jsonString = localStorage.getItem("projectsArray");
-  const retrievedArray = JSON.parse(jsonString);
+  const retrievedArray = JSON.parse(jsonString) || [];
 
+  console.log("Retrieved from Local Storage:");
   console.log(retrievedArray);
-}
 
-// storeArray();
-// retrieveArray();
+
+}
 
 export {
   taskFactory,

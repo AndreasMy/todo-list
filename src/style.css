@@ -25,7 +25,7 @@ aside {
   flex: 1;
   max-width: 240px;
   border-radius: 20px 0 0 20px;
-  background-color: rgb(231, 231, 231);
+
 }
 
 button {
@@ -192,7 +192,7 @@ input {
   max-width: 1200px;
   min-height: 80vh;
   margin: 30px 30px;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(231, 231, 231);
   border-radius: 22px;
 }
 
@@ -217,7 +217,8 @@ ul {
   flex-direction: column;
   flex: 1;
   background-color: rgb(255, 255, 255);
-  border-radius: 0 25px 25px 0;
+  border-radius: 15px 0 25px 0;
+  padding-top: 12px;
 }
 
 .app-header {
@@ -226,8 +227,8 @@ ul {
   justify-content: space-between;
   min-width: 100%;
   min-height: 75px;
-  background-color: rgb(231, 231, 231);
   border-radius: 0 20px 0 0;
+
 }
 
 .new-task-btn,

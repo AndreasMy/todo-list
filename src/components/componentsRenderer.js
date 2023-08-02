@@ -2,7 +2,13 @@ import { renderTaskModal, modalPriority, modalDate } from "./modal";
 import { renderPage } from "../modules/page";
 import { renderTaskItems } from "./taskItems";
 import { renderProjectTab } from "./sidebar";
-import { projects, projectFactory, taskFactory } from "../modules/crud";
+import {
+  projects,
+  projectFactory,
+  taskFactory,
+  storeArray,
+  retrieveArray
+} from "../modules/crud";
 import { textFactory } from "../modules/elementFactories";
 import {
   selectedProjectID,
@@ -106,7 +112,6 @@ function submitObject() {
   };
 
   const modalData = modalDataMap[chosenModal];
-  console.log(modalData);
 
   if (modalData) {
     pushFormSubmission(
@@ -117,7 +122,7 @@ function submitObject() {
       modalData.array
     );
   }
-  pushToArr()
+
   closeModal();
 }
 
@@ -125,6 +130,7 @@ function closeModal() {
   const staticBtns = filteredArrays().static();
   const dynamicBtns = filteredArrays().dynamic();
   removeElements("#content");
+  pushToArr()
   renderPage();
   renderTaskItems(generalTab);
   renderProjectTab(dynamicBtns, ".project-content-container");
@@ -142,6 +148,7 @@ function removeTask(index) {
     generalTab.splice(index, 1);
     renderTaskItems(generalTab);
   }
+
 }
 
 export { closeModal, removeTask, selectProjectArray, submitObject, openModal };
