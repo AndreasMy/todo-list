@@ -11,7 +11,7 @@ import { textFactory } from "../modules/elementFactories";
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
-  header.innerHTML = ""; // Clear existing content
+  header.innerHTML = ""; 
   header.appendChild(textFactory("h2", "app-header-title", text));
 }
 

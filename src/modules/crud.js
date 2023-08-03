@@ -1,6 +1,8 @@
 import { filter } from "lodash";
 import { checkIfStatic, findTabArray } from "./utils";
+import { copyArray, storeArray, localData } from "./localStorage";
 
+storeArray();
 const projects = [];
 console.log(projects);
 
@@ -41,8 +43,6 @@ function generateTabId(title) {
   };
 
   projects.push(tabs.general, tabs.today, tabs.week, tabs.completed);
-
-  console.log(projects);
 })();
 
 function defaultProject() {
@@ -52,6 +52,7 @@ function defaultProject() {
     "To make it is work",
     false
   );
+  const testLclStrg = projectFactory("Testing", "Persistent?", false);
 
   project.taskArray.push(
     taskFactory("Task 1", "Description for Task 1", "Normal"),
@@ -59,16 +60,19 @@ function defaultProject() {
   );
 
   anotherProject.taskArray.push(taskFactory("Yay", "It's working!", "High"));
+  testLclStrg.taskArray.push(
+    taskFactory("It works?", "Right?", "High"),
+    taskFactory("Now?", "Works?", "normal")
+  );
 
-  projects.push(project);
-  projects.push(anotherProject);
+  //  projects.push(project);
+  //  projects.push(anotherProject);
+  localData.push(testLclStrg);
 }
 defaultProject();
 
-//TODO, export/import function, store in variable, pass as argument, drink coffee
 function getStaticBtns() {
   const filteredBtns = projects.filter((project) => checkIfStatic(project));
-  console.log(filteredBtns);
   return filteredBtns;
 }
 
@@ -111,27 +115,4 @@ function defaultTasks() {
 }
 defaultTasks();
 
-function storeArray(array) {
-  localStorage.setItem("projectsArray", JSON.stringify(array));
-  console.log(localStorage)
-}
-
-function retrieveArray() {
-  const jsonString = localStorage.getItem("projectsArray");
-  const retrievedArray = JSON.parse(jsonString) || [];
-
-  console.log("Retrieved from Local Storage:");
-  console.log(retrievedArray);
-
-
-}
-
-export {
-  taskFactory,
-  projectFactory,
-  projects,
-  filteredArrays,
-  getStaticBtns,
-  storeArray,
-  retrieveArray,
-};
+export { taskFactory, projectFactory, filteredArrays, getStaticBtns, projects };
