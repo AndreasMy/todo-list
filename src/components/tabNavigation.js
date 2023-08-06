@@ -1,17 +1,23 @@
 import { renderTaskItems } from "./taskItems";
-
 import {
   selectProjectArray,
   setSelectedProject,
   removeElements,
   selectTabTitle,
   checkIfStatic,
+  findTabArray,
 } from "../modules/utils";
 import { textFactory } from "../modules/elementFactories";
+import { fetchLocalStorage } from "../modules/localStorage";
+
+/* const retrievedArray = fetchLocalStorage();
+const generalTab = findTabArray(retrievedArray, "tabgeneral");
+console.log(generalTab)
+ */
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
-  header.innerHTML = ""; 
+  header.innerHTML = "";
   header.appendChild(textFactory("h2", "app-header-title", text));
 }
 
@@ -21,6 +27,7 @@ function renderTabHeader(targetID) {
   console.log("Tab Title:", tabTitle);
 }
 
+//? projectArray should target localData
 function renderTabContent(targetID) {
   const projectArray = selectProjectArray(targetID);
   setSelectedProject(targetID);

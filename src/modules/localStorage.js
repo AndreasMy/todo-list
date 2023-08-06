@@ -2,14 +2,11 @@ import { projects } from "./crud";
 
 let localData = [];
 
+
 function copyArray() {
   const retrievedArray = fetchLocalStorage();
-  if (retrievedArray.length === 0) {
-    localData = [...projects];
-  } else {
-    localData = retrievedArray;
-  }
-
+  const localData = retrievedArray.length === 0 ? [...projects] : [...retrievedArray];
+  
   console.log("localData array:", localData);
   return localData;
 }
@@ -24,9 +21,9 @@ function fetchLocalStorage() {
   const jsonString = localStorage.getItem("projectsArray");
   const retrievedArray = JSON.parse(jsonString) || [];
 
-  console.log("Retrieved from Local Storage:");
-  console.log(retrievedArray);
+  console.log("Retrieved from Local Storage:", retrievedArray);
   return retrievedArray;
 }
 
-export { storeArray, fetchLocalStorage, copyArray, localData };
+export { storeArray, fetchLocalStorage, copyArray, localData, };
+

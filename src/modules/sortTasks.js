@@ -1,11 +1,15 @@
 import { isSameDay, isSameWeek, parseISO } from "date-fns";
 import { findTabArray } from "./utils";
-import { storeArray, retrieveArray } from "./localStorage";
+import { storeArray, retrieveArray, localData, fetchLocalStorage } from "./localStorage";
 import { projects } from "./crud";
 
-const generalTab = findTabArray("tabgeneral");
-const todayTab = findTabArray("tabtoday");
-const weekTab = findTabArray("tabweek");
+const retrievedArray = fetchLocalStorage();
+
+const generalTab = findTabArray(retrievedArray, "tabgeneral");
+const todayTab = findTabArray(retrievedArray, "tabtoday");
+const weekTab = findTabArray(retrievedArray, "tabweek");
+
+
 
 function fetchDates(array) {
   const getDates = array.map((element) => {

@@ -3,6 +3,9 @@ import {
   divFactory,
   buttonFactory,
 } from "../modules/elementFactories";
+import { fetchLocalStorage,  } from "../modules/localStorage";
+
+const retrievedArray = fetchLocalStorage();
 
 function projectSection() {
   const sidebar = document.querySelector("aside");
@@ -43,6 +46,7 @@ function projectTabFactory(tabArray) {
 }
 
 function renderProjectTab(tabArray, targetClass) {
+  console.log(tabArray)
   const tabElements = projectTabFactory(tabArray);
   const navList = document.createElement("ul");
   const projetContainer = document.querySelector(targetClass);

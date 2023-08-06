@@ -12,10 +12,12 @@ import {
   findTabArray,
 } from "../modules/utils";
 import { projects } from "../modules/crud";
-import { storeArray, localData } from "../modules/localStorage";
+import { storeArray, fetchLocalStorage, localData, copyArray } from "../modules/localStorage";
 import { fetchDates, pushToArr } from "../modules/sortTasks";
 
-const generalTabArray = findTabArray("tabgeneral");
+const generalTabArray = findTabArray(projects, "tabgeneral");
+const fetchedTabArray =  fetchLocalStorage(localData, "tabgeneral") //! Wrong category
+console.log(fetchedTabArray)
 
 function openModal() {
   return {
@@ -76,14 +78,21 @@ function pushFormSubmission(
 
   let newElement = null;
 
-  if (chosenModal === "projectModal") {
-    //* functionHandler === projectFactory
-    newElement = functionHandler(title, description);
-  } else if (chosenModal === "taskModal") {
-    const priority = modalInput.priority(radioID);
-    const date = modalInput.date();
-    //* functionHandler === taskFactory
-    newElement = functionHandler(title, description, priority, date);
+  switch (chosenModal) {
+    case "projectModal":
+      //* functionHandler === projectFactory
+      newElement = functionHandler(title, description);
+      break;
+    case "taskModal":
+      const priority = modalInput.priority(radioID);
+      const date = modalInput.date();
+      //* functionHandler === taskFactory
+      newElement = functionHandler(title, description, priority, date);
+      break;
+    // Add more cases if needed for other modals
+    default:
+      // Handle default case if needed
+      break;
   }
 
   console.log(newElement);
@@ -125,14 +134,16 @@ function submitObject() {
 }
 
 function closeModal() {
+  const projectArray = findTabArray(fetchedTabArray, "tabgeneral");
   const staticBtns = filteredArrays().static();
   const dynamicBtns = filteredArrays().dynamic();
   removeElements("#content");
   pushToArr();
   renderPage();
-  renderTaskItems(generalTabArray);
+  renderTaskItems(projectArray);
   renderProjectTab(dynamicBtns, ".project-content-container");
   renderProjectTab(staticBtns, ".static-tab-container");
+  console.log(projects)
 }
 
 function removeTask(index) {
@@ -145,6 +156,7 @@ function removeTask(index) {
   } else {
     generalTabArray.splice(index, 1);
     renderTaskItems(generalTabArray);
+    console.log(generalTabArray)
   }
 }
 

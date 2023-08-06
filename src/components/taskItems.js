@@ -6,6 +6,8 @@ import {
 import { removeElements } from "../modules/utils";
 import { removeTask } from "./componentsRenderer";
 
+
+//? Array should use retrievedArray as argument
 function taskItemFactory(array) {
   const elements = array.map((task, index) => {
     const taskItem = divFactory("div", `task-item`);
@@ -51,6 +53,7 @@ function taskItemFactory(array) {
   };
 }
 
+//? Array should use retrievedArray as argument
 function renderTaskItems(array) {
   removeElements(".app-content");
 
@@ -68,4 +71,4 @@ function renderTaskItems(array) {
   });
 }
 
-export { taskItemFactory, renderTaskItems };
+export { renderTaskItems };

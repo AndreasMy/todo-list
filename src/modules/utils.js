@@ -1,11 +1,15 @@
 import { projects } from "./crud";
+import { localData } from "./localStorage";
+import { fetchLocalStorage } from "./localStorage";
+
+const retrievedArray = fetchLocalStorage();
 
 let selectedProjectID = null;
 let chosenModal = "";
 
 const setChosenModal = (value) => {
   chosenModal = value;
-  console.log(chosenModal)
+  console.log(chosenModal);
 };
 
 function selectProjectID(targetID) {
@@ -25,19 +29,22 @@ function hasPersistentID(element) {
   const persitentTabIDs = ["completeBtn", "weekBtn", "todayBtn", "generalBtn"];
   return persitentTabIDs.includes(element.id);
 }
+
 //! obsolete?
 function hasDynamicID(element) {
   const prefix = "tab";
   return element.id.startsWith(prefix);
 }
 
-function getObjectArray(id) {
-  const getArray = projects.id.taskArray;
+//? add parameter for flexibility - or change it to select retrievedArray
+function getObjectArray() {
+  const getArray = retrievedArray.id.taskArray;
   return getArray;
 }
 
-function findTabArray(tabID) {
-  const tabProject = projects.find((project) => project.id === tabID);
+//? add parameter for flexibility - or change it to select retrievedArray
+function findTabArray(array, tabID) {
+  const tabProject = array.find((project) => project.id === tabID);
   return tabProject.taskArray;
 }
 
@@ -53,8 +60,11 @@ function removeElements(classID) {
   }
 }
 
+//? add parameter for flexibility - or change it to select retrievedArray
 function selectObjectByID(targetID) {
-  const selectedProject = projects.find((project) => project.id === targetID);
+  const selectedProject = retrievedArray.find(
+    (project) => project.id === targetID
+  );
   return selectedProject;
 }
 

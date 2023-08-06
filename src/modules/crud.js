@@ -1,10 +1,11 @@
 import { filter } from "lodash";
 import { checkIfStatic, findTabArray } from "./utils";
-import { copyArray, storeArray, localData } from "./localStorage";
+import { copyArray, storeArray, localData, fetchLocalStorage } from "./localStorage";
 
-storeArray();
 const projects = [];
-console.log(projects);
+const retrievedArray = fetchLocalStorage();
+
+console.log("Projects Array:", projects);
 
 //* Todo factory
 const taskFactory = (title, description, priority, date) => {
@@ -52,7 +53,7 @@ function defaultProject() {
     "To make it is work",
     false
   );
-  const testLclStrg = projectFactory("Testing", "Persistent?", false);
+  const testLclStrng = projectFactory("Testing", "Persistent?", false);
 
   project.taskArray.push(
     taskFactory("Task 1", "Description for Task 1", "Normal"),
@@ -60,24 +61,29 @@ function defaultProject() {
   );
 
   anotherProject.taskArray.push(taskFactory("Yay", "It's working!", "High"));
-  testLclStrg.taskArray.push(
+  testLclStrng.taskArray.push(
     taskFactory("It works?", "Right?", "High"),
     taskFactory("Now?", "Works?", "normal")
   );
 
-  //  projects.push(project);
+    localData.push(project);
   //  projects.push(anotherProject);
-  localData.push(testLclStrg);
+  // localData.push(testLclStrng);
+
+  copyArray()
+  storeArray()
 }
 defaultProject();
 
+//? replace projects with generic parameter and send to localData where it makes sense
+
 function getStaticBtns() {
-  const filteredBtns = projects.filter((project) => checkIfStatic(project));
+  const filteredBtns = retrievedArray.filter((project) => checkIfStatic(project));
   return filteredBtns;
 }
 
 function getDynamicBtns() {
-  const filteredBtns = projects.filter((project) => !checkIfStatic(project));
+  const filteredBtns = retrievedArray.filter((project) => !checkIfStatic(project));
   return filteredBtns;
 }
 getDynamicBtns();
@@ -90,7 +96,7 @@ function filteredArrays() {
 }
 
 function defaultTasks() {
-  const generalTab = findTabArray("tabgeneral");
+  const generalTab = findTabArray(retrievedArray, "tabgeneral");
 
   generalTab.push(
     taskFactory(
