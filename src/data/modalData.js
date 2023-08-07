@@ -1,7 +1,4 @@
-import {
-  renderTaskItems,
-
-} from "../components/taskElements";
+import { renderTaskItems } from "../components/taskElements";
 import { renderPage } from "../components/pageElements";
 import { taskFactory, projectFactory } from "../helpers/crud";
 import {
@@ -15,6 +12,10 @@ import {
 import { modalPriority, modalDate } from "../components/modalElements";
 import { filteredArrays } from "../helpers/crud";
 import { pushToArr } from "../data/taskData";
+import { renderTaskModal } from "../components/modalElements";
+import { projects } from "../helpers/crud";
+import { renderProjectTab } from "../components/tabElements";
+
 
 const generalTab = findTabArray("tabgeneral");
 
