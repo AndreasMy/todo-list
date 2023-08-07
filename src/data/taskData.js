@@ -1,6 +1,6 @@
 import { isSameDay, isSameWeek, parseISO } from "date-fns";
-import { findTabArray } from "./utils";
-import { storeArray, retrieveArray, projects } from "./crud";
+import { findTabArray } from "../helpers/utils";
+import { storeArray, retrieveArray, projects } from "../helpers/crud";
 
 const generalTab = findTabArray("tabgeneral");
 const todayTab = findTabArray("tabtoday");
@@ -38,8 +38,8 @@ function pushToArr() {
       }
     }
   });
-  storeArray(projects)
-  retrieveArray()
+  storeArray(projects);
+  retrieveArray();
 }
 
-export { fetchDates, pushToArr };
+export { fetchDates, pushToArr, };

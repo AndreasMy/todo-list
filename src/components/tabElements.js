@@ -2,7 +2,7 @@ import {
   textFactory,
   divFactory,
   buttonFactory,
-} from "../modules/elementFactories";
+} from "../helpers/elementFactories";
 
 function projectSection() {
   const sidebar = document.querySelector("aside");

@@ -2,9 +2,9 @@ import {
   textFactory,
   divFactory,
   buttonFactory,
-} from "../modules/elementFactories";
-import { removeElements } from "../modules/utils";
-import { removeTask } from "./componentsRenderer";
+} from "../helpers/elementFactories";
+import { removeElements } from "../helpers/utils";
+import { removeTask } from "../data/modalData";
 
 function taskItemFactory(array) {
   const elements = array.map((task, index) => {

@@ -1,4 +1,4 @@
-import { renderTaskItems } from "./taskItems";
+import { renderTaskItems } from "./taskElements";
 
 import {
   selectProjectArray,
@@ -6,8 +6,8 @@ import {
   removeElements,
   selectTabTitle,
   checkIfStatic,
-} from "../modules/utils";
-import { textFactory } from "../modules/elementFactories";
+} from "../helpers/utils";
+import { textFactory } from "../helpers/elementFactories";
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
@@ -24,8 +24,6 @@ function renderTabHeader(targetID) {
 function renderTabContent(targetID) {
   const projectArray = selectProjectArray(targetID);
   setSelectedProject(targetID);
-  console.log(projectArray);
-  console.log(targetID);
 
   removeElements(".app-content");
   renderTabHeader(targetID);
@@ -39,3 +37,4 @@ function renderTabContent(targetID) {
 }
 
 export { renderTabContent, setCategoryHeader };
+

@@ -1,15 +1,9 @@
-import { renderTaskModal, modalPriority, modalDate } from "./modal";
-import { renderPage } from "../modules/page";
-import { renderTaskItems } from "./taskItems";
-import { renderProjectTab } from "./sidebar";
 import {
-  projects,
-  projectFactory,
-  taskFactory,
-  storeArray,
-  retrieveArray
-} from "../modules/crud";
-import { textFactory } from "../modules/elementFactories";
+  renderTaskItems,
+
+} from "../components/taskElements";
+import { renderPage } from "../components/pageElements";
+import { taskFactory, projectFactory } from "../helpers/crud";
 import {
   selectedProjectID,
   selectProjectArray,
@@ -17,10 +11,10 @@ import {
   chosenModal,
   setChosenModal,
   findTabArray,
-} from "../modules/utils";
-
-import { filteredArrays } from "../modules/crud";
-import { fetchDates, pushToArr } from "../modules/sortTasks";
+} from "../helpers/utils";
+import { modalPriority, modalDate } from "../components/modalElements";
+import { filteredArrays } from "../helpers/crud";
+import { pushToArr } from "../data/taskData";
 
 const generalTab = findTabArray("tabgeneral");
 
@@ -36,7 +30,9 @@ function getModalInput() {
   };
 }
 
-//* Retrieves arguments that populate factory function stored in newElement
+//* Called in submitObject()
+//* Retrieves form data from getModalInput
+//* Uses form data to populate factory function stored in newElement
 function pushFormSubmission(
   titleFormID,
   projectFormID,
@@ -45,23 +41,35 @@ function pushFormSubmission(
   array
 ) {
   const modalInput = getModalInput();
-  const title = modalInput.title(titleFormID);
-  const description = modalInput.description(projectFormID);
 
-  let newElement = null;
+  const modalData = {
+    projectModal: {
+      handler: () => {
+        const title = modalInput.title(titleFormID);
+        const description = modalInput.description(projectFormID);
+        return functionHandler(title, description);
+      },
+    },
+    taskModal: {
+      handler: () => {
+        const title = modalInput.title(titleFormID);
+        const description = modalInput.description(projectFormID);
+        const priority = modalInput.priority(radioID);
+        const date = modalInput.date();
+        return functionHandler(title, description, priority, date);
+      },
+    },
+  };
 
-  if (chosenModal === "projectModal") {
-    newElement = functionHandler(title, description);
-  } else if (chosenModal === "taskModal") {
-    const priority = modalInput.priority(radioID);
-    const date = modalInput.date();
-    newElement = functionHandler(title, description, priority, date);
+  const newElement = modalData[chosenModal]?.handler();
+
+  if (newElement !== undefined) {
+    console.log(newElement);
+    array.push(newElement);
   }
-
-  console.log(newElement);
-  array.push(newElement);
 }
 
+//* Called in eventDelgcation
 function openModal() {
   return {
     taskModal: () => {
@@ -130,7 +138,7 @@ function closeModal() {
   const staticBtns = filteredArrays().static();
   const dynamicBtns = filteredArrays().dynamic();
   removeElements("#content");
-  pushToArr()
+  pushToArr();
   renderPage();
   renderTaskItems(generalTab);
   renderProjectTab(dynamicBtns, ".project-content-container");
@@ -148,7 +156,6 @@ function removeTask(index) {
     generalTab.splice(index, 1);
     renderTaskItems(generalTab);
   }
-
 }
 
 export { closeModal, removeTask, selectProjectArray, submitObject, openModal };

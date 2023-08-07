@@ -93,13 +93,13 @@ function defaultTasks() {
       "Project tab",
       "Make project tab btns render the content page",
       "Normal",
-      "2023-08-01"
+      "2023-08-07"
     ),
     taskFactory(
       "Project header",
       "Make project tab selection change header",
       "Low",
-      "2023-08-22"
+      "2023-08-11"
     ),
     taskFactory(
       "Task modal context awareness",

@@ -7,9 +7,9 @@ import {
   radioFactyory,
   dateFactory,
   navFactory,
-} from "../modules/elementFactories";
+} from "../helpers/elementFactories";
 
-import { closeModal } from "./componentsRenderer";
+import { closeModal } from "../data/modalData";
 
 function renderTaskModal(
   headerText,
@@ -131,6 +131,5 @@ function modalPriority() {
   inputWrapper.appendChild(radioContainer);
 }
 
-function modalDueDtate() {}
 
 export { renderTaskModal, modalPriority, modalDate };
