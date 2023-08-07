@@ -32,6 +32,8 @@ function generateTabId(title) {
   return `tab${camelCaseName}`;
 }
 
+//? Most of these should be called in a single function
+//? With the name populateDefaultLD 
 (function createStaticTabs() {
   const tabs = {
     general: projectFactory("General", "All tasks", true),
