@@ -124,8 +124,6 @@ function retrieveArray() {
 
   console.log("Retrieved from Local Storage:");
   console.log(retrievedArray);
-
-
 }
 
 export {

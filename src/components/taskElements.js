@@ -3,13 +3,19 @@ import {
   divFactory,
   buttonFactory,
 } from "../helpers/elementFactories";
-import { removeElements } from "../helpers/utils";
+import { findTabArray, removeElements } from "../helpers/utils";
 import { removeTask } from "../data/modalData";
+import { getFormattedDates } from "../data/taskData";
+
+
+const generalTab = findTabArray("tabgeneral");
 
 function taskItemFactory(array) {
   const elements = array.map((task, index) => {
     const taskItem = divFactory("div", `task-item`);
     taskItem.classList.add(`item-${index}`);
+
+    const taskContentWrapper = divFactory("div", "task-content");
 
     const priorityMarker = divFactory("div", "priority-marker");
     //* style the marker in js
@@ -35,11 +41,20 @@ function taskItemFactory(array) {
       `${task.description}`
     );
 
-    taskItem.appendChild(leftWrapper);
+    //* Display due date:
+    const dates = getFormattedDates(generalTab);
+    const dateDisplay = divFactory("span", "date-display");
+    const displayDate = textFactory("p", "display-date-txt", `${dates[index]}`);
+
+    taskItem.appendChild(dateDisplay);
+    dateDisplay.appendChild(displayDate);
+    taskItem.appendChild(taskContentWrapper);
+
+    taskContentWrapper.appendChild(leftWrapper);
 
     leftWrapper.appendChild(priorityMarker);
     leftWrapper.appendChild(itemTextWrapper);
-    taskItem.appendChild(cplBtn);
+    taskContentWrapper.appendChild(cplBtn);
     itemTextWrapper.appendChild(taskTitle);
     itemTextWrapper.appendChild(taskDescription);
 

@@ -25,7 +25,6 @@ aside {
   flex: 1;
   max-width: 240px;
   border-radius: 20px 0 0 20px;
-
 }
 
 button {
@@ -228,7 +227,6 @@ ul {
   min-width: 100%;
   min-height: 75px;
   border-radius: 0 20px 0 0;
-
 }
 
 .new-task-btn,
@@ -255,17 +253,24 @@ ul {
 
 .task-item {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-direction: row;
   margin: 12px 22px;
   border-radius: 12px;
   background-color: rgb(231, 231, 231);
 }
 
+.task-content {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
 .left-wrapper {
   display: flex;
   flex-direction: row;
-  }
+}
 
 .priority-marker {
   width: 25px;
@@ -274,13 +279,16 @@ ul {
 }
 
 .complete-btn {
+  align-self: center;
+  height: 23px;
+  width: 50px;
   border: none;
   font-size: 0.8rem;
   font-weight: 700;
   background-color: rgb(42, 87, 46);
   color: antiquewhite;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 8px;
+
 }
 
 .text-wrapper,
@@ -291,4 +299,24 @@ ul {
 .text-wrapper {
   display: flex;
   flex-direction: column;
+}
+
+.date-display {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  height: 20px;
+  min-width: 16%;
+  max-width: 18%;
+  margin-right: 8%;
+  padding: 3px;
+  background-color: rgb(40, 79, 129);
+  color: antiquewhite;
+  border-radius: 0 0 12px 12px;
+}
+
+.display-date-txt {
+  font-weight: 700;
+  font-size: 0.75rem;
 }

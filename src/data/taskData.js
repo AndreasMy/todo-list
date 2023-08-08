@@ -1,4 +1,4 @@
-import { isSameDay, isSameWeek, parseISO } from "date-fns";
+import { isSameDay, isSameWeek, parseISO, format } from "date-fns";
 import { findTabArray } from "../helpers/utils";
 import { storeArray, retrieveArray, projects } from "../helpers/crud";
 
@@ -15,6 +15,16 @@ function fetchDates(array) {
   return getDates;
 }
 
+function getFormattedDates(array) {
+  const formattedDates = array.map((obj) => {
+    const date = parseISO(obj.date);
+    const formattedDate = format(date, "EEE MMM dd yyy");
+    return formattedDate;
+  });
+
+  return formattedDates;
+}
+
 function sortDates() {
   return {
     isToday: (dateLeft, dateRight) => isSameDay(dateLeft, dateRight),
@@ -24,6 +34,7 @@ function sortDates() {
 
 function pushToArr() {
   const dates = fetchDates(generalTab);
+
   const today = new Date();
 
   dates.forEach((date, index) => {
@@ -42,4 +53,4 @@ function pushToArr() {
   retrieveArray();
 }
 
-export { fetchDates, pushToArr, };
+export { fetchDates, pushToArr, getFormattedDates };

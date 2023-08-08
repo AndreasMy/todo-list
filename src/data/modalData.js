@@ -16,7 +16,6 @@ import { renderTaskModal } from "../components/modalElements";
 import { projects } from "../helpers/crud";
 import { renderProjectTab } from "../components/tabElements";
 
-
 const generalTab = findTabArray("tabgeneral");
 
 //* Returns an object from the input fields in the modal
