@@ -1,6 +1,11 @@
 import { openModal } from "../data/modalData";
 import { renderTabContent } from "../components/tabNavigation";
-import { chosenModal, hasDynamicID } from "./utils";
+import {
+  chosenModal,
+  hasDynamicID,
+  selectTabTitle,
+  setSelectedProject,
+} from "./utils";
 import { projects } from "./crud";
 
 const content = document.querySelector("#content");
@@ -16,12 +21,7 @@ const eventDelegation = () => {
       modal.projectModal();
     } else if (hasDynamicID(event.target)) {
       renderTabContent(event.target.id);
-      /*      const selectedTabTitle = selectTabTitle(event.target.id);
-      console.log(selectedTabTitle) */
-      //? function that tells NEW TASK what object has been selected
-    } /* else if (checkIfStatic(element)) {
-      handleStaticTabs()
-    } */
+    }
   });
 };
 

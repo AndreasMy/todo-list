@@ -6,6 +6,7 @@ const generalTab = findTabArray("tabgeneral");
 const todayTab = findTabArray("tabtoday");
 const weekTab = findTabArray("tabweek");
 
+//* Dates for data sorting
 function fetchDates(array) {
   const getDates = array.map((element) => {
     const dates = parseISO(element.date);
@@ -15,6 +16,7 @@ function fetchDates(array) {
   return getDates;
 }
 
+//* Dates for rendered task items
 function getFormattedDates(array) {
   const formattedDates = array.map((obj) => {
     const date = parseISO(obj.date);

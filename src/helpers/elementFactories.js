@@ -1,4 +1,7 @@
-const {format} = require('date-fns');
+const { format } = require("date-fns");
+import { targetTabArray } from "../data/tabData";
+import { projects } from "./crud";
+import { selectTabTitle, selectedProjectID } from "./utils";
 
 function divFactory(elemType, className) {
   const element = document.createElement(elemType);
@@ -30,12 +33,12 @@ function navFactory(num) {
     const li = document.createElement("li");
     ul.appendChild(li);
   }
-  return ul; 
+  return ul;
 }
 
 function labelFactory(labelFor, labelText) {
   const label = document.createElement("label");
-  label.setAttribute("for", labelFor)
+  label.setAttribute("for", labelFor);
   label.textContent = labelText;
 
   return label;
@@ -61,15 +64,36 @@ function radioFactyory(inputID, inputName, inputValue) {
 
 function dateFactory() {
   //* Get tday's date
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().split("T")[0];
 
   const date = document.createElement("input");
   date.type = "date";
-  date.id = "dueDate" 
-  date.name = "due-date"
-  date.value = today
+  date.id = "dueDate";
+  date.name = "due-date";
+  date.value = today;
 
-  return date
+  return date;
+}
+
+function selectorFactory(id) {
+  const menuItems = targetTabArray(projects);
+  const select = document.createElement("select");
+
+  menuItems.forEach((item) => {
+    const menuItem = optionsFactory(item);
+    select.appendChild(menuItem);
+  });
+
+  document.activeElement.blur();
+  select.setAttribute("id", id);
+  return select;
+}
+
+function optionsFactory(value) {
+  const option = document.createElement("option");
+  option.textContent = value;
+  option.value = value;
+  return option;
 }
 
 export {
@@ -80,5 +104,7 @@ export {
   textFactory,
   navFactory,
   radioFactyory,
-  dateFactory
+  dateFactory,
+  optionsFactory,
+  selectorFactory,
 };

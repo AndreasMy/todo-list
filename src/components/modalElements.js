@@ -7,10 +7,17 @@ import {
   radioFactyory,
   dateFactory,
   navFactory,
+  selectorFactory,
+  optionsFactory,
 } from "../helpers/elementFactories";
 
 import { closeModal } from "../data/modalData";
+import { targetTabArray } from "../data/tabData";
+import { projects } from "../helpers/crud";
+import { selectTabTitle } from "../helpers/utils";
 
+
+targetTabArray(projects);
 function renderTaskModal(
   headerText,
   labelFor,
@@ -80,6 +87,29 @@ function renderTaskModal(
   modalConfirm.addEventListener("click", onsubmitHandler);
 }
 
+function modalProjectMenu(targetID) {
+  const inputWrapper = document.querySelector(".input-wrapper");
+  const menuWrapper = divFactory("div", "menu-wrapper");
+  const menuLabel = labelFactory(
+    "projectSelect",
+    "Select category or project:"
+  );
+ selectTabTitle(targetID);
+  const select = selectorFactory("taskDestination");
+
+  inputWrapper.appendChild(menuLabel);
+  inputWrapper.appendChild(select);
+  // autofocus logic here?
+    // Set autofocus logic after appending the select element
+  selectTabTitle(targetID); // This sets the selected tab title
+
+  // Check if the currently focused element is the select element
+  if (document.activeElement !== select) {
+    select.focus(); // Set focus to the select element if it's not already focused
+  }
+  inputWrapper.appendChild(menuWrapper);
+}
+
 function modalDate() {
   const inputWrapper = document.querySelector(".input-wrapper");
   const dateWrapper = divFactory("div", "date-wrapper");
@@ -131,5 +161,4 @@ function modalPriority() {
   inputWrapper.appendChild(radioContainer);
 }
 
-
-export { renderTaskModal, modalPriority, modalDate };
+export { renderTaskModal, modalPriority, modalDate, modalProjectMenu };

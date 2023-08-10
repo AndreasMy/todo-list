@@ -1,6 +1,11 @@
 import { renderTaskItems } from "../components/taskElements";
 import { renderPage } from "../components/pageElements";
 import { taskFactory, projectFactory } from "../helpers/crud";
+import { filteredArrays } from "../helpers/crud";
+import { pushToArr } from "../data/taskData";
+import { renderTaskModal } from "../components/modalElements";
+import { projects } from "../helpers/crud";
+import { renderProjectTab } from "../components/tabElements";
 import {
   selectedProjectID,
   selectProjectArray,
@@ -9,12 +14,11 @@ import {
   setChosenModal,
   findTabArray,
 } from "../helpers/utils";
-import { modalPriority, modalDate } from "../components/modalElements";
-import { filteredArrays } from "../helpers/crud";
-import { pushToArr } from "../data/taskData";
-import { renderTaskModal } from "../components/modalElements";
-import { projects } from "../helpers/crud";
-import { renderProjectTab } from "../components/tabElements";
+import {
+  modalPriority,
+  modalDate,
+  modalProjectMenu,
+} from "../components/modalElements";
 
 const generalTab = findTabArray("tabgeneral");
 
@@ -27,6 +31,7 @@ function getModalInput() {
     priority: (priority) =>
       document.querySelector(`input[name="${priority}"]:checked`).value,
     date: () => document.querySelector("#dueDate").value,
+    destination: () => document.querySelector("#taskDestination").value,
   };
 }
 
@@ -47,7 +52,7 @@ function pushFormSubmission(
       handler: () => {
         const title = modalInput.title(titleFormID);
         const description = modalInput.description(projectFormID);
-        return functionHandler(title, description);
+        return functionHandler(title, description, false, true);
       },
     },
     taskModal: {
@@ -78,6 +83,7 @@ function openModal() {
       renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
       modalDate();
       modalPriority();
+      modalProjectMenu();
 
       //* Auto select input field
       const inputField = document.querySelector("#task");
@@ -94,6 +100,7 @@ function openModal() {
         "projectDescription",
         submitObject
       );
+  
 
       //* Auto select input field
       const inputField = document.querySelector("#project");

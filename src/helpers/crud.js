@@ -10,7 +10,7 @@ const taskFactory = (title, description, priority, date) => {
 };
 
 //* Project factory
-const projectFactory = (title, description, isStatic) => {
+const projectFactory = (title, description, isStatic, isTaskStorageEnabled) => {
   const tabID = generateTabId(title);
   const tab = {
     id: tabID,
@@ -18,6 +18,7 @@ const projectFactory = (title, description, isStatic) => {
     description,
     taskArray: [],
     isStatic,
+    isTaskStorageEnabled,
   };
 
   return tab;
@@ -33,26 +34,25 @@ function generateTabId(title) {
 }
 
 //? Most of these should be called in a single function
-//? With the name populateDefaultLD 
+//? With the name populateDefaultLD
 (function createStaticTabs() {
   const tabs = {
-    general: projectFactory("General", "All tasks", true),
-    today: projectFactory("Today", "today's tasks", true),
-    week: projectFactory("Week", "This week's tasks", true),
-    completed: projectFactory("Completed", "Completed tasks", true),
+    general: projectFactory("General", "All tasks", true, true),
+    today: projectFactory("Today", "today's tasks", true, false),
+    week: projectFactory("Week", "This week's tasks", true, false),
+    completed: projectFactory("Completed", "Completed tasks", true, false),
   };
 
   projects.push(tabs.general, tabs.today, tabs.week, tabs.completed);
-
   console.log(projects);
 })();
 
 function defaultProject() {
-  const project = projectFactory("Trying", "To make it work", false);
+  const project = projectFactory("Trying", "To make it work", false, true);
   const anotherProject = projectFactory(
     "Trying Harder",
     "To make it is work",
-    false
+    false, true
   );
 
   project.taskArray.push(
@@ -115,7 +115,7 @@ defaultTasks();
 
 function storeArray(array) {
   localStorage.setItem("projectsArray", JSON.stringify(array));
-  console.log(localStorage)
+  console.log(localStorage);
 }
 
 function retrieveArray() {
