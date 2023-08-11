@@ -154,15 +154,17 @@ function closeModal() {
 
 function removeTask(index) {
   removeElements(".app-content");
-
   if (selectedProjectID !== null) {
     const projectArray = selectProjectArray(selectedProjectID);
     projectArray.splice(index, 1);
     renderTaskItems(projectArray);
+    console.log(selectedProjectID)
   } else {
     generalTab.splice(index, 1);
     renderTaskItems(generalTab);
+    console.log(selectedProjectID)
   }
+
 }
 
 export { closeModal, removeTask, selectProjectArray, submitObject, openModal };

@@ -6,6 +6,8 @@ import {
   removeElements,
   selectTabTitle,
   checkIfStatic,
+  selectObjectByID,
+  selectProjectID,
 } from "../helpers/utils";
 import { textFactory } from "../helpers/elementFactories";
 
@@ -24,6 +26,8 @@ function renderTabHeader(targetID) {
 function renderTabContent(targetID) {
   const projectArray = selectProjectArray(targetID);
   setSelectedProject(targetID);
+/*   const objID = selectProjectID(targetID);
+  console.log(objID); */
 
   removeElements(".app-content");
   renderTabHeader(targetID);
@@ -36,5 +40,8 @@ function renderTabContent(targetID) {
   }
 }
 
-export { renderTabContent, setCategoryHeader };
+function highlightTab() {
+  //code
+}
 
+export { renderTabContent, setCategoryHeader };

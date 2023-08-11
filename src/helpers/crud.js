@@ -95,7 +95,7 @@ function defaultTasks() {
       "Project tab",
       "Make project tab btns render the content page",
       "Normal",
-      "2023-08-07"
+      "2023-08-10"
     ),
     taskFactory(
       "Project header",
