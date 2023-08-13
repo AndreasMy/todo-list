@@ -63,8 +63,14 @@ function radioFactyory(inputID, inputName, inputValue) {
 }
 
 function dateFactory() {
-  //* Get tday's date
-  const today = new Date().toISOString().split("T")[0];
+  //* Get today's date
+  // Get the current date in your local time zone
+  const now = new Date();
+  const today = new Date(
+    Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+  )
+    .toISOString()
+    .split("T")[0];
 
   const date = document.createElement("input");
   date.type = "date";

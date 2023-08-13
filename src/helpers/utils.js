@@ -8,10 +8,6 @@ const setChosenModal = (value) => {
   console.log(chosenModal)
 };
 
-function selectProjectID(targetID) {
-  return (selectedID = targetID);
-}
-
 function setSelectedProject(targetID) {
   selectedProjectID = targetID;
 }
@@ -31,19 +27,14 @@ function hasDynamicID(element) {
   return element.id.startsWith(prefix);
 }
 
-function getObjectArray(id) {
-  const getArray = projects.id.taskArray;
-  return getArray;
-}
-
-function findTabArray(tabID) {
-  const tabProject = projects.find((project) => project.id === tabID);
-  return tabProject.taskArray;
-}
-
 //? replaces the above 2 functions in eventDelegation
 function checkIfStatic(element) {
   return element.isStatic === true;
+}
+
+function checkIfAvailableForStorage(targetID) {
+  const selectedProject = selectObjectByID(targetID);
+  return selectedProject ? selectedProject.isTaskStorageEnabled : null
 }
 
 function removeElements(classID) {
@@ -70,7 +61,7 @@ function selectProjectArray(targetID) {
 
 export {
   selectedProjectID,
-  selectProjectID,
+
   setSelectedProject,
   clearSelectedProject,
   hasPersistentID,
@@ -82,6 +73,6 @@ export {
   checkIfStatic,
   selectTabTitle,
   selectObjectByID,
-  getObjectArray,
-  findTabArray,
+
+  checkIfAvailableForStorage
 };

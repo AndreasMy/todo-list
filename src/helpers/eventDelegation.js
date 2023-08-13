@@ -5,6 +5,11 @@ import {
   hasDynamicID,
   selectTabTitle,
   setSelectedProject,
+  checkIfAvailableForStorage,
+  selectObjectByID,
+  staticTabNav,
+  checkIfStatic,
+  
 } from "./utils";
 import { projects } from "./crud";
 
@@ -20,6 +25,7 @@ const eventDelegation = () => {
     } else if (event.target.matches("#addProjectBtn")) {
       modal.projectModal();
     } else if (hasDynamicID(event.target)) {
+      selectObjectByID(event.target.id)
       renderTabContent(event.target.id);
     }
   });

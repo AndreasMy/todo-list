@@ -4,7 +4,7 @@ import { taskFactory, projectFactory } from "../helpers/crud";
 import { filteredArrays } from "../helpers/crud";
 import { pushToArr } from "../data/taskData";
 import { renderTaskModal } from "../components/modalElements";
-import { projects } from "../helpers/crud";
+import { projects, tasks } from "../helpers/crud";
 import { renderProjectTab } from "../components/tabElements";
 import {
   selectedProjectID,
@@ -20,7 +20,7 @@ import {
   modalProjectMenu,
 } from "../components/modalElements";
 
-const generalTab = findTabArray("tabgeneral");
+// const tasks = findTabArray("tabgeneral");
 
 //* Returns an object from the input fields in the modal
 function getModalInput() {
@@ -122,7 +122,7 @@ function submitObject() {
       descriptionFromID: "#description",
       radioID: "priority",
       functionHandler: taskFactory,
-      array: generalTab,
+      array: tasks,
     },
   };
 
@@ -145,26 +145,15 @@ function closeModal() {
   const staticBtns = filteredArrays().static();
   const dynamicBtns = filteredArrays().dynamic();
   removeElements("#content");
-  pushToArr();
+  //pushToArr();
   renderPage();
-  renderTaskItems(generalTab);
+  renderTaskItems(tasks);
   renderProjectTab(dynamicBtns, ".project-content-container");
   renderProjectTab(staticBtns, ".static-tab-container");
+  console.log(tasks)
+  console.log(projects)
 }
 
-function removeTask(index) {
-  removeElements(".app-content");
-  if (selectedProjectID !== null) {
-    const projectArray = selectProjectArray(selectedProjectID);
-    projectArray.splice(index, 1);
-    renderTaskItems(projectArray);
-    console.log(selectedProjectID)
-  } else {
-    generalTab.splice(index, 1);
-    renderTaskItems(generalTab);
-    console.log(selectedProjectID)
-  }
 
-}
 
-export { closeModal, removeTask, selectProjectArray, submitObject, openModal };
+export { closeModal, submitObject, openModal };

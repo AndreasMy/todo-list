@@ -2,21 +2,39 @@ import { filter } from "lodash";
 import { checkIfStatic, findTabArray } from "./utils";
 
 const projects = [];
+const tasks = [];
 console.log(projects);
+console.log(tasks);
 
 //* Todo factory
-const taskFactory = (title, description, priority, date) => {
-  return { title, description, priority, date };
+const taskFactory = (
+  title,
+  description,
+  priority,
+  date,
+  isGeneralTask,
+  isProjectTask
+) => {
+  const taskID = generateObjID(title, "task");
+  const task = {
+    title,
+    description,
+    priority,
+    date,
+    id: taskID,
+    isGeneralTask,
+    isProjectTask,
+  };
+  return task;
 };
 
 //* Project factory
 const projectFactory = (title, description, isStatic, isTaskStorageEnabled) => {
-  const tabID = generateTabId(title);
+  const tabID = generateObjID(title, "tab");
   const tab = {
     id: tabID,
     title,
     description,
-    taskArray: [],
     isStatic,
     isTaskStorageEnabled,
   };
@@ -24,26 +42,26 @@ const projectFactory = (title, description, isStatic, isTaskStorageEnabled) => {
   return tab;
 };
 
-function generateTabId(title) {
+function generateObjID(title, type) {
   const formattedName = title.toLowerCase().replace(/\s+/g, "-");
   const camelCaseName = formattedName.replace(/-([a-z])/g, (match, letter) =>
     letter.toUpperCase()
   );
 
-  return `tab${camelCaseName}`;
+  return `${type}${camelCaseName}`;
 }
 
 //? Most of these should be called in a single function
 //? With the name populateDefaultLD
 (function createStaticTabs() {
   const tabs = {
-    general: projectFactory("General", "All tasks", true, true),
+    inbox: projectFactory("Inbox", "All tasks", true, true),
     today: projectFactory("Today", "today's tasks", true, false),
     week: projectFactory("Week", "This week's tasks", true, false),
     completed: projectFactory("Completed", "Completed tasks", true, false),
   };
 
-  projects.push(tabs.general, tabs.today, tabs.week, tabs.completed);
+  projects.push(tabs.inbox, tabs.today, tabs.week, tabs.completed);
   console.log(projects);
 })();
 
@@ -52,7 +70,8 @@ function defaultProject() {
   const anotherProject = projectFactory(
     "Trying Harder",
     "To make it is work",
-    false, true
+    false,
+    true
   );
 
   project.taskArray.push(
@@ -65,7 +84,7 @@ function defaultProject() {
   projects.push(project);
   projects.push(anotherProject);
 }
-defaultProject();
+//defaultProject();
 
 //TODO, export/import function, store in variable, pass as argument, drink coffee
 function getStaticBtns() {
@@ -88,29 +107,34 @@ function filteredArrays() {
 }
 
 function defaultTasks() {
-  const generalTab = findTabArray("tabgeneral");
-
-  generalTab.push(
+  tasks.push(
     taskFactory(
       "Project tab",
       "Make project tab btns render the content page",
       "Normal",
-      "2023-08-10"
+      "2023-08-14",
+      true,
+      false
     ),
     taskFactory(
       "Project header",
       "Make project tab selection change header",
       "Low",
-      "2023-08-11"
+      "2023-08-13",
+      true,
+      false
     ),
     taskFactory(
       "Task modal context awareness",
       "Modal automatiaclly detects the selected projects",
       "High",
-      "2023-08-05"
+      "2023-08-13",
+      true,
+      false
     )
   );
 }
+
 defaultTasks();
 
 function storeArray(array) {
@@ -134,4 +158,5 @@ export {
   getStaticBtns,
   storeArray,
   retrieveArray,
+  tasks,
 };

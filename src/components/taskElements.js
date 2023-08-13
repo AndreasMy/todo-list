@@ -4,11 +4,10 @@ import {
   buttonFactory,
 } from "../helpers/elementFactories";
 import { findTabArray, removeElements } from "../helpers/utils";
-import { removeTask } from "../data/modalData";
+import { removeTask } from "./tabNavigation";
 import { getFormattedDates } from "../data/taskData";
+import { tasks } from "../helpers/crud";
 
-
-const generalTab = findTabArray("tabgeneral");
 
 function taskItemFactory(array) {
   const elements = array.map((task, index) => {
@@ -42,7 +41,7 @@ function taskItemFactory(array) {
     );
 
     //* Display due date:
-    const dates = getFormattedDates(generalTab);
+    const dates = getFormattedDates(tasks);
     const dateDisplay = divFactory("span", "date-display");
     const displayDate = textFactory("p", "display-date-txt", `${dates[index]}`);
 
