@@ -43,17 +43,20 @@ function sortDates() {
   };
 }
 
-function sortByDate(filterFn) {
+function sortByDate(filterFn, array) {
   const today = new Date();
-  const filteredTasks = tasks.filter((task) =>
+  const filteredTasks = array.filter((task) =>
     filterFn(parseISO(task.date), today)
   );
   console.log("Filtered tasks:", filteredTasks);
   return filteredTasks;
 }
 
+function sortByTabID() {
+  const filteredTasks = tasks.filter((task) => selectedProjectID === task.tabID)
+  return filteredTasks
+}
 
 
 
-
-export { fetchDates, getFormattedDates, sortDates, sortByDate };
+export { fetchDates, getFormattedDates, sortDates, sortByDate,sortByTabID };

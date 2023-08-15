@@ -1,11 +1,11 @@
-import { projects } from "./crud";
+import { projects, tasks } from "./crud";
 
 let selectedProjectID = null;
 let chosenModal = "";
 
 const setChosenModal = (value) => {
   chosenModal = value;
-  console.log(chosenModal)
+  console.log(chosenModal);
 };
 
 function setSelectedProject(targetID) {
@@ -18,11 +18,11 @@ function clearSelectedProject() {
 
 //! obsolete?
 function hasPersistentID(element) {
-  const persitentTabIDs = ["completeBtn", "weekBtn", "todayBtn", "generalBtn"];
+  const persitentTabIDs = ["tabinbox", "tabtoday", "tabweek", "tabcompleted"];
   return persitentTabIDs.includes(element.id);
 }
 //! obsolete?
-function hasDynamicID(element) {
+function elementIsTab(element) {
   const prefix = "tab";
   return element.id.startsWith(prefix);
 }
@@ -32,9 +32,36 @@ function checkIfStatic(element) {
   return element.isStatic === true;
 }
 
+function taskParamHelper() {
+  if (
+    selectedProjectID === "tabinbox" ||
+    selectedProjectID === "tabtoday" ||
+    selectedProjectID === "tabweek" ||
+    selectedProjectID === "tabcompleted"
+  ) {
+    return {
+      staticTask: true,
+      projectTask: false,
+    };
+  } else {
+    return {
+      staticTask: false,
+      projectTask: true,
+    };
+  }
+}
+
+function filterStaticTasks() {
+  return tasks.filter((task) => task.isGeneralTask === true);
+}
+
+function filterProjectTask() {
+  return tasks.filter((task) => task.isProjectTask === true);
+}
+
 function checkIfAvailableForStorage(targetID) {
   const selectedProject = selectObjectByID(targetID);
-  return selectedProject ? selectedProject.isTaskStorageEnabled : null
+  return selectedProject ? selectedProject.isTaskStorageEnabled : null;
 }
 
 function removeElements(classID) {
@@ -61,11 +88,10 @@ function selectProjectArray(targetID) {
 
 export {
   selectedProjectID,
-
   setSelectedProject,
   clearSelectedProject,
   hasPersistentID,
-  hasDynamicID,
+  elementIsTab,
   selectProjectArray,
   removeElements,
   chosenModal,
@@ -73,6 +99,8 @@ export {
   checkIfStatic,
   selectTabTitle,
   selectObjectByID,
-
-  checkIfAvailableForStorage
+  checkIfAvailableForStorage,
+  filterStaticTasks,
+  filterProjectTask,
+  taskParamHelper,
 };

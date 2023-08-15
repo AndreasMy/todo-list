@@ -1,5 +1,5 @@
-import { filter } from "lodash";
-import { checkIfStatic, findTabArray } from "./utils";
+import { checkIfStatic } from "./utils";
+import { selectedProjectID } from "./utils";
 
 const projects = [];
 const tasks = [];
@@ -15,6 +15,7 @@ const taskFactory = (
   isGeneralTask,
   isProjectTask
 ) => {
+  const projectID = selectedProjectID;
   const taskID = generateObjID(title, "task");
   const task = {
     title,
@@ -22,6 +23,7 @@ const taskFactory = (
     priority,
     date,
     id: taskID,
+    tabID: projectID,
     isGeneralTask,
     isProjectTask,
   };
@@ -38,7 +40,6 @@ const projectFactory = (title, description, isStatic, isTaskStorageEnabled) => {
     isStatic,
     isTaskStorageEnabled,
   };
-
   return tab;
 };
 
@@ -49,6 +50,23 @@ function generateObjID(title, type) {
   );
 
   return `${type}${camelCaseName}`;
+}
+
+function generateProjectID() {
+  const projectID = selectedProjectID;
+  console.log(projectID)
+
+}
+generateProjectID()
+
+//* Create array for tabs
+function createProjectArray(arrayName) {
+  const newArray = [];
+
+  return {
+    [arrayName]: newArray,
+    // Other methods
+  };
 }
 
 //? Most of these should be called in a single function
@@ -74,19 +92,34 @@ function defaultProject() {
     true
   );
 
-  project.taskArray.push(
-    taskFactory("Task 1", "Description for Task 1", "Normal"),
-    taskFactory("Task 2", "Description for Task 2", "Normal")
+  tasks.push(
+    taskFactory(
+      "Task 1",
+      "Description for Task 1",
+      "Normal",
+      "2023-08-15",
+      false,
+      true
+    ),
+    taskFactory(
+      "Task 2",
+      "Description for Task 2",
+      "Normal",
+      "2023-08-16",
+      false,
+      true
+    )
   );
 
-  anotherProject.taskArray.push(taskFactory("Yay", "It's working!", "High"));
+  tasks.push(
+    taskFactory("Yay", "It's working!", "High", "2023-08-16", false, true)
+  );
 
   projects.push(project);
   projects.push(anotherProject);
 }
-//defaultProject();
+// defaultProject();
 
-//TODO, export/import function, store in variable, pass as argument, drink coffee
 function getStaticBtns() {
   const filteredBtns = projects.filter((project) => checkIfStatic(project));
   console.log(filteredBtns);
@@ -131,6 +164,14 @@ function defaultTasks() {
       "2023-08-13",
       true,
       false
+    ),
+    taskFactory(
+      "Take the dog for a walk",
+      "Bring bags",
+      "Low",
+      "2023-08-13",
+      true,
+      false
     )
   );
 }
@@ -151,12 +192,14 @@ function retrieveArray() {
 }
 
 export {
+  tasks,
+  projects,
   taskFactory,
   projectFactory,
-  projects,
   filteredArrays,
   getStaticBtns,
   storeArray,
   retrieveArray,
-  tasks,
+  createProjectArray,
+
 };

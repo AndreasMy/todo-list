@@ -13,6 +13,10 @@ import {
   chosenModal,
   setChosenModal,
   findTabArray,
+  filterStaticTasks,
+  filterProjectTask,
+  checkIfStatic,
+  taskParamHelper,
 } from "../helpers/utils";
 import {
   modalPriority,
@@ -20,7 +24,8 @@ import {
   modalProjectMenu,
 } from "../components/modalElements";
 
-// const tasks = findTabArray("tabgeneral");
+let staticTasks = filterStaticTasks();
+let projectTasks = filterProjectTask();
 
 //* Returns an object from the input fields in the modal
 function getModalInput() {
@@ -46,6 +51,7 @@ function pushFormSubmission(
   array
 ) {
   const modalInput = getModalInput();
+  const taskParams = taskParamHelper();
 
   const modalData = {
     projectModal: {
@@ -61,7 +67,14 @@ function pushFormSubmission(
         const description = modalInput.description(projectFormID);
         const priority = modalInput.priority(radioID);
         const date = modalInput.date();
-        return functionHandler(title, description, priority, date);
+        return functionHandler(
+          title,
+          description,
+          priority,
+          date,
+          taskParams.staticTask,
+          taskParams.projectTask
+        );
       },
     },
   };
@@ -100,7 +113,6 @@ function openModal() {
         "projectDescription",
         submitObject
       );
-  
 
       //* Auto select input field
       const inputField = document.querySelector("#project");
@@ -134,7 +146,7 @@ function submitObject() {
       modalData.descriptionFromID,
       modalData.radioID,
       modalData.functionHandler,
-      modalData.array
+      modalData.array,
     );
   }
 
@@ -147,13 +159,14 @@ function closeModal() {
   removeElements("#content");
   //pushToArr();
   renderPage();
-  renderTaskItems(tasks);
+
+  staticTasks = filterStaticTasks();
+  renderTaskItems(staticTasks);
+
   renderProjectTab(dynamicBtns, ".project-content-container");
   renderProjectTab(staticBtns, ".static-tab-container");
-  console.log(tasks)
-  console.log(projects)
+  console.log(tasks);
+  console.log(projects);
 }
-
-
 
 export { closeModal, submitObject, openModal };

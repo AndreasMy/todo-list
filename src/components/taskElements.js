@@ -4,10 +4,9 @@ import {
   buttonFactory,
 } from "../helpers/elementFactories";
 import { findTabArray, removeElements } from "../helpers/utils";
-import { removeTask } from "./tabNavigation";
+import { removeTask } from "../data/taskData";
 import { getFormattedDates } from "../data/taskData";
 import { tasks } from "../helpers/crud";
-
 
 function taskItemFactory(array) {
   const elements = array.map((task, index) => {
@@ -30,7 +29,7 @@ function taskItemFactory(array) {
     const itemTextWrapper = divFactory("div", "text-wrapper");
     const cplBtn = buttonFactory(
       "complete-btn",
-      `completeBtn_${index}`,
+      task.id,
       "Finish"
     );
     const taskTitle = textFactory("h4", "task-title", `${task.title}`);
@@ -75,10 +74,10 @@ function renderTaskItems(array) {
     appContent.appendChild(element);
 
     //* Buttons
-    const completedClick = document.querySelector(`#completeBtn_${index}`);
+    /*     const completedClick = document.querySelector(`#completeBtn_${index}`);
     completedClick.addEventListener("click", () => {
       removeTask(index);
-    });
+    }); */
   });
 }
 
