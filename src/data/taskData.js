@@ -1,18 +1,6 @@
-import {
-  isSameDay,
-  isSameWeek,
-  isSameMonth,
-  parseISO,
-  format,
-  isToday,
-} from "date-fns";
-import {
-  findTabArray,
-  selectProjectArray,
-  removeElements,
-  selectedProjectID,
-} from "../helpers/utils";
-import { storeArray, retrieveArray, projects, tasks } from "../helpers/crud";
+import { isSameDay, isSameWeek, isSameMonth, parseISO, format } from "date-fns";
+import { selectedProjectID } from "../helpers/utils";
+import { tasks } from "../helpers/crud";
 
 //* Dates for data sorting
 function fetchDates(array) {
@@ -45,6 +33,7 @@ function sortDates() {
 
 function sortByDate(filterFn, array) {
   const today = new Date();
+  console.log(today)
   const filteredTasks = array.filter((task) =>
     filterFn(parseISO(task.date), today)
   );
@@ -53,10 +42,10 @@ function sortByDate(filterFn, array) {
 }
 
 function sortByTabID() {
-  const filteredTasks = tasks.filter((task) => selectedProjectID === task.tabID)
-  return filteredTasks
+  const filteredTasks = tasks.filter(
+    (task) => selectedProjectID === task.tabID
+  );
+  return filteredTasks;
 }
 
-
-
-export { fetchDates, getFormattedDates, sortDates, sortByDate,sortByTabID };
+export { fetchDates, getFormattedDates, sortDates, sortByDate, sortByTabID };

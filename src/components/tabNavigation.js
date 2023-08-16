@@ -10,11 +10,26 @@ import {
   filterProjectTask,
 } from "../helpers/utils";
 import { textFactory } from "../helpers/elementFactories";
-import { projects, tasks } from "../helpers/crud";
+import { projects, retrieveArray, tasks, completed } from "../helpers/crud";
 import { sortDates, sortByDate, sortByTabID } from "../data/taskData";
 
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();
+
+
+function createTabRenderer(targetID, array) {
+  staticTasks = filterStaticTasks();
+  const tabConfig = goToTab(targetID, array);
+  const renderFunction = tabConfig.render;
+  tabConfig.highlight();
+  return renderFunction;
+}
+
+function defaultTab(targetID, array) {
+  const renderTab = createTabRenderer(targetID, array);
+  renderTab();
+}
+
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
@@ -28,64 +43,101 @@ function renderTabHeader(targetID) {
   console.log("Tab Title:", tabTitle);
 }
 
-function renderTabContent(targetID) {
-  removeElements(".app-content");
-  renderTabHeader(targetID);
+function goToTab(targetID) {
+  const todayFilter = sortDates().isToday;
+  const isThisWeekFilter = sortDates().isThisWeek;
+
+  let selectedTab;
   const targetProject = projects.find((project) => project.id === targetID);
+  if (targetProject && !checkIfStatic(targetProject)) {
+    selectedTab = selectedProjectID;
+  }
 
-  if (targetProject && checkIfStatic(targetProject)) {
-    console.log("Static Tab");
-    staticTabNav(targetID);
+  return {
+    tabinbox: {
+      render: () => {
+        renderTabHeader(targetID);
+        renderTaskItems(staticTasks);
+        highlightTab("tabinbox");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    tabtoday: {
+      render: () => {
+        renderTabHeader(targetID);
+        const displayToday = sortByDate(todayFilter, staticTasks);
+        renderTaskItems(displayToday);
+        highlightTab("tabtoday");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    tabweek: {
+      render: () => {
+        renderTabHeader(targetID);
+        const displayWeek = sortByDate(isThisWeekFilter, staticTasks);
+        renderTaskItems(displayWeek);
+        highlightTab("tabweek");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    tabcompleted: {
+      render: () => {
+        renderTabHeader(targetID);
+        renderTaskItems(completed);
+        highlightTab("tabcompleted");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    [selectedTab]: {
+      render: () => {
+        const tabTask = sortByTabID();
+        renderTaskItems(tabTask);
+      },
+      highlight: () => highlightTab(targetID),
+    },
+  }[targetID];
+}
+
+
+function highlightTab(targetID) {
+  const targetProject = projects.find((project) => project.id === targetID);
+  const tab = document.querySelector(`#${targetID}`);
+  const tabs = document.querySelectorAll(".project-tab");
+
+  // Reset all tab styles
+  tabs.forEach((tab) => {
+    tab.style.backgroundColor = "rgb(231, 231, 231)";
+    tab.style.color = "black";
+  });
+
+  // Apply selected tab styles
+  if (targetProject) {
+    tab.style.backgroundColor = "rgb(207, 35, 35)";
+    tab.style.color = "antiquewhite";
   } else {
-    console.log("Project Tab");
-    projectTabNav(targetID);
+    tab.style.backgroundColor = "rgb(255, 255, 255)";
   }
-}
-
-function staticTabNav(targetID) {
-  const selectedTab = selectObjectByID(targetID);
-  staticTasks = filterStaticTasks();
-  console.log(staticTasks);
-
-  if (selectedTab.id === "tabinbox") {
-    renderTaskItems(staticTasks);
-  } else if (selectedTab.id === "tabtoday") {
-    const isTodayFilter = sortDates().isToday;
-    const displayToday = sortByDate(isTodayFilter, staticTasks);
-    renderTaskItems(displayToday);
-  } else if (selectedTab.id === "tabweek") {
-    const isThisWeekFilter = sortDates().isThisWeek;
-    const displayWeek = sortByDate(isThisWeekFilter, staticTasks);
-    renderTaskItems(displayWeek);
-  }
-}
-
-function projectTabNav() {
-  projectTasks = filterProjectTask();
-  const tabTask = sortByTabID();
-  renderTaskItems(tabTask);
-  console.log(tabTask);
 }
 
 function removeTask(taskID) {
   removeElements(".app-content");
   const taskIndex = tasks.findIndex((task) => task.id === taskID);
-  console.log(taskIndex);
 
   tasks.splice(taskIndex, 1);
 
   staticTasks = filterStaticTasks();
-  renderTaskItems(staticTasks);
+  const renderTab = createTabRenderer(selectedProjectID);
+  renderTab();
 
   console.log(projects);
   console.log(tasks);
 }
 
-function highlightTab() {
-  //code
-}
-
-//TODO: for static tabs, run switch statement for filters based on date
-//TODO: this function is run in eventDelagation if tab is static
-
-export { renderTabContent, setCategoryHeader, removeTask, staticTabNav };
+export {
+  setCategoryHeader,
+  removeTask,
+  highlightTab,
+  goToTab,
+  createTabRenderer,
+  defaultTab
+};

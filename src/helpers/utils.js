@@ -1,6 +1,6 @@
 import { projects, tasks } from "./crud";
 
-let selectedProjectID = null;
+let selectedProjectID = "tabinbox";
 let chosenModal = "";
 
 const setChosenModal = (value) => {

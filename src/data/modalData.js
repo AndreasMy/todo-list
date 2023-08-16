@@ -23,9 +23,48 @@ import {
   modalDate,
   modalProjectMenu,
 } from "../components/modalElements";
+import {
+  goToTab,
+  createTabRenderer,
+  highlightTab,
+} from "../components/tabNavigation";
 
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();
+
+//* Called in eventDelgcation
+function openModal() {
+  return {
+    taskModal: () => {
+      setChosenModal("taskModal");
+      //* Render modal Elements
+      renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
+      modalDate();
+      modalPriority();
+      modalProjectMenu();
+
+      //* Auto select input field
+      const inputField = document.querySelector("#task");
+      inputField.focus();
+    },
+
+    projectModal: () => {
+      setChosenModal("projectModal");
+      //* Render modal Elements
+      renderTaskModal(
+        "Add Project",
+        "project",
+        "Project:",
+        "projectDescription",
+        submitObject
+      );
+
+      //* Auto select input field
+      const inputField = document.querySelector("#project");
+      inputField.focus();
+    },
+  };
+}
 
 //* Returns an object from the input fields in the modal
 function getModalInput() {
@@ -87,40 +126,6 @@ function pushFormSubmission(
   }
 }
 
-//* Called in eventDelgcation
-function openModal() {
-  return {
-    taskModal: () => {
-      setChosenModal("taskModal");
-      //* Render modal Elements
-      renderTaskModal("Add Task", "task", "Task:", "description", submitObject);
-      modalDate();
-      modalPriority();
-      modalProjectMenu();
-
-      //* Auto select input field
-      const inputField = document.querySelector("#task");
-      inputField.focus();
-    },
-
-    projectModal: () => {
-      setChosenModal("projectModal");
-      //* Render modal Elements
-      renderTaskModal(
-        "Add Project",
-        "project",
-        "Project:",
-        "projectDescription",
-        submitObject
-      );
-
-      //* Auto select input field
-      const inputField = document.querySelector("#project");
-      inputField.focus();
-    },
-  };
-}
-
 function submitObject() {
   const modalDataMap = {
     projectModal: {
@@ -146,7 +151,7 @@ function submitObject() {
       modalData.descriptionFromID,
       modalData.radioID,
       modalData.functionHandler,
-      modalData.array,
+      modalData.array
     );
   }
 
@@ -159,13 +164,15 @@ function closeModal() {
   removeElements("#content");
   //pushToArr();
   renderPage();
-
-  staticTasks = filterStaticTasks();
-  renderTaskItems(staticTasks);
-
   renderProjectTab(dynamicBtns, ".project-content-container");
   renderProjectTab(staticBtns, ".static-tab-container");
+
+  staticTasks = filterStaticTasks();
+  const renderTab = createTabRenderer(selectedProjectID, staticTasks);
+  renderTab();
+
   console.log(tasks);
+  console.log(staticTasks);
   console.log(projects);
 }
 

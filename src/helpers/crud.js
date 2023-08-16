@@ -3,6 +3,7 @@ import { selectedProjectID } from "./utils";
 
 const projects = [];
 const tasks = [];
+const completed = [];
 console.log(projects);
 console.log(tasks);
 
@@ -51,13 +52,6 @@ function generateObjID(title, type) {
 
   return `${type}${camelCaseName}`;
 }
-
-function generateProjectID() {
-  const projectID = selectedProjectID;
-  console.log(projectID)
-
-}
-generateProjectID()
 
 //* Create array for tabs
 function createProjectArray(arrayName) {
@@ -145,7 +139,7 @@ function defaultTasks() {
       "Project tab",
       "Make project tab btns render the content page",
       "Normal",
-      "2023-08-14",
+      "2023-08-15",
       true,
       false
     ),
@@ -153,7 +147,7 @@ function defaultTasks() {
       "Project header",
       "Make project tab selection change header",
       "Low",
-      "2023-08-13",
+      "2023-08-23",
       true,
       false
     ),
@@ -201,5 +195,5 @@ export {
   storeArray,
   retrieveArray,
   createProjectArray,
-
+  completed,
 };

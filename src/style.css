@@ -139,7 +139,7 @@ input {
   margin: 20px 0;
 }
 
-.nav-btn,
+
 .add-project-btn,
 .project-tab {
   font-size: 1.2rem;
@@ -162,16 +162,16 @@ input {
   color: antiquewhite;
 }
 
-.nav-btn:hover,
+
 .project-tab:hover {
   background-color: rgb(202, 202, 202);
 }
 
-.nav-btn:focus,
+/* .nav-btn:focus,
 .project-tab:focus {
   background-color: rgb(207, 35, 35);
   color: antiquewhite;
-}
+} */
 
 .project-container {
   display: flex;
