@@ -4,21 +4,22 @@ import {
   removeElements,
   selectTabTitle,
   checkIfStatic,
-  selectObjectByID,
   selectedProjectID,
   filterStaticTasks,
   filterProjectTask,
 } from "../helpers/utils";
 import { textFactory } from "../helpers/elementFactories";
-import { projects, retrieveArray, tasks, completed } from "../helpers/crud";
+import { projects, tasks, completed } from "../helpers/crud";
 import { sortDates, sortByDate, sortByTabID } from "../data/taskData";
 
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();
 
-
+//* Using currying here...make sure to learn more
 function createTabRenderer(targetID, array) {
+  // staticTasks should be updated elsewhere, used here because of fn call in ED
   staticTasks = filterStaticTasks();
+
   const tabConfig = goToTab(targetID, array);
   const renderFunction = tabConfig.render;
   tabConfig.highlight();
@@ -30,10 +31,9 @@ function defaultTab(targetID, array) {
   renderTab();
 }
 
-
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
-  header.innerHTML = ""; // Clear existing content
+  header.innerHTML = "";
   header.appendChild(textFactory("h2", "app-header-title", text));
 }
 
@@ -98,7 +98,6 @@ function goToTab(targetID) {
   }[targetID];
 }
 
-
 function highlightTab(targetID) {
   const targetProject = projects.find((project) => project.id === targetID);
   const tab = document.querySelector(`#${targetID}`);
@@ -139,5 +138,5 @@ export {
   highlightTab,
   goToTab,
   createTabRenderer,
-  defaultTab
+  defaultTab,
 };

@@ -1,21 +1,17 @@
 import { renderTaskItems } from "../components/taskElements";
 import { renderPage } from "../components/pageElements";
-import { taskFactory, projectFactory } from "../helpers/crud";
+import { taskFactory, projectFactory, newProjects } from "../helpers/crud";
 import { filteredArrays } from "../helpers/crud";
-import { pushToArr } from "../data/taskData";
 import { renderTaskModal } from "../components/modalElements";
 import { projects, tasks } from "../helpers/crud";
 import { renderProjectTab } from "../components/tabElements";
 import {
   selectedProjectID,
-  selectProjectArray,
   removeElements,
   chosenModal,
   setChosenModal,
-  findTabArray,
   filterStaticTasks,
   filterProjectTask,
-  checkIfStatic,
   taskParamHelper,
 } from "../helpers/utils";
 import {
@@ -23,11 +19,8 @@ import {
   modalDate,
   modalProjectMenu,
 } from "../components/modalElements";
-import {
-  goToTab,
-  createTabRenderer,
-  highlightTab,
-} from "../components/tabNavigation";
+import { createTabRenderer } from "../components/tabNavigation";
+import { storeArray } from "./localStorage";
 
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();
@@ -121,8 +114,20 @@ function pushFormSubmission(
   const newElement = modalData[chosenModal]?.handler();
 
   if (newElement !== undefined) {
-    console.log(newElement);
-    array.push(newElement);
+    switch (array) {
+      case tasks:
+        array.push(newElement);
+        storeArray("taskArray", array);
+        break;
+      case projects:
+        array.push(newElement);
+        const dynamicBtns = filteredArrays().dynamic();
+        storeArray("projectArray", dynamicBtns);
+        break;
+
+      default:
+        break;
+    }
   }
 }
 

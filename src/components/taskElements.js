@@ -4,7 +4,7 @@ import {
   buttonFactory,
 } from "../helpers/elementFactories";
 import { findTabArray, removeElements } from "../helpers/utils";
-import { removeTask } from "../data/taskData";
+import { retrieveArray } from "../data/localStorage";
 import { getFormattedDates } from "../data/taskData";
 import { tasks } from "../helpers/crud";
 
@@ -70,14 +70,8 @@ function renderTaskItems(array) {
   const taskItems = taskItemFactory(array);
   const appContent = document.querySelector(".app-content");
 
-  taskItems.elements.forEach((element, index) => {
+  taskItems.elements.forEach((element) => {
     appContent.appendChild(element);
-
-    //* Buttons
-    /*     const completedClick = document.querySelector(`#completeBtn_${index}`);
-    completedClick.addEventListener("click", () => {
-      removeTask(index);
-    }); */
   });
 }
 

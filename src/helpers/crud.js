@@ -1,8 +1,9 @@
 import { checkIfStatic } from "./utils";
 import { selectedProjectID } from "./utils";
+import { retrieveArray } from "../data/localStorage";
 
-const projects = [];
-const tasks = [];
+const projects =  retrieveArray("projectArray")
+const tasks = retrieveArray("taskArray")
 const completed = [];
 console.log(projects);
 console.log(tasks);
@@ -30,6 +31,7 @@ const taskFactory = (
   };
   return task;
 };
+
 
 //* Project factory
 const projectFactory = (title, description, isStatic, isTaskStorageEnabled) => {
@@ -170,20 +172,8 @@ function defaultTasks() {
   );
 }
 
-defaultTasks();
+// defaultTasks();
 
-function storeArray(array) {
-  localStorage.setItem("projectsArray", JSON.stringify(array));
-  console.log(localStorage);
-}
-
-function retrieveArray() {
-  const jsonString = localStorage.getItem("projectsArray");
-  const retrievedArray = JSON.parse(jsonString) || [];
-
-  console.log("Retrieved from Local Storage:");
-  console.log(retrievedArray);
-}
 
 export {
   tasks,
@@ -192,8 +182,7 @@ export {
   projectFactory,
   filteredArrays,
   getStaticBtns,
-  storeArray,
-  retrieveArray,
   createProjectArray,
   completed,
+
 };
