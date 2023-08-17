@@ -11,6 +11,7 @@ import {
 import { textFactory } from "../helpers/elementFactories";
 import { projects, tasks, completed } from "../helpers/crud";
 import { sortDates, sortByDate, sortByTabID } from "../data/taskData";
+import { storeArray, retrieveArray } from "../data/localStorage";
 
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();
@@ -120,16 +121,28 @@ function highlightTab(targetID) {
 
 function removeTask(taskID) {
   removeElements(".app-content");
+  const arrayFromStorage = retrieveArray("taskArray");
+
+  // findIndex needs their respective array indices
   const taskIndex = tasks.findIndex((task) => task.id === taskID);
+  const storageIndex = arrayFromStorage.findIndex((task) => task.id === taskID);
 
-  tasks.splice(taskIndex, 1);
+  if (taskIndex !== -1 && storageIndex !== -1) {
+    tasks.splice(taskIndex, 1);
+    arrayFromStorage.splice(storageIndex, 1);
+    
+    storeArray("taskArray", tasks);
+    
+    // Update staticTasks array
+    staticTasks = filterStaticTasks();
+    
+    const renderTab = createTabRenderer(selectedProjectID);
+    renderTab();
+  
+    console.log(projects);
+    console.log(tasks);
+  }
 
-  staticTasks = filterStaticTasks();
-  const renderTab = createTabRenderer(selectedProjectID);
-  renderTab();
-
-  console.log(projects);
-  console.log(tasks);
 }
 
 export {

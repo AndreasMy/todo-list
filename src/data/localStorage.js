@@ -11,12 +11,13 @@ function retrieveArray(arrayName) {
 
   console.log("Retrieved from Local Storage:");
   console.log(retrievedArray);
-  return retrievedArray
+  return retrievedArray;
 }
 
 function populateArray(array) {
-    const arrayFromStorage = retrieveArray("taskArray")
-    array.push(arrayFromStorage)
+  const arrayFromStorage = retrieveArray("taskArray");
+  array.push(arrayFromStorage);
 }
 
-export { storeArray, retrieveArray, populateArray };
+
+export { storeArray, retrieveArray, populateArray,  };
