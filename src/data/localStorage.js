@@ -1,4 +1,3 @@
-import { tasks } from "../helpers/crud";
 
 function storeArray(arrayName, array) {
   localStorage.setItem(arrayName, JSON.stringify(array));

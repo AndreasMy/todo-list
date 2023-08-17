@@ -3,8 +3,8 @@ import {
   divFactory,
   buttonFactory,
 } from "../helpers/elementFactories";
-import { findTabArray, removeElements } from "../helpers/utils";
-import { retrieveArray } from "../data/localStorage";
+import { removeElements } from "../helpers/utils";
+
 import { getFormattedDates } from "../data/taskData";
 import { tasks } from "../helpers/crud";
 
@@ -27,11 +27,7 @@ function taskItemFactory(array) {
 
     const leftWrapper = divFactory("div", "left-wrapper");
     const itemTextWrapper = divFactory("div", "text-wrapper");
-    const cplBtn = buttonFactory(
-      "complete-btn",
-      task.id,
-      "Finish"
-    );
+    const cplBtn = buttonFactory("complete-btn", task.id, "Finish");
     const taskTitle = textFactory("h4", "task-title", `${task.title}`);
     const taskDescription = textFactory(
       "p",
@@ -40,9 +36,9 @@ function taskItemFactory(array) {
     );
 
     //* Display due date:
-    const dates = getFormattedDates(tasks);
+    const dates = getFormattedDates(task.date);
     const dateDisplay = divFactory("span", "date-display");
-    const displayDate = textFactory("p", "display-date-txt", `${dates[index]}`);
+    const displayDate = textFactory("p", "display-date-txt", `${dates}`);
 
     taskItem.appendChild(dateDisplay);
     dateDisplay.appendChild(displayDate);

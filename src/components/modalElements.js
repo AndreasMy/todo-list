@@ -8,14 +8,12 @@ import {
   dateFactory,
   navFactory,
   selectorFactory,
-  optionsFactory,
 } from "../helpers/elementFactories";
 
 import { closeModal } from "../data/modalData";
 import { targetTabArray } from "../data/tabData";
 import { projects } from "../helpers/crud";
 import { selectTabTitle } from "../helpers/utils";
-
 
 targetTabArray(projects);
 function renderTaskModal(
@@ -94,13 +92,13 @@ function modalProjectMenu(targetID) {
     "projectSelect",
     "Select category or project:"
   );
- selectTabTitle(targetID);
+  selectTabTitle(targetID);
   const select = selectorFactory("taskDestination");
 
   inputWrapper.appendChild(menuLabel);
   inputWrapper.appendChild(select);
   // autofocus logic here?
-    // Set autofocus logic after appending the select element
+  // Set autofocus logic after appending the select element
   selectTabTitle(targetID); // This sets the selected tab title
 
   // Check if the currently focused element is the select element

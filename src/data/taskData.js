@@ -13,14 +13,10 @@ function fetchDates(array) {
 }
 
 //* Dates for rendered task items
-function getFormattedDates(array) {
-  const formattedDates = array.map((obj) => {
-    const date = parseISO(obj.date);
-    const formattedDate = format(date, "EEE MMM dd yyy");
-    return formattedDate;
-  });
-
-  return formattedDates;
+function getFormattedDates(dateString) {
+  const date = parseISO(dateString);
+  const formattedDate = format(date, "EEE MMM dd yyyy");
+  return formattedDate;
 }
 
 function sortDates() {

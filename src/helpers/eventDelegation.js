@@ -1,5 +1,4 @@
 import { openModal } from "../data/modalData";
-import { renderTabContent } from "../components/tabNavigation";
 import { elementIsTab, selectObjectByID, setSelectedProject } from "./utils";
 import { removeTask, createTabRenderer } from "../components/tabNavigation";
 

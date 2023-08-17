@@ -1,4 +1,3 @@
-import { renderTaskItems } from "../components/taskElements";
 import { renderPage } from "../components/pageElements";
 import { taskFactory, projectFactory, newProjects } from "../helpers/crud";
 import { filteredArrays } from "../helpers/crud";
