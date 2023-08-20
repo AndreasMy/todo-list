@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 import { renderTaskItems } from "./taskItems";
+=======
+import { renderTaskItems } from "./taskElements";
+
+>>>>>>> main
 import {
-  selectProjectArray,
-  setSelectedProject,
   removeElements,
   selectTabTitle,
   checkIfStatic,
+<<<<<<< HEAD
   findTabArray,
 } from "../modules/utils";
 import { textFactory } from "../modules/elementFactories";
@@ -14,6 +18,35 @@ import { fetchLocalStorage } from "../modules/localStorage";
 const generalTab = findTabArray(retrievedArray, "tabgeneral");
 console.log(generalTab)
  */
+=======
+  selectedProjectID,
+  filterStaticTasks,
+  filterProjectTask,
+} from "../helpers/utils";
+import { textFactory } from "../helpers/elementFactories";
+import { projects, tasks, completed } from "../helpers/crud";
+import { sortDates, sortByDate, sortByTabID } from "../data/taskData";
+import { storeArray, retrieveArray } from "../data/localStorage";
+
+let staticTasks = filterStaticTasks();
+let projectTasks = filterProjectTask();
+
+//* Using currying here...make sure to learn more
+function createTabRenderer(targetID, array) {
+  // staticTasks should be updated elsewhere, used here because of fn call in ED
+  staticTasks = filterStaticTasks();
+
+  const tabConfig = goToTab(targetID, array);
+  const renderFunction = tabConfig.render;
+  tabConfig.highlight();
+  return renderFunction;
+}
+
+function defaultTab(targetID, array) {
+  const renderTab = createTabRenderer(targetID, array);
+  renderTab();
+}
+>>>>>>> main
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
@@ -27,22 +60,130 @@ function renderTabHeader(targetID) {
   console.log("Tab Title:", tabTitle);
 }
 
+<<<<<<< HEAD
 //? projectArray should target localData
 function renderTabContent(targetID) {
   const projectArray = selectProjectArray(targetID);
   setSelectedProject(targetID);
   console.log(projectArray);
   console.log(targetID);
+=======
+function goToTab(targetID) {
+  const todayFilter = sortDates().isToday;
+  const isThisWeekFilter = sortDates().isThisWeek;
+>>>>>>> main
 
-  removeElements(".app-content");
-  renderTabHeader(targetID);
+  let selectedTab;
+  const targetProject = projects.find((project) => project.id === targetID);
+  if (targetProject && !checkIfStatic(targetProject)) {
+    selectedTab = selectedProjectID;
+  }
 
-  if (!checkIfStatic(targetID)) {
-    renderTaskItems(projectArray);
-    console.log("working");
+  return {
+    tabinbox: {
+      render: () => {
+        renderTabHeader(targetID);
+        renderTaskItems(staticTasks);
+        highlightTab("tabinbox");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    tabtoday: {
+      render: () => {
+        renderTabHeader(targetID);
+        const displayToday = sortByDate(todayFilter, staticTasks);
+        renderTaskItems(displayToday);
+        highlightTab("tabtoday");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    tabweek: {
+      render: () => {
+        renderTabHeader(targetID);
+        const displayWeek = sortByDate(isThisWeekFilter, staticTasks);
+        renderTaskItems(displayWeek);
+        highlightTab("tabweek");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    tabcompleted: {
+      render: () => {
+        renderTabHeader(targetID);
+        renderTaskItems(completed);
+        highlightTab("tabcompleted");
+      },
+      highlight: () => highlightTab(targetID),
+    },
+    [selectedTab]: {
+      render: () => {
+        const tabTask = sortByTabID();
+        renderTaskItems(tabTask);
+      },
+      highlight: () => highlightTab(targetID),
+    },
+  }[targetID];
+}
+
+function highlightTab(targetID) {
+  const targetProject = projects.find((project) => project.id === targetID);
+  const tab = document.querySelector(`#${targetID}`);
+  const tabs = document.querySelectorAll(".project-tab");
+  const tabRmBtns = document.querySelectorAll(".tab-rm-btn");
+
+  // Reset all tab styles
+  tabs.forEach((tab) => {
+    tab.style.backgroundColor = "rgb(231, 231, 231)";
+    tab.style.color = "black";
+  });
+
+  tabRmBtns.forEach((btn) => {
+    btn.style.color = "black";
+  });
+
+  // Apply selected tab styles
+  if (targetProject) {
+    tab.style.backgroundColor = "rgb(207, 35, 35)";
+    tab.style.color = "antiquewhite";
+
+    const selectedTabRmBtn = document.querySelector(`#${targetID} .tab-rm-btn`);
+    if (selectedTabRmBtn) {
+      selectedTabRmBtn.style.color = "rgb(255, 255, 255)";
+    }
   } else {
-    console.log("not working");
+    tab.style.backgroundColor = "rgb(255, 255, 255)";
   }
 }
 
-export { renderTabContent, setCategoryHeader };
+function removeTask(taskID) {
+  removeElements(".app-content");
+  const arrayFromStorage = retrieveArray("taskArray");
+
+  // findIndex needs their respective array indices
+  const taskIndex = tasks.findIndex((task) => task.id === taskID);
+  const storageIndex = arrayFromStorage.findIndex((task) => task.id === taskID);
+
+  if (taskIndex !== -1 && storageIndex !== -1) {
+    tasks.splice(taskIndex, 1);
+    arrayFromStorage.splice(storageIndex, 1);
+
+    storeArray("taskArray", tasks);
+
+    // Update staticTasks array
+    staticTasks = filterStaticTasks();
+
+    const renderTab = createTabRenderer(selectedProjectID);
+    renderTab();
+
+    console.log(projects);
+    console.log(tasks);
+  }
+}
+
+export {
+  setCategoryHeader,
+  removeTask,
+  highlightTab,
+  goToTab,
+  createTabRenderer,
+  defaultTab,
+};
