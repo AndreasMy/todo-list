@@ -3,6 +3,7 @@ import {
   divFactory,
   buttonFactory,
 } from "../helpers/elementFactories";
+import { checkIfStatic } from "../helpers/utils";
 
 function projectSection() {
   const sidebar = document.querySelector("aside");
@@ -28,12 +29,16 @@ function projectSection() {
 
 function projectTabFactory(tabArray) {
   const elements = tabArray.map((project) => {
-    const tabItem = buttonFactory(
-      "project-tab",
-      `${project.id}`,
-      "project-tab"
-    );
+    const tabItem = divFactory("div", "project-tab");
+
+    tabItem.setAttribute("id", `${project.id}`);
     tabItem.textContent = `${project.title}`;
+
+    if (!checkIfStatic(project)) {
+      const tabRmBtn = buttonFactory("tab-rm-btn", project.id, "X");
+      tabItem.appendChild(tabRmBtn);
+    }
+
     return tabItem;
   });
 

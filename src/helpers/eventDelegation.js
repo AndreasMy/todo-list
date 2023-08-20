@@ -24,7 +24,7 @@ const eventDelegation = () => {
         setSelectedProject(event.target.id);
 
         const renderTab = createTabRenderer(event.target.id);
-        renderTab();
+        renderTab(event.target.id);
         break;
     }
   });

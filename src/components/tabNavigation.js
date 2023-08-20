@@ -103,6 +103,7 @@ function highlightTab(targetID) {
   const targetProject = projects.find((project) => project.id === targetID);
   const tab = document.querySelector(`#${targetID}`);
   const tabs = document.querySelectorAll(".project-tab");
+  const tabRmBtns = document.querySelectorAll(".tab-rm-btn");
 
   // Reset all tab styles
   tabs.forEach((tab) => {
@@ -110,10 +111,19 @@ function highlightTab(targetID) {
     tab.style.color = "black";
   });
 
+  tabRmBtns.forEach((btn) => {
+    btn.style.color = "black";
+  });
+
   // Apply selected tab styles
   if (targetProject) {
     tab.style.backgroundColor = "rgb(207, 35, 35)";
     tab.style.color = "antiquewhite";
+
+    const selectedTabRmBtn = document.querySelector(`#${targetID} .tab-rm-btn`);
+    if (selectedTabRmBtn) {
+      selectedTabRmBtn.style.color = "rgb(255, 255, 255)";
+    }
   } else {
     tab.style.backgroundColor = "rgb(255, 255, 255)";
   }
@@ -130,19 +140,18 @@ function removeTask(taskID) {
   if (taskIndex !== -1 && storageIndex !== -1) {
     tasks.splice(taskIndex, 1);
     arrayFromStorage.splice(storageIndex, 1);
-    
+
     storeArray("taskArray", tasks);
-    
+
     // Update staticTasks array
     staticTasks = filterStaticTasks();
-    
+
     const renderTab = createTabRenderer(selectedProjectID);
     renderTab();
-  
+
     console.log(projects);
     console.log(tasks);
   }
-
 }
 
 export {
