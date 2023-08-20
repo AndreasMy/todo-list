@@ -1,24 +1,9 @@
-<<<<<<< HEAD
-import { renderTaskItems } from "./taskItems";
-=======
 import { renderTaskItems } from "./taskElements";
 
->>>>>>> main
 import {
   removeElements,
   selectTabTitle,
   checkIfStatic,
-<<<<<<< HEAD
-  findTabArray,
-} from "../modules/utils";
-import { textFactory } from "../modules/elementFactories";
-import { fetchLocalStorage } from "../modules/localStorage";
-
-/* const retrievedArray = fetchLocalStorage();
-const generalTab = findTabArray(retrievedArray, "tabgeneral");
-console.log(generalTab)
- */
-=======
   selectedProjectID,
   filterStaticTasks,
   filterProjectTask,
@@ -46,7 +31,6 @@ function defaultTab(targetID, array) {
   const renderTab = createTabRenderer(targetID, array);
   renderTab();
 }
->>>>>>> main
 
 function setCategoryHeader(text) {
   const header = document.querySelector(".header-title-wrapper");
@@ -60,18 +44,9 @@ function renderTabHeader(targetID) {
   console.log("Tab Title:", tabTitle);
 }
 
-<<<<<<< HEAD
-//? projectArray should target localData
-function renderTabContent(targetID) {
-  const projectArray = selectProjectArray(targetID);
-  setSelectedProject(targetID);
-  console.log(projectArray);
-  console.log(targetID);
-=======
 function goToTab(targetID) {
   const todayFilter = sortDates().isToday;
   const isThisWeekFilter = sortDates().isThisWeek;
->>>>>>> main
 
   let selectedTab;
   const targetProject = projects.find((project) => project.id === targetID);

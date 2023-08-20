@@ -2,15 +2,8 @@ import {
   textFactory,
   divFactory,
   buttonFactory,
-<<<<<<< HEAD:src/components/sidebar.js
-} from "../modules/elementFactories";
-import { fetchLocalStorage,  } from "../modules/localStorage";
-
-const retrievedArray = fetchLocalStorage();
-=======
 } from "../helpers/elementFactories";
 import { checkIfStatic } from "../helpers/utils";
->>>>>>> main:src/components/tabElements.js
 
 function projectSection() {
   const sidebar = document.querySelector("aside");

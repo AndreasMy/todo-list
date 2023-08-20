@@ -1,12 +1,4 @@
-<<<<<<< HEAD:src/modules/utils.js
-import { projects } from "./crud";
-import { localData } from "./localStorage";
-import { fetchLocalStorage } from "./localStorage";
-
-const retrievedArray = fetchLocalStorage();
-=======
 import { projects, tasks } from "./crud";
->>>>>>> main:src/helpers/utils.js
 
 let selectedProjectID = "tabinbox";
 let chosenModal = "";
@@ -36,21 +28,6 @@ function elementIsTab(element) {
   return element.id.startsWith(prefix);
 }
 
-<<<<<<< HEAD:src/modules/utils.js
-//? add parameter for flexibility - or change it to select retrievedArray
-function getObjectArray() {
-  const getArray = retrievedArray.id.taskArray;
-  return getArray;
-}
-
-//? add parameter for flexibility - or change it to select retrievedArray
-function findTabArray(array, tabID) {
-  const tabProject = array.find((project) => project.id === tabID);
-  return tabProject.taskArray;
-}
-
-=======
->>>>>>> main:src/helpers/utils.js
 //? replaces the above 2 functions in eventDelegation
 function checkIfStatic(element) {
   return element.isStatic === true;
