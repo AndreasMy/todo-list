@@ -1,7 +1,19 @@
+import { projects } from "../helpers/crud";
 
 function storeArray(arrayName, array) {
   localStorage.setItem(arrayName, JSON.stringify(array));
   console.log(localStorage);
+}
+
+function storeUniqueArray(arrayName, newArray) {
+  const retrievedArray = retrieveArray(arrayName);
+
+  const newTabs = newArray.filter(
+    (item) =>
+      !retrievedArray.some((existingItem) => existingItem.id === item.id)
+  );
+  const combinedArray = [...retrievedArray, ...newTabs]
+  storeArray(arrayName, combinedArray)
 }
 
 function retrieveArray(arrayName) {
@@ -11,6 +23,7 @@ function retrieveArray(arrayName) {
   console.log("Retrieved from Local Storage:");
   console.log(retrievedArray);
   return retrievedArray;
+  
 }
 
 function populateArray(array) {
@@ -18,5 +31,4 @@ function populateArray(array) {
   array.push(arrayFromStorage);
 }
 
-
-export { storeArray, retrieveArray, populateArray,  };
+export { storeArray, retrieveArray, populateArray, storeUniqueArray };

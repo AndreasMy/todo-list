@@ -1,9 +1,13 @@
 import { checkIfStatic } from "./utils";
 import { selectedProjectID } from "./utils";
-import { retrieveArray } from "../data/localStorage";
+import {
+  retrieveArray,
+  storeArray,
+  storeUniqueArray,
+} from "../data/localStorage";
 
-const projects =  retrieveArray("projectArray")
-const tasks = retrieveArray("taskArray")
+const projects = retrieveArray("projectArray");
+const tasks = retrieveArray("taskArray");
 const completed = [];
 console.log(projects);
 console.log(tasks);
@@ -31,7 +35,6 @@ const taskFactory = (
   };
   return task;
 };
-
 
 //* Project factory
 const projectFactory = (title, description, isStatic, isTaskStorageEnabled) => {
@@ -75,15 +78,21 @@ function createProjectArray(arrayName) {
     completed: projectFactory("Completed", "Completed tasks", true, false),
   };
 
-  projects.push(tabs.inbox, tabs.today, tabs.week, tabs.completed);
+  if (projects.length === 0) {
+    projects.push(tabs.inbox, tabs.today, tabs.week, tabs.completed);
+  }
+
+  const staticTabs = [tabs.inbox, tabs.today, tabs.week, tabs.completed];
+  storeUniqueArray("projectArray", staticTabs);
   console.log(projects);
 })();
+// localStorage.clear()
 
 function defaultProject() {
   const project = projectFactory("Trying", "To make it work", false, true);
   const anotherProject = projectFactory(
     "Trying Harder",
-    "To make it is work",
+    "To make it work",
     false,
     true
   );
@@ -174,15 +183,13 @@ function defaultTasks() {
 
 // defaultTasks();
 
-
 export {
   tasks,
-  projects,
   taskFactory,
   projectFactory,
   filteredArrays,
   getStaticBtns,
   createProjectArray,
   completed,
-
+  projects,
 };
