@@ -72,6 +72,7 @@ function removeElements(classID) {
 }
 
 function selectObjectByID(targetID) {
+  
   const selectedProject = projects.find((project) => project.id === targetID);
   return selectedProject;
 }

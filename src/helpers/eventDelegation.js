@@ -1,7 +1,10 @@
 import { openModal } from "../data/modalData";
 import { elementIsTab, selectObjectByID, setSelectedProject } from "./utils";
-import { removeTask, createTabRenderer } from "../components/tabNavigation";
-
+import {
+  removeTask,
+  createTabRenderer,
+  removeTab,
+} from "../components/tabNavigation";
 
 const content = document.querySelector("#content");
 const modal = openModal();
@@ -18,6 +21,10 @@ const eventDelegation = () => {
       case event.target.matches(".complete-btn"):
         const taskID = event.target.id;
         removeTask(taskID);
+        break;
+      case event.target.matches(".tab-rm-btn"):
+        const tabID= event.target.id
+        removeTab(tabID);
         break;
       case elementIsTab(event.target):
         selectObjectByID(event.target.id);

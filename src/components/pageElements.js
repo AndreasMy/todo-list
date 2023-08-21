@@ -26,7 +26,6 @@ function renderMain() {
   const tabContainer = divFactory("nav", "tab-container");
   const tabHeader = textFactory("h3", "tab-header", "To Do List");
   const staticTabContainer = divFactory("div", "static-tab-container");
-  const navList = navFactory(4);
 
   //* Sorting btns
   const newTaskBtn = buttonFactory("new-task-btn", "newTaskBtn", "New Task");
@@ -60,19 +59,15 @@ function createStaticTabs() {
 }
 
 function renderStaticTabs() {
-  const staticTabs = createStaticTabs()
-  const renderedStaticTabs = renderProjectTab(
-    staticTabs,
-    ".static-tab-container"
-  );
-  return renderedStaticTabs;
+  const staticTabs = createStaticTabs();
+  renderProjectTab(staticTabs, ".static-tab-container");
 }
 
 function renderPage() {
   renderMain();
   setCategoryHeader("General");
   projectSection();
-  renderStaticTabs()
+  renderStaticTabs();
 }
 
-export { renderPage };
+export { renderPage, createStaticTabs };

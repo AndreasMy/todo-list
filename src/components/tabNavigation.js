@@ -12,6 +12,8 @@ import { textFactory } from "../helpers/elementFactories";
 import { projects, tasks, completed } from "../helpers/crud";
 import { sortDates, sortByDate, sortByTabID } from "../data/taskData";
 import { storeArray, retrieveArray } from "../data/localStorage";
+import { createStaticTabs } from "./pageElements";
+import { arMA } from "date-fns/locale";
 
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();
@@ -39,7 +41,11 @@ function setCategoryHeader(text) {
 }
 
 function renderTabHeader(targetID) {
-  const tabTitle = selectTabTitle(targetID);
+  const staticTabs = createStaticTabs()
+  const allProjects = projects.concat(staticTabs)
+  const selectedProject = allProjects.find((project) => project.id === targetID);
+
+  const tabTitle = selectedProject ? selectedProject.title : "Not found";
   setCategoryHeader(tabTitle);
   console.log("Tab Title:", tabTitle);
 }
@@ -100,7 +106,10 @@ function goToTab(targetID) {
 }
 
 function highlightTab(targetID) {
-  const targetProject = projects.find((project) => project.id === targetID);
+  const staticTabs = createStaticTabs()
+  const allProjects = projects.concat(staticTabs)
+
+  const targetProject = allProjects.find((project) => project.id === targetID);
   const tab = document.querySelector(`#${targetID}`);
   const tabs = document.querySelectorAll(".project-tab");
   const tabRmBtns = document.querySelectorAll(".tab-rm-btn");
@@ -152,6 +161,25 @@ function removeTask(taskID) {
   }
 }
 
+function removeTab(tabID) {
+  removeElements(".project-content-container");
+  const arrayFromStorage = retrieveArray("projectArray");
+  const tabIndex = projects.findIndex((tab) => tab.id === tabID);
+  const storageIndex = arrayFromStorage.findIndex((tab) => tab.id === tabID)
+
+  if (tabIndex !== -1 && storageIndex !== -1) {
+    projects.splice(tabIndex, 1);
+    arrayFromStorage.splice(storageIndex, 1)
+
+    storeArray("projectArray", projects)
+    const renderTab = createTabRenderer(selectedProjectID);
+    renderTab();
+    
+    renderProjectTab(projects, ".static-tab-container")
+  }
+
+}
+
 export {
   setCategoryHeader,
   removeTask,
@@ -159,4 +187,5 @@ export {
   goToTab,
   createTabRenderer,
   defaultTab,
+  removeTab,
 };

@@ -196,7 +196,7 @@ input {
 
 .project-header,
 .tab-header {
-  margin: 15px;
+  margin: 16.5px;
 }
 
 .app-container {
@@ -231,7 +231,7 @@ ul {
   flex-direction: column;
   flex: 1;
   background-color: rgb(255, 255, 255);
-  border-radius: 15px 0 25px 0;
+  border-radius: 0 0 25px 0;
   padding-top: 12px;
 }
 
