@@ -10,7 +10,7 @@ import {
 const projects = retrieveArray("projectArray");
 const tasks = retrieveArray("taskArray");
 const completed = [];
-console.log(projects);
+console.log("Projects Array:", projects);
 console.log(tasks);
 
 function distributeTabArrays() {
@@ -73,7 +73,7 @@ function generateObjID(title, type) {
   return `${type}${camelCaseName}`;
 }
 
-(function createStaticTabs() {
+function createStaticTabs() {
   const tabs = {
     inbox: projectFactory("Inbox", "All tasks", true, true),
     today: projectFactory("Today", "today's tasks", true, false),
@@ -86,11 +86,11 @@ function generateObjID(title, type) {
   }
 
   const staticTabs = [tabs.inbox, tabs.today, tabs.week, tabs.completed];
-  storeUniqueArray("tabArray", staticTabs);
+ // storeUniqueArray("tabArray", staticTabs);
 
   console.log(projects);
-})();
-//localStorage.clear();
+};
+// localStorage.clear();
 
 function getStaticBtns() {
   const filteredBtns = projects.filter((project) => checkIfStatic(project));

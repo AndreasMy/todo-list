@@ -105,7 +105,6 @@ function highlightTab(targetID) {
   const tabs = document.querySelectorAll(".project-tab");
   const tabRmBtns = document.querySelectorAll(".tab-rm-btn");
 
-  // Reset all tab styles
   tabs.forEach((tab) => {
     tab.style.backgroundColor = "rgb(231, 231, 231)";
     tab.style.color = "black";
@@ -115,7 +114,6 @@ function highlightTab(targetID) {
     btn.style.color = "black";
   });
 
-  // Apply selected tab styles
   if (targetProject) {
     tab.style.backgroundColor = "rgb(207, 35, 35)";
     tab.style.color = "antiquewhite";
