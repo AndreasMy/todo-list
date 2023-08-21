@@ -41,9 +41,11 @@ function setCategoryHeader(text) {
 }
 
 function renderTabHeader(targetID) {
-  const staticTabs = createStaticTabs()
-  const allProjects = projects.concat(staticTabs)
-  const selectedProject = allProjects.find((project) => project.id === targetID);
+  const staticTabs = createStaticTabs();
+  const allProjects = projects.concat(staticTabs);
+  const selectedProject = allProjects.find(
+    (project) => project.id === targetID
+  );
 
   const tabTitle = selectedProject ? selectedProject.title : "Not found";
   setCategoryHeader(tabTitle);
@@ -106,8 +108,8 @@ function goToTab(targetID) {
 }
 
 function highlightTab(targetID) {
-  const staticTabs = createStaticTabs()
-  const allProjects = projects.concat(staticTabs)
+  const staticTabs = createStaticTabs();
+  const allProjects = projects.concat(staticTabs);
 
   const targetProject = allProjects.find((project) => project.id === targetID);
   const tab = document.querySelector(`#${targetID}`);
@@ -163,21 +165,28 @@ function removeTask(taskID) {
 
 function removeTab(tabID) {
   removeElements(".project-content-container");
+  removeElements(".app-content");
+
   const arrayFromStorage = retrieveArray("projectArray");
+  let taskFromStorage = retrieveArray("taskArray");
+
   const tabIndex = projects.findIndex((tab) => tab.id === tabID);
-  const storageIndex = arrayFromStorage.findIndex((tab) => tab.id === tabID)
+  const storageIndex = arrayFromStorage.findIndex((tab) => tab.id === tabID);
 
   if (tabIndex !== -1 && storageIndex !== -1) {
     projects.splice(tabIndex, 1);
-    arrayFromStorage.splice(storageIndex, 1)
+    arrayFromStorage.splice(storageIndex, 1);
+    storeArray("projectArray", projects);
 
-    storeArray("projectArray", projects)
-    const renderTab = createTabRenderer(selectedProjectID);
-    renderTab();
-    
-    renderProjectTab(projects, ".static-tab-container")
+    taskFromStorage = taskFromStorage.filter((task) => task.tabID !== tabID);
+    storeArray("taskArray", taskFromStorage);
+
+    console.log(taskFromStorage);
+    console.log(tabID);
+
+
+    defaultTab("tabinbox", staticTasks);
   }
-
 }
 
 export {
