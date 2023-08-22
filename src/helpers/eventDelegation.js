@@ -1,5 +1,5 @@
 import { openModal } from "../data/modalData";
-import { elementIsTab, selectObjectByID, setSelectedProject } from "./utils";
+import { elementIsTab, selectObjectByID, setSelectedProject, selectedProjectID } from "./utils";
 import {
   removeTask,
   createTabRenderer,
@@ -29,6 +29,7 @@ const eventDelegation = () => {
       case elementIsTab(event.target):
         selectObjectByID(event.target.id);
         setSelectedProject(event.target.id);
+        console.log(selectedProjectID)
 
         const renderTab = createTabRenderer(event.target.id);
         renderTab(event.target.id);

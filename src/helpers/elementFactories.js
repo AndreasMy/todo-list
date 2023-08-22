@@ -1,4 +1,5 @@
 const { format } = require("date-fns");
+import { createStaticTabs } from "../components/pageElements";
 import { targetTabArray } from "../data/tabData";
 import { projects } from "./crud";
 import { selectTabTitle, selectedProjectID } from "./utils";
@@ -82,11 +83,16 @@ function dateFactory() {
 }
 
 function selectorFactory(id) {
-  const menuItems = targetTabArray(projects);
+  const staticTabs = createStaticTabs();
+  const allProjects = projects.concat(staticTabs);
+
+  const menuItems = targetTabArray(allProjects);
   const select = document.createElement("select");
 
-  menuItems.forEach((item) => {
-    const menuItem = optionsFactory(item);
+  menuItems.forEach((item, index) => {
+    console.log(item);
+    let menuItem = optionsFactory(item);
+    menuItem.value = allProjects[index].id;
     select.appendChild(menuItem);
   });
 
@@ -95,10 +101,9 @@ function selectorFactory(id) {
   return select;
 }
 
-function optionsFactory(value) {
+function optionsFactory(textContent) {
   const option = document.createElement("option");
-  option.textContent = value;
-  option.value = value;
+  option.textContent = textContent;
   return option;
 }
 

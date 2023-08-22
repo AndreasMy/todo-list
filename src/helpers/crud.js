@@ -13,20 +13,6 @@ const completed = [];
 console.log("Projects Array:", projects);
 console.log(tasks);
 
-function distributeTabArrays() {
-  const retrievedArrays = retrieveTabArrays();
-  const projectArray = retrievedArrays.projectArray;
-  const tabArray = retrievedArrays.tabArray;
-
-  const concatenatedArray = projectArray.concat(tabArray);
-
-  return {
-    projectArray,
-    tabArray,
-    concatenatedArray,
-  };
-}
-
 //* Todo factory
 const taskFactory = (
   title,
@@ -73,23 +59,6 @@ function generateObjID(title, type) {
   return `${type}${camelCaseName}`;
 }
 
-function createStaticTabs() {
-  const tabs = {
-    inbox: projectFactory("Inbox", "All tasks", true, true),
-    today: projectFactory("Today", "today's tasks", true, false),
-    week: projectFactory("Week", "This week's tasks", true, false),
-    completed: projectFactory("Completed", "Completed tasks", true, false),
-  };
-
-  if (projects.length === 0) {
-    projects.push(tabs.inbox, tabs.today, tabs.week, tabs.completed);
-  }
-
-  const staticTabs = [tabs.inbox, tabs.today, tabs.week, tabs.completed];
- // storeUniqueArray("tabArray", staticTabs);
-
-  console.log(projects);
-};
 // localStorage.clear();
 
 function getStaticBtns() {

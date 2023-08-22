@@ -13,7 +13,6 @@ import { projects, tasks, completed } from "../helpers/crud";
 import { sortDates, sortByDate, sortByTabID } from "../data/taskData";
 import { storeArray, retrieveArray } from "../data/localStorage";
 import { createStaticTabs } from "./pageElements";
-import { arMA } from "date-fns/locale";
 
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();

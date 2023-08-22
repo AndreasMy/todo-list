@@ -89,7 +89,7 @@ function modalProjectMenu(targetID) {
   const inputWrapper = document.querySelector(".input-wrapper");
   const menuWrapper = divFactory("div", "menu-wrapper");
   const menuLabel = labelFactory(
-    "projectSelect",
+    "taskDestination",
     "Select category or project:"
   );
   selectTabTitle(targetID);
@@ -97,12 +97,13 @@ function modalProjectMenu(targetID) {
 
   inputWrapper.appendChild(menuLabel);
   inputWrapper.appendChild(select);
+
   // autofocus logic here?
   // Set autofocus logic after appending the select element
   selectTabTitle(targetID); // This sets the selected tab title
 
   // Check if the currently focused element is the select element
-  if (document.activeElement !== select) {
+  if (document.activeElement === select) {
     select.focus(); // Set focus to the select element if it's not already focused
   }
   inputWrapper.appendChild(menuWrapper);
@@ -116,7 +117,6 @@ function modalDate() {
 
   dateWrapper.appendChild(datePickerLabel);
   dateWrapper.appendChild(datePicker);
-
   inputWrapper.appendChild(dateWrapper);
 }
 
