@@ -24,6 +24,15 @@ import { storeArray } from "./localStorage";
 let staticTasks = filterStaticTasks();
 let projectTasks = filterProjectTask();
 
+function setOptionValue() {
+  const selectElement = document.querySelector("#taskDestination");
+  selectElement.querySelectorAll("option").forEach((option) => {
+    if (option.value === selectedProjectID) {
+      option.selected = true;
+    }
+  });
+}
+
 //* Called in eventDelgcation
 function openModal() {
   return {
@@ -34,6 +43,7 @@ function openModal() {
       modalDate();
       modalPriority();
       modalProjectMenu();
+      setOptionValue();
 
       //* Auto select input field
       const inputField = document.querySelector("#task");
